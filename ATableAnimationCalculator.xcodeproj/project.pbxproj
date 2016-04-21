@@ -20,8 +20,8 @@
 		2DBA1F5C344BF75DF505C2E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA106AC47ABD8CB4DEDFC6 /* AppDelegate.swift */; };
 		FA3C82B31CC3CC86009A7E4D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3C82B21CC3CC86009A7E4D /* Launch Screen.storyboard */; };
 		FAECAF2D1CC8D0BB000548EB /* ATableAnimationCalculator.h in Headers */ = {isa = PBXBuildFile; fileRef = FAECAF2C1CC8D0BB000548EB /* ATableAnimationCalculator.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FAECAF311CC8D0BB000548EB /* ATableAnimationCalculator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAECAF2A1CC8D0BB000548EB /* ATableAnimationCalculator.framework */; };
-		FAECAF321CC8D0BB000548EB /* ATableAnimationCalculator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAECAF2A1CC8D0BB000548EB /* ATableAnimationCalculator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FAECAF311CC8D0BB000548EB /* AwesomeTableAnimationCalculator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAECAF2A1CC8D0BB000548EB /* AwesomeTableAnimationCalculator.framework */; };
+		FAECAF321CC8D0BB000548EB /* AwesomeTableAnimationCalculator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAECAF2A1CC8D0BB000548EB /* AwesomeTableAnimationCalculator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAECAF371CC8D0D3000548EB /* ATableAnimationCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA16B1E13A6C59B5BD6E03 /* ATableAnimationCalculator.swift */; };
 		FAECAF381CC8D0D3000548EB /* ATableDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA10F4CCF8E17E82A5FB6A /* ATableDiff.swift */; };
 		FAECAF391CC8D0D3000548EB /* ACellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1A72A8B860BAD43D1C78 /* ACellModel.swift */; };
@@ -46,7 +46,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FAECAF321CC8D0BB000548EB /* ATableAnimationCalculator.framework in Embed Frameworks */,
+				FAECAF321CC8D0BB000548EB /* AwesomeTableAnimationCalculator.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -68,7 +68,7 @@
 		FA3C828D1CC39305009A7E4D /* ATableAnimationCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATableAnimationCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA3C82AB1CC3933C009A7E4D /* CVDS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CVDS-Info.plist"; sourceTree = "<group>"; };
 		FA3C82B21CC3CC86009A7E4D /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		FAECAF2A1CC8D0BB000548EB /* ATableAnimationCalculator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ATableAnimationCalculator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAECAF2A1CC8D0BB000548EB /* AwesomeTableAnimationCalculator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AwesomeTableAnimationCalculator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAECAF2C1CC8D0BB000548EB /* ATableAnimationCalculator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ATableAnimationCalculator.h; sourceTree = "<group>"; };
 		FAECAF2E1CC8D0BB000548EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -78,7 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAECAF311CC8D0BB000548EB /* ATableAnimationCalculator.framework in Frameworks */,
+				FAECAF311CC8D0BB000548EB /* AwesomeTableAnimationCalculator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,7 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				FA3C828D1CC39305009A7E4D /* ATableAnimationCalculator.app */,
-				FAECAF2A1CC8D0BB000548EB /* ATableAnimationCalculator.framework */,
+				FAECAF2A1CC8D0BB000548EB /* AwesomeTableAnimationCalculator.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -196,9 +196,9 @@
 			productReference = FA3C828D1CC39305009A7E4D /* ATableAnimationCalculator.app */;
 			productType = "com.apple.product-type.application";
 		};
-		FAECAF291CC8D0BB000548EB /* ATableAnimationCalculator */ = {
+		FAECAF291CC8D0BB000548EB /* AwesomeTableAnimationCalculator */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FAECAF331CC8D0BB000548EB /* Build configuration list for PBXNativeTarget "ATableAnimationCalculator" */;
+			buildConfigurationList = FAECAF331CC8D0BB000548EB /* Build configuration list for PBXNativeTarget "AwesomeTableAnimationCalculator" */;
 			buildPhases = (
 				FAECAF251CC8D0BB000548EB /* Sources */,
 				FAECAF261CC8D0BB000548EB /* Frameworks */,
@@ -209,9 +209,9 @@
 			);
 			dependencies = (
 			);
-			name = ATableAnimationCalculator;
+			name = AwesomeTableAnimationCalculator;
 			productName = ATableAnimationCalculator;
-			productReference = FAECAF2A1CC8D0BB000548EB /* ATableAnimationCalculator.framework */;
+			productReference = FAECAF2A1CC8D0BB000548EB /* AwesomeTableAnimationCalculator.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -246,7 +246,7 @@
 			projectRoot = "";
 			targets = (
 				FA3C828C1CC39305009A7E4D /* ATableAnimationCalculatorExample */,
-				FAECAF291CC8D0BB000548EB /* ATableAnimationCalculator */,
+				FAECAF291CC8D0BB000548EB /* AwesomeTableAnimationCalculator */,
 			);
 		};
 /* End PBXProject section */
@@ -305,7 +305,7 @@
 /* Begin PBXTargetDependency section */
 		FAECAF301CC8D0BB000548EB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = FAECAF291CC8D0BB000548EB /* ATableAnimationCalculator */;
+			target = FAECAF291CC8D0BB000548EB /* AwesomeTableAnimationCalculator */;
 			targetProxy = FAECAF2F1CC8D0BB000548EB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -487,7 +487,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FAECAF331CC8D0BB000548EB /* Build configuration list for PBXNativeTarget "ATableAnimationCalculator" */ = {
+		FAECAF331CC8D0BB000548EB /* Build configuration list for PBXNativeTarget "AwesomeTableAnimationCalculator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FAECAF341CC8D0BB000548EB /* Debug */,

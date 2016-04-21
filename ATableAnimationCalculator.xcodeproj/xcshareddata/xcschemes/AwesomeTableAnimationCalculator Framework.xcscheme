@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FAECAF291CC8D0BB000548EB"
-               BuildableName = "ATableAnimationCalculator.framework"
-               BlueprintName = "ATableAnimationCalculator"
+               BuildableName = "AwesomeTableAnimationCalculator.framework"
+               BlueprintName = "AwesomeTableAnimationCalculator"
                ReferencedContainer = "container:ATableAnimationCalculator.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,8 +46,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FAECAF291CC8D0BB000548EB"
-            BuildableName = "ATableAnimationCalculator.framework"
-            BlueprintName = "ATableAnimationCalculator"
+            BuildableName = "AwesomeTableAnimationCalculator.framework"
+            BlueprintName = "AwesomeTableAnimationCalculator"
             ReferencedContainer = "container:ATableAnimationCalculator.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,8 +64,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FAECAF291CC8D0BB000548EB"
-            BuildableName = "ATableAnimationCalculator.framework"
-            BlueprintName = "ATableAnimationCalculator"
+            BuildableName = "AwesomeTableAnimationCalculator.framework"
+            BlueprintName = "AwesomeTableAnimationCalculator"
             ReferencedContainer = "container:ATableAnimationCalculator.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
