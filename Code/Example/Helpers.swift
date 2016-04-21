@@ -2,7 +2,7 @@
 // Created by Alexander Babaev on 18.04.16.
 // Copyright (c) 2016 Alexander Babaev, LonelyBytes. All rights reserved.
 // Sources: https://github.com/bealex/AwesomeTableAnimationCalculator
-// License: MIT
+// License: MIT https://github.com/bealex/AwesomeTableAnimationCalculator/blob/master/LICENSE
 //
 
 import Foundation
