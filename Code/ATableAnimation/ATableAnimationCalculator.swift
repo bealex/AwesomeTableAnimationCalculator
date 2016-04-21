@@ -31,7 +31,7 @@ public class ATableAnimationCalculator<ACellModelType:ACellModel> {
         return false
     }
 
-    init() {
+    public init() {
         comparator = { left, right in
             let indexLeft = self.items.indexOf(left)
             let indexRight = self.items.indexOf(right)
