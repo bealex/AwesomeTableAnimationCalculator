@@ -5,6 +5,7 @@ There are times when you need to determine what was changed in a table (collecti
 Awesome Table Animation Calculator provides simple interface for this task. It holds data model for the table and can calculate animatable difference for some changes (and apply them to the UICollectionView/UITableView afterwards).
 
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AwesomeTableAnimationCalculator.svg)](https://img.shields.io/cocoapods/v/AwesomeTableAnimationCalculator.svg)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 ###Usage
 
