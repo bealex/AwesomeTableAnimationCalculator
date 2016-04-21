@@ -1,6 +1,8 @@
 //
 // Created by Alexander Babaev on 18.04.16.
-// Copyright (c) 2016 LonelyBytes. All rights reserved.
+// Copyright (c) 2016 Alexander Babaev, LonelyBytes. All rights reserved.
+// Sources: https://github.com/bealex/AwesomeTableAnimationCalculator
+// License: MIT
 //
 
 import Foundation

@@ -1,9 +1,8 @@
 //
-//  AppDelegate.swift
-//  CollectionViewDataStorage
-//
-//  Created by Alexander Babaev on 17.04.16.
-//  Copyright © 2016 LonelyBytes. All rights reserved.
+// Created by Alexander Babaev on 17.04.16.
+// Copyright (c) 2016 Alexander Babaev, LonelyBytes. All rights reserved.
+// Sources: https://github.com/bealex/AwesomeTableAnimationCalculator
+// License: MIT
 //
 
 import UIKit

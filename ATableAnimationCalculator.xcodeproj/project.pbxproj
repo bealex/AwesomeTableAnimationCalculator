@@ -400,7 +400,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Babaev (H8VN44VCRU)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/CVDS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lonelybytes.CollectionViewDataStorage;
 				PRODUCT_NAME = ATableAnimationCalculator;
@@ -414,7 +414,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Babaev (H8VN44VCRU)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/CVDS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lonelybytes.CollectionViewDataStorage;
 				PRODUCT_NAME = ATableAnimationCalculator;
@@ -494,6 +494,7 @@
 				FAECAF351CC8D0BB000548EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
