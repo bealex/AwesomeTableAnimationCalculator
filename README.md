@@ -1,4 +1,10 @@
-There are times when you need to determine what was changed in a table (collection) model to update it with animations. It can be even more complex task when sections are involved. Awesome Table Animation Calculator provides simple interface for this task. It holds data model for the table and can calculate animatable difference for some changes (and apply them to the UICollectionView/UITableView afterwards).
+### Awesome Table Animation Calculator
+
+There are times when you need to determine what was changed in a table (collection) model to update it with animations. It can be even more complex task when sections are involved. 
+
+Awesome Table Animation Calculator provides simple interface for this task. It holds data model for the table and can calculate animatable difference for some changes (and apply them to the UICollectionView/UITableView afterwards).
+
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AwesomeTableAnimationCalculator.svg)](https://img.shields.io/cocoapods/v/AwesomeTableAnimationCalculator.svg)
 
 ###Usage
 

@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
-  s.author             = { "Alexander Babaev" => "alex@lonelybytes.com" }
+  s.author             = { "Alexander Babaev" => "alex@jdnevnik.com" }
   s.social_media_url   = "http://twitter.com/bealex"
 
   s.platform     = :ios, "8.0"
