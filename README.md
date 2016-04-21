@@ -6,13 +6,15 @@ Awesome Table Animation Calculator provides simple interface for this task. It h
 
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AwesomeTableAnimationCalculator.svg)](https://img.shields.io/cocoapods/v/AwesomeTableAnimationCalculator.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/bealex/AwesomeTableAnimationCalculator/blob/master/LICENSE)
+[![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=5718f40453d186010052486e&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/5718f40453d186010052486e/build/latest)
 
 ###Usage
 
 Implement Cell and Section models. These models define equality for cells (both id-equality and contents equality) and sections. Here is a simple example.
 
 ```swift
-public class ASectionModelExample: ASectionModel {
+public class ASectionModelExample: ASectionModel, Equatable {
     public let title:String
 
     public init(title:String, start:Int, end:Int) {

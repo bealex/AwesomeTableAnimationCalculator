@@ -6,8 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/Code/Example/ViewControllerCollection.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/Example/Helpers.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/Example/ViewControllerTable.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Code/Example/SectionDataHolderExample.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Code/Example/CellDataHolderExample.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Code/Example/ASectionModelExample.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Code/Example/ACellModelExample.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ATableDiff.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ATableDiff+UIKit.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ASectionModel.swift" isTestSource="false" />

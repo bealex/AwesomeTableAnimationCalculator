@@ -29,17 +29,11 @@ public class ATableAnimationCalculator<ACellModelType:ACellModel> {
     var items:[ACellModelType] = []
     var sections:[ACellModelType.ASectionModelType] = []
 
-    public var comparator:(ACellModelType, ACellModelType) -> Bool = { left, right in
-        return false
-    }
+    public lazy var comparator:(ACellModelType, ACellModelType) -> Bool = { left, right in
+        let indexLeft = self.items.indexOf(left)
+        let indexRight = self.items.indexOf(right)
 
-    public init() {
-        comparator = { left, right in
-            let indexLeft = self.items.indexOf(left)
-            let indexRight = self.items.indexOf(right)
-
-            return indexLeft < indexRight
-        }
+        return indexLeft < indexRight
     }
 }
 

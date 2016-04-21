@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2DBA113121608D47EF21293A /* SectionDataHolderExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1A1A4BA3C67910625F3A /* SectionDataHolderExample.swift */; };
+		2DBA113121608D47EF21293A /* ASectionModelExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1A1A4BA3C67910625F3A /* ASectionModelExample.swift */; };
 		2DBA12D86D980D3B4CE1B7E6 /* ATableDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA10F4CCF8E17E82A5FB6A /* ATableDiff.swift */; };
 		2DBA133651B21739A6BDFD39 /* ATableAnimationCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA16B1E13A6C59B5BD6E03 /* ATableAnimationCalculator.swift */; };
 		2DBA14A3CDECA53AEA54A733 /* ACellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1A72A8B860BAD43D1C78 /* ACellModel.swift */; };
 		2DBA157305C5DB40925299AD /* ViewControllerCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA17980FDACD2DA68DF3AD /* ViewControllerCollection.swift */; };
 		2DBA160646D4C3B3A43770FE /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1C7C0A270FBE5537552D /* Helpers.swift */; };
-		2DBA1686E4587A0F03360E66 /* CellDataHolderExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1B9BF863F1359E5075CB /* CellDataHolderExample.swift */; };
+		2DBA1686E4587A0F03360E66 /* ACellModelExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1B9BF863F1359E5075CB /* ACellModelExample.swift */; };
 		2DBA19DA8F873E0E720D3B75 /* ATableDiff+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1F7CC3E71520B3E95460 /* ATableDiff+UIKit.swift */; };
 		2DBA1BAB7F2F7D352598F5E5 /* ViewControllerTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1EA8CE95FD828A357375 /* ViewControllerTable.swift */; };
 		2DBA1C880E2334DE753D9A94 /* ASectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA19BAB4472CFD93C4710E /* ASectionModel.swift */; };
@@ -59,9 +59,9 @@
 		2DBA16B1E13A6C59B5BD6E03 /* ATableAnimationCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATableAnimationCalculator.swift; sourceTree = "<group>"; };
 		2DBA17980FDACD2DA68DF3AD /* ViewControllerCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerCollection.swift; sourceTree = "<group>"; };
 		2DBA19BAB4472CFD93C4710E /* ASectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASectionModel.swift; sourceTree = "<group>"; };
-		2DBA1A1A4BA3C67910625F3A /* SectionDataHolderExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionDataHolderExample.swift; sourceTree = "<group>"; };
+		2DBA1A1A4BA3C67910625F3A /* ASectionModelExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASectionModelExample.swift; sourceTree = "<group>"; };
 		2DBA1A72A8B860BAD43D1C78 /* ACellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACellModel.swift; sourceTree = "<group>"; };
-		2DBA1B9BF863F1359E5075CB /* CellDataHolderExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellDataHolderExample.swift; sourceTree = "<group>"; };
+		2DBA1B9BF863F1359E5075CB /* ACellModelExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACellModelExample.swift; sourceTree = "<group>"; };
 		2DBA1C7C0A270FBE5537552D /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		2DBA1EA8CE95FD828A357375 /* ViewControllerTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTable.swift; sourceTree = "<group>"; };
 		2DBA1F7CC3E71520B3E95460 /* ATableDiff+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ATableDiff+UIKit.swift"; sourceTree = "<group>"; };
@@ -109,8 +109,8 @@
 			children = (
 				2DBA106AC47ABD8CB4DEDFC6 /* AppDelegate.swift */,
 				2DBA17980FDACD2DA68DF3AD /* ViewControllerCollection.swift */,
-				2DBA1B9BF863F1359E5075CB /* CellDataHolderExample.swift */,
-				2DBA1A1A4BA3C67910625F3A /* SectionDataHolderExample.swift */,
+				2DBA1B9BF863F1359E5075CB /* ACellModelExample.swift */,
+				2DBA1A1A4BA3C67910625F3A /* ASectionModelExample.swift */,
 				2DBA1C7C0A270FBE5537552D /* Helpers.swift */,
 				2DBA1EA8CE95FD828A357375 /* ViewControllerTable.swift */,
 			);
@@ -280,8 +280,8 @@
 				2DBA1C880E2334DE753D9A94 /* ASectionModel.swift in Sources */,
 				2DBA1F5C344BF75DF505C2E7 /* AppDelegate.swift in Sources */,
 				2DBA157305C5DB40925299AD /* ViewControllerCollection.swift in Sources */,
-				2DBA1686E4587A0F03360E66 /* CellDataHolderExample.swift in Sources */,
-				2DBA113121608D47EF21293A /* SectionDataHolderExample.swift in Sources */,
+				2DBA1686E4587A0F03360E66 /* ACellModelExample.swift in Sources */,
+				2DBA113121608D47EF21293A /* ASectionModelExample.swift in Sources */,
 				2DBA160646D4C3B3A43770FE /* Helpers.swift in Sources */,
 				2DBA1BAB7F2F7D352598F5E5 /* ViewControllerTable.swift in Sources */,
 				2DBA19DA8F873E0E720D3B75 /* ATableDiff+UIKit.swift in Sources */,
