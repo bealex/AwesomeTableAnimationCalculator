@@ -11,6 +11,11 @@ Awesome Table Animation Calculator provides simple interface for this task. It h
 
 ###Usage
 
+Installation
+- manually, just get source files from `Code/ATableAnimation`
+- CocoaPods: `pod 'AwesomeTableAnimationCalculator'`
+- Carthage: `github "bealex/AwesomeTableAnimationCalculator"`
+
 Implement Cell and Section models. These models define equality for cells (both id-equality and contents equality) and sections. Here is a simple example.
 
 ```swift
