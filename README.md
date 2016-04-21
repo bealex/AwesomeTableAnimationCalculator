@@ -17,9 +17,8 @@ Implement Cell and Section models. These models define equality for cells (both 
 public class ASectionModelExample: ASectionModel, Equatable {
     public let title:String
 
-    public init(title:String, start:Int, end:Int) {
+    public init(title:String) {
         self.title = title
-        super.init(startIndex: start, endIndex:end)
     }
 }
 
@@ -69,10 +68,10 @@ func ==(lhs:ACellModelExample, rhs:ACellModelExample) -> Bool {
 Create AnimationCalculator and set comparable there for the cells sorting.
 
 ```swift
-private let dataStorage = ATableAnimationCalculator<ACellModelExample>()
+private let calculator = ATableAnimationCalculator<ACellModelExample>()
 
 // somewhere in init or viewDidLoad
-dataStorage.comparator = { left, right in
+calculator.cellModelComparator = { left, right in
     return left.header < right.header
            ? true
            : left.header > right.header
@@ -86,33 +85,29 @@ After that you can use methods of AnimationCalculator for your dataSource method
 
 ```swift
 func numberOfSectionsInTableView(tableView:UITableView) -> Int {
-    return dataStorage.sectionsCount()
+    return calculator.sectionsCount()
 }
 
 func tableView(tableView:UITableView, numberOfRowsInSection section:Int) -> Int {
-    return dataStorage.itemsCount(inSection:section)
+    return calculator.itemsCount(inSection:section)
 }
 
 func tableView(tableView:UITableView, 
         cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
     var cell = tableView.dequeueReusableCellWithIdentifier("generalCell")
-    if (cell == nil) {
-        cell = UITableViewCell(style:.Default, reuseIdentifier:"generalCell")
-    }
-    cell!.textLabel!.text = dataStorage.item(forIndexPath:indexPath).text
+    cell!.textLabel!.text = calculator.item(forIndexPath:indexPath).text
     return cell!
 }
 
 func tableView(tableView:UITableView, titleForHeaderInSection section:Int) -> ing? {
-    let sectionData = dataStorage.section(withIndex:section)
-    return "Header: \(sectionData.title)"
+    return calculator.section(withIndex:section).title
 }
 ```
 
 Now magic starts. You can simply change whole model like this (no animation yet):
 
 ```swift
-dataStorage.setItems([
+try! calculator.setItems([
         ACellModelExample(text:"1", header:"A"),
         ACellModelExample(text:"2", header:"B"),
         ACellModelExample(text:"3", header:"B"),
@@ -131,13 +126,13 @@ let addedItems = [
     ACellModelExample(text:"4.5", header:"C"),
 ]
 
-let itemsToAnimate = try! dataStorage.updateItems(addOrUpdate:addedItems, delete:
+let itemsToAnimate = try! calculator.updateItems(addOrUpdate:addedItems, delete:
 itemsToAnimate.applyTo(tableView:tableView)
 ```
 
 If you've changed comparator, you can simply resort model:
 
 ```swift
-let itemsToAnimate = try! self.dataStorage.resortItems()
+let itemsToAnimate = try! calculator.resortItems()
 itemsToAnimate.applyTo(tableView:self.tableView)
 ```
