@@ -18,7 +18,7 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dataStorage.comparator = { lhs, rhs in
+        dataStorage.cellModelComparator = { lhs, rhs in
             return lhs.header < rhs.header
                    ? true
                    : lhs.header > rhs.header
@@ -190,7 +190,7 @@ extension ViewControllerCollection {
 
         time += dTime
         dispatch_after_main(time) {
-            self.dataStorage.comparator = { rhs, lhs in
+            self.dataStorage.cellModelComparator = { rhs, lhs in
                 return lhs.header < rhs.header
                        ? true
                        : lhs.header > rhs.header

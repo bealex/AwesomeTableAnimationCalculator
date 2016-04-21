@@ -18,7 +18,7 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dataStorage.comparator = { left, right in
+        dataStorage.cellModelComparator = { left, right in
             return left.header < right.header
                    ? true
                    : left.header > right.header
@@ -174,7 +174,7 @@ extension ViewControllerTable {
 
         time += dTime
         dispatch_after_main(time) {
-            self.dataStorage.comparator = { rhs, lhs in
+            self.dataStorage.cellModelComparator = { rhs, lhs in
                 return lhs.header < rhs.header
                        ? true
                        : lhs.header > rhs.header

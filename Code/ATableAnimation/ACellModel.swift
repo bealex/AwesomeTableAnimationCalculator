@@ -37,5 +37,5 @@ public protocol ACellModel: Equatable {
     func isInSameSectionWith(another: Self) -> Bool
 
     /// Creates section for the cell.
-    func createSection(startIndex startIndex:Int, endIndex:Int) -> ASectionModelType
+    func createSection() -> ASectionModelType
 }

@@ -29,7 +29,7 @@ public class ATableAnimationCalculator<ACellModelType:ACellModel> {
     var items:[ACellModelType] = []
     var sections:[ACellModelType.ASectionModelType] = []
 
-    public lazy var comparator:(ACellModelType, ACellModelType) -> Bool = { left, right in
+    public lazy var cellModelComparator:(ACellModelType, ACellModelType) -> Bool = { left, right in
         let indexLeft = self.items.indexOf(left)
         let indexRight = self.items.indexOf(right)
 
@@ -129,7 +129,7 @@ private extension ATableAnimationCalculator {
     }
 
     func calculateDiff(items newItems:[ACellModelType]) throws -> ATableDiff {
-        let sortedNewItems = newItems.map({ ACellModelType(copy:$0) }).sort(comparator)
+        let sortedNewItems = newItems.map({ ACellModelType(copy:$0) }).sort(cellModelComparator)
 
         let newSections:[ACellModelType.ASectionModelType] = sections(fromItems:sortedNewItems)
 
@@ -444,7 +444,10 @@ private extension ATableAnimationCalculator {
                 currentSectionEndIndex += 1
 
                 if !currentSectionItem.isInSameSectionWith(item) {
-                    result.append(currentSectionItem.createSection(startIndex:currentSectionStartIndex, endIndex:currentSectionEndIndex - 1))
+                    let section = currentSectionItem.createSection()
+                    section.update(startIndex:currentSectionStartIndex, endIndex:currentSectionEndIndex - 1)
+
+                    result.append(section)
 
                     currentSectionItem = item
                     currentSectionStartIndex = currentSectionEndIndex - 1
@@ -452,7 +455,10 @@ private extension ATableAnimationCalculator {
             }
 
             if currentSectionStartIndex != currentSectionEndIndex {
-                result.append(currentSectionItem.createSection(startIndex:currentSectionStartIndex, endIndex:currentSectionEndIndex))
+                let section = currentSectionItem.createSection()
+                section.update(startIndex:currentSectionStartIndex, endIndex:currentSectionEndIndex)
+
+                result.append(section)
             }
         }
 

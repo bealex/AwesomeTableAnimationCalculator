@@ -10,9 +10,8 @@ import Foundation
 public class ASectionModelExample: ASectionModel, Equatable {
     public let title:String
 
-    public init(title:String, start:Int, end:Int) {
+    public init(title:String) {
         self.title = title
-        super.init(startIndex: start, endIndex:end)
     }
 }
 

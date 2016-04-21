@@ -32,8 +32,8 @@ class ACellModelExample: ACellModel {
         return header == another.header
     }
 
-    func createSection(startIndex startIndex: Int, endIndex: Int) -> ASectionModelExample {
-        return ASectionModelExample(title:header, start:startIndex, end:endIndex)
+    func createSection() -> ASectionModelExample {
+        return ASectionModelExample(title:header)
     }
 }
 

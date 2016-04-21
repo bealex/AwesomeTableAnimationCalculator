@@ -7,12 +7,13 @@
 
 import Foundation
 
-/// Simple representation of the section
+/// Simple representation of the section. All child classes
+/// must implement Equatable because of associatedtype in the ACellModel.
 public class ASectionModel {
-    public let startIndex:Int
-    public let endIndex:Int
+    internal private (set) var startIndex:Int = 0
+    internal private (set) var endIndex:Int = 0
 
-    public init(startIndex:Int, endIndex:Int) {
+    internal func update(startIndex startIndex:Int, endIndex:Int) {
         self.startIndex = startIndex
         self.endIndex = endIndex
     }
