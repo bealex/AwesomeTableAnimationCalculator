@@ -11,7 +11,7 @@ Awesome Table Animation Calculator provides simple interface for this task. It h
 
 Implement Cell and Section models. These models define equality for cells (both id-equality and contents equality) and sections. Here is a simple example.
 
-```
+```swift
 public class ASectionModelExample: ASectionModel {
     public let title:String
 
@@ -28,7 +28,7 @@ public func ==(lhs:ASectionModelExample, rhs:ASectionModelExample) -> Bool {
 
 Cells are just a little bit harder.
 
-```
+```swift
 class ACellModelExample: ACellModel {
     var id:String
     var header:String
@@ -66,7 +66,7 @@ func ==(lhs:ACellModelExample, rhs:ACellModelExample) -> Bool {
 
 Create AnimationCalculator and set comparable there for the cells sorting.
 
-```
+```swift
 private let dataStorage = ATableAnimationCalculator<ACellModelExample>()
 
 // somewhere in init or viewDidLoad
@@ -82,7 +82,7 @@ dataStorage.comparator = { left, right in
 After that you can use methods of AnimationCalculator for your dataSource methods implementation.
 
 
-```
+```swift
 func numberOfSectionsInTableView(tableView:UITableView) -> Int {
     return dataStorage.sectionsCount()
 }
@@ -109,7 +109,7 @@ func tableView(tableView:UITableView, titleForHeaderInSection section:Int) -> in
 
 Now magic starts. You can simply change whole model like this (no animation yet):
 
-```
+```swift
 dataStorage.setItems([
         ACellModelExample(text:"1", header:"A"),
         ACellModelExample(text:"2", header:"B"),
@@ -123,7 +123,7 @@ tableView.reloadData()
 
 You can change just a subset of cells (with animation):
 
-```
+```swift
 let addedItems = [
     ACellModelExample(text:"2.5", header:"B"),
     ACellModelExample(text:"4.5", header:"C"),
@@ -135,7 +135,7 @@ itemsToAnimate.applyTo(tableView:tableView)
 
 If you've changed comparator, you can simply resort model:
 
-```
+```swift
 let itemsToAnimate = try! self.dataStorage.resortItems()
 itemsToAnimate.applyTo(tableView:self.tableView)
 ```
