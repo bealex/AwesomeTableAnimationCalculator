@@ -1,0 +1,331 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2DBA113121608D47EF21293A /* SectionDataHolderExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1A1A4BA3C67910625F3A /* SectionDataHolderExample.swift */; };
+		2DBA12D86D980D3B4CE1B7E6 /* ATableDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA10F4CCF8E17E82A5FB6A /* ATableDiff.swift */; };
+		2DBA133651B21739A6BDFD39 /* ATableAnimationCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA16B1E13A6C59B5BD6E03 /* ATableAnimationCalculator.swift */; };
+		2DBA14A3CDECA53AEA54A733 /* ACellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1A72A8B860BAD43D1C78 /* ACellModel.swift */; };
+		2DBA157305C5DB40925299AD /* ViewControllerCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA17980FDACD2DA68DF3AD /* ViewControllerCollection.swift */; };
+		2DBA160646D4C3B3A43770FE /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1C7C0A270FBE5537552D /* Helpers.swift */; };
+		2DBA1686E4587A0F03360E66 /* CellDataHolderExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1B9BF863F1359E5075CB /* CellDataHolderExample.swift */; };
+		2DBA19DA8F873E0E720D3B75 /* ATableDiff+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1F7CC3E71520B3E95460 /* ATableDiff+UIKit.swift */; };
+		2DBA1BAB7F2F7D352598F5E5 /* ViewControllerTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1EA8CE95FD828A357375 /* ViewControllerTable.swift */; };
+		2DBA1C880E2334DE753D9A94 /* ASectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA19BAB4472CFD93C4710E /* ASectionModel.swift */; };
+		2DBA1F5C344BF75DF505C2E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA106AC47ABD8CB4DEDFC6 /* AppDelegate.swift */; };
+		FA3C82B31CC3CC86009A7E4D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3C82B21CC3CC86009A7E4D /* Launch Screen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2DBA106AC47ABD8CB4DEDFC6 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2DBA10F4CCF8E17E82A5FB6A /* ATableDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATableDiff.swift; sourceTree = "<group>"; };
+		2DBA16B1E13A6C59B5BD6E03 /* ATableAnimationCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATableAnimationCalculator.swift; sourceTree = "<group>"; };
+		2DBA17980FDACD2DA68DF3AD /* ViewControllerCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerCollection.swift; sourceTree = "<group>"; };
+		2DBA19BAB4472CFD93C4710E /* ASectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASectionModel.swift; sourceTree = "<group>"; };
+		2DBA1A1A4BA3C67910625F3A /* SectionDataHolderExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionDataHolderExample.swift; sourceTree = "<group>"; };
+		2DBA1A72A8B860BAD43D1C78 /* ACellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACellModel.swift; sourceTree = "<group>"; };
+		2DBA1B9BF863F1359E5075CB /* CellDataHolderExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellDataHolderExample.swift; sourceTree = "<group>"; };
+		2DBA1C7C0A270FBE5537552D /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		2DBA1EA8CE95FD828A357375 /* ViewControllerTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTable.swift; sourceTree = "<group>"; };
+		2DBA1F7CC3E71520B3E95460 /* ATableDiff+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ATableDiff+UIKit.swift"; sourceTree = "<group>"; };
+		FA3C828D1CC39305009A7E4D /* ATableAnimationCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATableAnimationCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA3C82AB1CC3933C009A7E4D /* CVDS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CVDS-Info.plist"; sourceTree = "<group>"; };
+		FA3C82B21CC3CC86009A7E4D /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FA3C828A1CC39305009A7E4D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2DBA14005D4878DEAC971FC8 /* ATableAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				2DBA16B1E13A6C59B5BD6E03 /* ATableAnimationCalculator.swift */,
+				2DBA10F4CCF8E17E82A5FB6A /* ATableDiff.swift */,
+				2DBA1A72A8B860BAD43D1C78 /* ACellModel.swift */,
+				2DBA19BAB4472CFD93C4710E /* ASectionModel.swift */,
+				2DBA1F7CC3E71520B3E95460 /* ATableDiff+UIKit.swift */,
+			);
+			path = ATableAnimation;
+			sourceTree = "<group>";
+		};
+		2DBA1F1B8DF95D708A4D2B19 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				2DBA106AC47ABD8CB4DEDFC6 /* AppDelegate.swift */,
+				2DBA17980FDACD2DA68DF3AD /* ViewControllerCollection.swift */,
+				2DBA1B9BF863F1359E5075CB /* CellDataHolderExample.swift */,
+				2DBA1A1A4BA3C67910625F3A /* SectionDataHolderExample.swift */,
+				2DBA1C7C0A270FBE5537552D /* Helpers.swift */,
+				2DBA1EA8CE95FD828A357375 /* ViewControllerTable.swift */,
+			);
+			path = Example;
+			sourceTree = "<group>";
+		};
+		FA3C82841CC39305009A7E4D = {
+			isa = PBXGroup;
+			children = (
+				FA3C82A21CC3933C009A7E4D /* Code */,
+				FA3C82A51CC3933C009A7E4D /* Resources */,
+				FA3C828E1CC39305009A7E4D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FA3C828E1CC39305009A7E4D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA3C828D1CC39305009A7E4D /* ATableAnimationCalculator.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FA3C82A21CC3933C009A7E4D /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				2DBA14005D4878DEAC971FC8 /* ATableAnimation */,
+				2DBA1F1B8DF95D708A4D2B19 /* Example */,
+			);
+			path = Code;
+			sourceTree = "<group>";
+		};
+		FA3C82A51CC3933C009A7E4D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FA3C82AB1CC3933C009A7E4D /* CVDS-Info.plist */,
+				FA3C82B21CC3CC86009A7E4D /* Launch Screen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FA3C828C1CC39305009A7E4D /* ATableAnimationCalculator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA3C829F1CC39305009A7E4D /* Build configuration list for PBXNativeTarget "ATableAnimationCalculator" */;
+			buildPhases = (
+				FA3C82891CC39305009A7E4D /* Sources */,
+				FA3C828A1CC39305009A7E4D /* Frameworks */,
+				FA3C828B1CC39305009A7E4D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ATableAnimationCalculator;
+			productName = CollectionViewDataStorage;
+			productReference = FA3C828D1CC39305009A7E4D /* ATableAnimationCalculator.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FA3C82851CC39305009A7E4D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = LonelyBytes;
+				TargetAttributes = {
+					FA3C828C1CC39305009A7E4D = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = FA3C82881CC39305009A7E4D /* Build configuration list for PBXProject "ATableAnimationCalculator" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FA3C82841CC39305009A7E4D;
+			productRefGroup = FA3C828E1CC39305009A7E4D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FA3C828C1CC39305009A7E4D /* ATableAnimationCalculator */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FA3C828B1CC39305009A7E4D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA3C82B31CC3CC86009A7E4D /* Launch Screen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FA3C82891CC39305009A7E4D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DBA133651B21739A6BDFD39 /* ATableAnimationCalculator.swift in Sources */,
+				2DBA12D86D980D3B4CE1B7E6 /* ATableDiff.swift in Sources */,
+				2DBA14A3CDECA53AEA54A733 /* ACellModel.swift in Sources */,
+				2DBA1C880E2334DE753D9A94 /* ASectionModel.swift in Sources */,
+				2DBA1F5C344BF75DF505C2E7 /* AppDelegate.swift in Sources */,
+				2DBA157305C5DB40925299AD /* ViewControllerCollection.swift in Sources */,
+				2DBA1686E4587A0F03360E66 /* CellDataHolderExample.swift in Sources */,
+				2DBA113121608D47EF21293A /* SectionDataHolderExample.swift in Sources */,
+				2DBA160646D4C3B3A43770FE /* Helpers.swift in Sources */,
+				2DBA1BAB7F2F7D352598F5E5 /* ViewControllerTable.swift in Sources */,
+				2DBA19DA8F873E0E720D3B75 /* ATableDiff+UIKit.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		FA3C829D1CC39305009A7E4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FA3C829E1CC39305009A7E4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FA3C82A01CC39305009A7E4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Babaev (H8VN44VCRU)";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/CVDS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lonelybytes.CollectionViewDataStorage;
+				PRODUCT_NAME = ATableAnimationCalculator;
+				PROVISIONING_PROFILE = "f81becb9-de47-4324-8fef-555b3cc4f88e";
+			};
+			name = Debug;
+		};
+		FA3C82A11CC39305009A7E4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Babaev (H8VN44VCRU)";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/CVDS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lonelybytes.CollectionViewDataStorage;
+				PRODUCT_NAME = ATableAnimationCalculator;
+				PROVISIONING_PROFILE = "f81becb9-de47-4324-8fef-555b3cc4f88e";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FA3C82881CC39305009A7E4D /* Build configuration list for PBXProject "ATableAnimationCalculator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA3C829D1CC39305009A7E4D /* Debug */,
+				FA3C829E1CC39305009A7E4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA3C829F1CC39305009A7E4D /* Build configuration list for PBXNativeTarget "ATableAnimationCalculator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA3C82A01CC39305009A7E4D /* Debug */,
+				FA3C82A11CC39305009A7E4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FA3C82851CC39305009A7E4D /* Project object */;
+}
