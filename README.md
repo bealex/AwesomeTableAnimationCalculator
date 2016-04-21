@@ -1,1 +1,134 @@
-# AwesomeTableAnimationCalculator
+There are times when you need to determine what was changed in a table (collection) model to update it with animations. It can be even more complex task when sections are involved. Awesome Table Animation Calculator provides simple interface for this task. It holds data model for the table and can calculate animatable difference for some changes (and apply them to the UICollectionView/UITableView afterwards).
+
+###Usage
+
+Implement Cell and Section models. These models define equality for cells (both id-equality and contents equality) and sections. Here is a simple example.
+
+```
+public class ASectionModelExample: ASectionModel {
+    public let title:String
+
+    public init(title:String, start:Int, end:Int) {
+        self.title = title
+        super.init(startIndex: start, endIndex:end)
+    }
+}
+
+public func ==(lhs:ASectionModelExample, rhs:ASectionModelExample) -> Bool {
+    return lhs.title == rhs.title
+}
+```
+
+Cells are just a little bit harder.
+
+```
+class ACellModelExample: ACellModel {
+    var id:String
+    var header:String
+    var text:String
+
+    init(text:String, header:String) {
+        id = NSUUID().UUIDString
+        self.text = text
+        self.header = header
+    }
+
+    required init(copy:ACellModelExample) {
+        id = copy.id
+        text = copy.text
+        header = copy.header
+    }
+
+    func contentIsSameAsIn(another:ACellModelExample) -> Bool {
+        return text == another.text
+    }
+
+    func hasSameSectionAs(another:ACellModelExample) -> Bool {
+        return header == another.header
+    }
+
+    func createSection(startIndex startIndex:Int, endIndex:Int) -> ASectionModelExample {
+        return ASectionModelExample(title:header, start:startIndex, end:endIndex)
+    }
+}
+
+func ==(lhs:ACellModelExample, rhs:ACellModelExample) -> Bool {
+    return lhs.id == rhs.id
+}
+```
+
+Create AnimationCalculator and set comparable there for the cells sorting.
+
+```
+private let dataStorage = ATableAnimationCalculator<ACellModelExample>()
+
+// somewhere in init or viewDidLoad
+dataStorage.comparator = { left, right in
+    return left.header < right.header
+           ? true
+           : left.header > right.header
+               ? false
+               : left.text < right.text
+}
+```
+
+After that you can use methods of AnimationCalculator for your dataSource methods implementation.
+
+
+```
+func numberOfSectionsInTableView(tableView:UITableView) -> Int {
+    return dataStorage.sectionsCount()
+}
+
+func tableView(tableView:UITableView, numberOfRowsInSection section:Int) -> Int {
+    return dataStorage.itemsCount(inSection:section)
+}
+
+func tableView(tableView:UITableView, 
+        cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
+    var cell = tableView.dequeueReusableCellWithIdentifier("generalCell")
+    if (cell == nil) {
+        cell = UITableViewCell(style:.Default, reuseIdentifier:"generalCell")
+    }
+    cell!.textLabel!.text = dataStorage.item(forIndexPath:indexPath).text
+    return cell!
+}
+
+func tableView(tableView:UITableView, titleForHeaderInSection section:Int) -> ing? {
+    let sectionData = dataStorage.section(withIndex:section)
+    return "Header: \(sectionData.title)"
+}
+```
+
+Now magic starts. You can simply change whole model like this (no animation yet):
+
+```
+dataStorage.setItems([
+        ACellModelExample(text:"1", header:"A"),
+        ACellModelExample(text:"2", header:"B"),
+        ACellModelExample(text:"3", header:"B"),
+        ACellModelExample(text:"4", header:"C"),
+        ACellModelExample(text:"5", header:"C")
+])
+
+tableView.reloadData()
+```
+
+You can change just a subset of cells (with animation):
+
+```
+let addedItems = [
+    ACellModelExample(text:"2.5", header:"B"),
+    ACellModelExample(text:"4.5", header:"C"),
+]
+
+let itemsToAnimate = try! dataStorage.updateItems(addOrUpdate:addedItems, delete:
+itemsToAnimate.applyTo(tableView:tableView)
+```
+
+If you've changed comparator, you can simply resort model:
+
+```
+let itemsToAnimate = try! self.dataStorage.resortItems()
+itemsToAnimate.applyTo(tableView:self.tableView)
+```
