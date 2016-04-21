@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "AwesomeTableAnimationCalculator"
-  s.version      = "0.8.1"
+  s.version      = "0.8.2"
   s.summary      = "This code helps to detect changed (add, move, delete, refresh) if cell and section indexes for animatable updating Collection/Table view"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.description  = <<-DESC
@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
   # need to test with OS X, watchOS, tvOS
 
 
-  s.source       = { :git => "https://github.com/bealex/AwesomeTableAnimationCalculator.git", :tag => "0.8.1" }
+  s.source       = { :git => "https://github.com/bealex/AwesomeTableAnimationCalculator.git", :tag => "0.8.2" }
   s.source_files  = "Code/ATableAnimation/**/*.swift"
   s.exclude_files = "Code/Example", "Resources", "ATableAnimationCalculator.xcodeproj/**"
 

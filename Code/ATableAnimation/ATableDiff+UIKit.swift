@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-extension ATableDiff {
+public extension ATableDiff {
     func applyTo(collectionView collectionView:UICollectionView) {
         let updates = {
             if self.updatedPaths.count != 0 {
@@ -57,7 +57,7 @@ extension ATableDiff {
 }
 
 
-extension ATableDiff {
+public extension ATableDiff {
     func applyTo(tableView tableView:UITableView) {
         let updates = {
             if self.updatedPaths.count != 0 {
