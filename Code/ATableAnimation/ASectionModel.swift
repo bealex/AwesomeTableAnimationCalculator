@@ -8,7 +8,7 @@
 import Foundation
 
 /// Simple representation of the section
-public class ASectionModel: Equatable {
+public class ASectionModel {
     public let startIndex:Int
     public let endIndex:Int
 
@@ -16,9 +16,5 @@ public class ASectionModel: Equatable {
         self.startIndex = startIndex
         self.endIndex = endIndex
     }
-}
-
-public func ==(lhs: ASectionModel, rhs: ASectionModel) -> Bool {
-    return lhs.startIndex == rhs.startIndex && lhs.endIndex == rhs.endIndex
 }
 

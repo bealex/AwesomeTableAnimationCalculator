@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class ASectionModelExample: ASectionModel {
+public class ASectionModelExample: ASectionModel, Equatable {
     public let title:String
 
     public init(title:String, start:Int, end:Int) {

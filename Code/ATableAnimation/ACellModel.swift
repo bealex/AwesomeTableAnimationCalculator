@@ -23,7 +23,7 @@ import Foundation
  */
 public protocol ACellModel: Equatable {
     /// Section type for these cells
-    associatedtype ASectionModelType: ASectionModel
+    associatedtype ASectionModelType: ASectionModel, Equatable
 
     /// Copying constructor. It must copy all the cell contents. Otherwise
     /// if it will be changed outside (and simultaneously here), Calculator will not get that.
