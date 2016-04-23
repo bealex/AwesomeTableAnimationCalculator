@@ -24,6 +24,7 @@ public class ASectionModelExample: ASectionModel, Equatable {
 
     public init(title:String) {
         self.title = title
+        super.init()
     }
 }
 
@@ -55,14 +56,6 @@ class ACellModelExample: ACellModel {
     func contentIsSameAsIn(another:ACellModelExample) -> Bool {
         return text == another.text
     }
-
-    func hasSameSectionAs(another:ACellModelExample) -> Bool {
-        return header == another.header
-    }
-
-    func createSection() -> ASectionModelExample {
-        return ASectionModelExample(title:header)
-    }
 }
 
 func ==(lhs:ACellModelExample, rhs:ACellModelExample) -> Bool {
@@ -70,10 +63,27 @@ func ==(lhs:ACellModelExample, rhs:ACellModelExample) -> Bool {
 }
 ```
 
-Create AnimationCalculator and set comparable there for the cells sorting.
+Class that connects sections and cells together:
+
+```
+class ACellSectionModelExample: ACellSectionModel {
+    required init() {
+    }
+
+    func cellsHaveSameSection(one one:ACellModelExample, another:ACellModelExample) -> Bool {
+        return one.header == another.header
+    }
+
+    func createSection(forCell cell:ACellModelExample) -> ASectionModelExample {
+        return ASectionModelExample(title:cell.header)
+    }
+}
+```
+
+Create AnimationCalculator and set the cellModelComparator there for the correct cells sorting.
 
 ```swift
-private let calculator = ATableAnimationCalculator<ACellModelExample>()
+private let calculator = ATableAnimationCalculator(cellSectionModel: ACellSectionModelExample())
 
 // somewhere in init or viewDidLoad
 calculator.cellModelComparator = { left, right in
