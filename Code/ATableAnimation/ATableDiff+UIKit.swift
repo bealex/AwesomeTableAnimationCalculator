@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+//MARK: Applying calculation result to the UICollectionView
 public extension ATableDiff {
     func applyTo(collectionView collectionView:UICollectionView) {
         let updates = {
@@ -43,7 +44,7 @@ public extension ATableDiff {
 
         let completion = { (_:Bool) in
             if self.movedPaths.count != 0 {
-                // Hack, mecause move does not update target items
+                // Hack, because move does not update target items
                 var updatedIndexPaths:[NSIndexPath] = []
 
                 for (_, indexPathTo) in self.movedPaths {
@@ -58,7 +59,7 @@ public extension ATableDiff {
     }
 }
 
-
+//MARK: Applying calculation result to the UITableView
 public extension ATableDiff {
     func applyTo(tableView tableView:UITableView) {
         let updates = {
@@ -94,7 +95,7 @@ public extension ATableDiff {
 
         let completion = { (_:Bool) in
             if self.movedPaths.count != 0 {
-                // Hack, mecause move does not update target items
+                // Hack, because move does not update target items
                 var updatedIndexPaths:[NSIndexPath] = []
 
                 for (_, indexPathTo) in self.movedPaths {

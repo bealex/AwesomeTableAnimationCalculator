@@ -12,7 +12,7 @@ import Foundation
  */
 public protocol ACellSectionModel {
     associatedtype ACellModelType: ACellModel
-    associatedtype ASectionModelType: ASectionModel, Equatable
+    associatedtype ASectionModelType: ASectionModelProtocol, Equatable
 
     /**
      Checks, if two cells are in the same section.

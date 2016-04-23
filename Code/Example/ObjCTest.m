@@ -9,28 +9,16 @@
 @implementation ObjCTest {
 }
 
-- (instancetype)init
+- (void)test
 {
-    self = [super init];
-    if (self) {
-        ATableAnimationCalculatorObjC *calculator = [[ATableAnimationCalculatorObjC alloc] init];
-//        try! dataStorage.setItems([
-//                ACellModelExample(text: "1", header: "A"),
-//        ACellModelExample(text: "2", header: "B"),
-//        ACellModelExample(text: "3", header: "B"),
-//        ACellModelExample(text: "4", header: "C"),
-//        ACellModelExample(text: "5", header: "C")
-//        ])
-        [calculator setItems:@[
-                 [[ACellModelExample alloc] initWithText:@"1" header:@"A"],
-                 [[ACellModelExample alloc] initWithText:@"2" header:@"B"],
-                 [[ACellModelExample alloc] initWithText:@"3" header:@"B"],
-                 [[ACellModelExample alloc] initWithText:@"4" header:@"C"],
-                 [[ACellModelExample alloc] initWithText:@"5" header:@"C"],
-        ] andApplyToTableView:[[UITableView alloc] init]];
-    }
-
-    return self;
+    ATableAnimationCalculatorObjC *calculator = [[ATableAnimationCalculatorObjC alloc] init];
+    [calculator setItems:@[
+             [[ACellModelExampleObjC alloc] initWithText:@"1" header:@"A"],
+             [[ACellModelExampleObjC alloc] initWithText:@"2" header:@"B"],
+             [[ACellModelExampleObjC alloc] initWithText:@"3" header:@"B"],
+             [[ACellModelExampleObjC alloc] initWithText:@"4" header:@"C"],
+             [[ACellModelExampleObjC alloc] initWithText:@"5" header:@"C"],
+    ] andApplyToTableView:[[UITableView alloc] init]];
 }
 
 @end

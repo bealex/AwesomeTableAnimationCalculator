@@ -7,4 +7,5 @@
 
 
 @interface ObjCTest: NSObject
+- (void)test;
 @end

@@ -25,6 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window.makeKeyAndVisible()
         }
 
+        // just a small test of ObjC code
+        ObjCTest().test()
+
         return true
     }
 

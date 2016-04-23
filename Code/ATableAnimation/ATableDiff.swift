@@ -7,6 +7,9 @@
 
 import Foundation
 
+/**
+ Calculation result
+ */
 public struct ATableDiff {
     let updatedPaths:[NSIndexPath]
 

@@ -10,7 +10,7 @@ import AwesomeTableAnimationCalculator
 
 class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private let tableView:UITableView = UITableView(frame:CGRectZero, style:UITableViewStyle.Plain)
-    private let dataStorage = ATableAnimationCalculator(cellSectionModel: ACellSectionModelExample())
+    private let calculator = ATableAnimationCalculator(cellSectionModel: ACellSectionModelExample())
 
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -19,7 +19,7 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dataStorage.cellModelComparator = { left, right in
+        calculator.cellModelComparator = { left, right in
             return left.header < right.header
                    ? true
                    : left.header > right.header
@@ -48,11 +48,11 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
     }
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return dataStorage.sectionsCount()
+        return calculator.sectionsCount()
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataStorage.itemsCount(inSection:section)
+        return calculator.itemsCount(inSection:section)
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -60,12 +60,12 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
         if (cell == nil) {
             cell = UITableViewCell(style:.Default, reuseIdentifier:"generalCell")
         }
-        cell!.textLabel!.text = dataStorage.item(forIndexPath:indexPath).text
+        cell!.textLabel!.text = calculator.item(forIndexPath:indexPath).text
         return cell!
     }
 
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let sectionData = dataStorage.section(withIndex:section)
+        let sectionData = calculator.section(withIndex:section)
         return "Header: \(sectionData.title)"
     }
 }
@@ -73,14 +73,14 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
 extension ViewControllerTable {
     func update(items addedItems:[ACellModelExample], updateItemsWithIndexes:[Int], deleteItemsWithIndexes:[Int]) {
         var updatedItems:[ACellModelExample] = updateItemsWithIndexes.map { index in
-            let updatedValue = ACellModelExample(copy:self.dataStorage.item(withIndex:index))
+            let updatedValue = ACellModelExample(copy:self.calculator.item(withIndex:index))
             updatedValue.text = updatedValue.text + " •"
 
             return updatedValue
         }
 
         let deletedItems = deleteItemsWithIndexes.map { index in
-            return self.dataStorage.item(withIndex:index)
+            return self.calculator.item(withIndex:index)
         }
 
         updatedItems.appendContentsOf(addedItems)
@@ -91,17 +91,17 @@ extension ViewControllerTable {
         print("  " + deletedItems.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
         print("--------------------------------------------- Changes:")
 
-        let itemsToAnimate = try! dataStorage.updateItems(addOrUpdate:updatedItems, delete:deletedItems)
+        let itemsToAnimate = try! calculator.updateItems(addOrUpdate:updatedItems, delete:deletedItems)
 
         print("--------------------------------------------- NewItems:")
-        print("  " + dataStorage.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
         print("---------------------------------------------\n\n")
 
         itemsToAnimate.applyTo(tableView:tableView)
     }
 
     func initData() {
-        try! dataStorage.setItems([
+        try! calculator.setItems([
                 ACellModelExample(text: "1", header: "A"),
                 ACellModelExample(text: "2", header: "B"),
                 ACellModelExample(text: "3", header: "B"),
@@ -110,7 +110,7 @@ extension ViewControllerTable {
         ])
 
         print("--------------------------------------------- NewItems:")
-        print("  " + dataStorage.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
         print("---------------------------------------------\n\n")
     }
 
@@ -175,7 +175,7 @@ extension ViewControllerTable {
 
         time += dTime
         dispatch_after_main(time) {
-            self.dataStorage.cellModelComparator = { rhs, lhs in
+            self.calculator.cellModelComparator = { rhs, lhs in
                 return lhs.header < rhs.header
                        ? true
                        : lhs.header > rhs.header
@@ -185,10 +185,10 @@ extension ViewControllerTable {
 
             print("••••••••••••••••••••••••••••••••••••• RESORTING all... :)")
 
-            let itemsToAnimate = try! self.dataStorage.resortItems()
+            let itemsToAnimate = try! self.calculator.resortItems()
 
             print("--------------------------------------------- NewItems:")
-            print("  " + self.dataStorage.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+            print("  " + self.calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
             print("---------------------------------------------\n\n")
 
             itemsToAnimate.applyTo(tableView:self.tableView);
@@ -196,18 +196,18 @@ extension ViewControllerTable {
 
         time += dTime
         dispatch_after_main(time) {
-            let moved1 = ACellModelExample(copy:self.dataStorage.items[3])
-            let moved2 = ACellModelExample(copy:self.dataStorage.items[0])
+            let moved1 = ACellModelExample(copy:self.calculator.items[3])
+            let moved2 = ACellModelExample(copy:self.calculator.items[0])
 
             moved1.header = "D"
             moved2.header = "A"
 
             print("••••••••••••••••••••••••••••••••••••• RESORTING between sections... :)")
 
-            let itemsToAnimate = try! self.dataStorage.updateItems(addOrUpdate:[moved1, moved2], delete:[])
+            let itemsToAnimate = try! self.calculator.updateItems(addOrUpdate:[moved1, moved2], delete:[])
 
             print("--------------------------------------------- NewItems:")
-            print("  " + self.dataStorage.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+            print("  " + self.calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
             print("---------------------------------------------\n\n")
 
             itemsToAnimate.applyTo(tableView:self.tableView);

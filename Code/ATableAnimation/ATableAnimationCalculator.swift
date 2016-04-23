@@ -7,13 +7,36 @@
 
 import Foundation
 
-private extension ASectionModel {
+//MARK: Some helper extensions
+
+private extension ASectionModelProtocol {
     var range:Range<Int> {
         get {
             return Range<Int>(startIndex ..< endIndex)
         }
     }
 }
+
+private extension ASectionModelProtocol {
+    func update(startIndex startIndex:Int, endIndex:Int) {
+    }
+}
+
+private extension ASectionModel {
+    func update(startIndex startIndex:Int, endIndex:Int) {
+        self.startIndex = startIndex
+        self.endIndex = endIndex
+    }
+}
+
+private extension ASectionModelObjC {
+    func update(startIndex startIndex:Int, endIndex:Int) {
+        self.startIndex = startIndex
+        self.endIndex = endIndex
+    }
+}
+
+//MARK: Calculator class
 
 /**
  This class can tell you, which sections and/or items must

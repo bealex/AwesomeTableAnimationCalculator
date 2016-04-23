@@ -7,20 +7,28 @@
 
 import Foundation
 
-/// Simple representation of the section. All child classes
-/// must implement Equatable because of associatedtype in the ACellModel.
-public class ASectionModel: NSObject {
-    public private (set) var startIndex:Int = 0
-    public private (set) var endIndex:Int = 0
+/**
+ This protocol is needed because I want to provide two versions of the base class: Swift and Objective-C supproted.
+ */
+public protocol ASectionModelProtocol {
+    var startIndex:Int { get }
+    var endIndex:Int { get }
+}
 
-    public override init() {
-        startIndex = 0
-        endIndex = 0
-        super.init()
-    }
+/**
+ Here is the pure Swift version
+ */
+public class ASectionModel: ASectionModelProtocol {
+    public internal (set) var startIndex:Int = 0
+    public internal (set) var endIndex:Int = 0
 
-    internal func update(startIndex startIndex:Int, endIndex:Int) {
-        self.startIndex = startIndex
-        self.endIndex = endIndex
-    }
+    public init() {}
+}
+
+/**
+ This version must be used for Objective-C supported classes
+ */
+public class ASectionModelObjC: NSObject, ASectionModelProtocol {
+    public internal (set) var startIndex:Int = 0
+    public internal (set) var endIndex:Int = 0
 }

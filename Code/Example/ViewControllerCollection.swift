@@ -10,7 +10,7 @@ import AwesomeTableAnimationCalculator
 
 class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     private let collectionView:UICollectionView = UICollectionView(frame:CGRectZero, collectionViewLayout:UICollectionViewFlowLayout())
-    private let dataStorage = ATableAnimationCalculator(cellSectionModel: ACellSectionModelExample())
+    private let calculator = ATableAnimationCalculator(cellSectionModel: ACellSectionModelExample())
 
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -19,9 +19,7 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        ObjCTest()
-
-        dataStorage.cellModelComparator = { lhs, rhs in
+        calculator.cellModelComparator = { lhs, rhs in
             return lhs.header < rhs.header
                    ? true
                    : lhs.header > rhs.header
@@ -59,18 +57,18 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
     }
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return dataStorage.sectionsCount()
+        return calculator.sectionsCount()
     }
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataStorage.itemsCount(inSection:section)
+        return calculator.itemsCount(inSection:section)
     }
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("generalCell", forIndexPath:indexPath)
         cell.selectedBackgroundView?.backgroundColor = UIColor.lightGrayColor()
         if let cellView = cell as? CellViewCollection {
-            cellView.label.text = dataStorage.item(forIndexPath:indexPath).text
+            cellView.label.text = calculator.item(forIndexPath:indexPath).text
         }
 
         return cell
@@ -80,7 +78,7 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
         let header = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier:"generalHeader", forIndexPath:indexPath)
 
         if let headerView = header as? CellHeaderViewCollection {
-            let sectionData = dataStorage.section(withIndex:indexPath.section)
+            let sectionData = calculator.section(withIndex:indexPath.section)
             headerView.label.text = "Header: \(sectionData.title)"
         }
 
@@ -91,14 +89,14 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
 extension ViewControllerCollection {
     func update(items addedItems:[ACellModelExample], updateItemsWithIndexes:[Int], deleteItemsWithIndexes:[Int]) {
         var updatedItems:[ACellModelExample] = updateItemsWithIndexes.map { index in
-            let updatedValue = ACellModelExample(copy:self.dataStorage.item(withIndex:index))
+            let updatedValue = ACellModelExample(copy:self.calculator.item(withIndex:index))
             updatedValue.text = updatedValue.text + " •"
 
             return updatedValue
         }
 
         let deletedItems = deleteItemsWithIndexes.map { index in
-            return self.dataStorage.item(withIndex:index)
+            return self.calculator.item(withIndex:index)
         }
 
         updatedItems.appendContentsOf(addedItems)
@@ -109,17 +107,17 @@ extension ViewControllerCollection {
         print("  " + deletedItems.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
         print("--------------------------------------------- Changes:")
 
-        let itemsToAnimate = try! dataStorage.updateItems(addOrUpdate:updatedItems, delete:deletedItems)
+        let itemsToAnimate = try! calculator.updateItems(addOrUpdate:updatedItems, delete:deletedItems)
 
         print("--------------------------------------------- NewItems:")
-        print("  " + dataStorage.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
         print("---------------------------------------------\n\n")
 
         itemsToAnimate.applyTo(collectionView:collectionView)
     }
 
     func initData() {
-        try! dataStorage.setItems([
+        try! calculator.setItems([
                 ACellModelExample(text: "1", header: "A"),
                 ACellModelExample(text: "2", header: "B"),
                 ACellModelExample(text: "3", header: "B"),
@@ -128,7 +126,7 @@ extension ViewControllerCollection {
         ])
 
         print("--------------------------------------------- NewItems:")
-        print("  " + dataStorage.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
         print("---------------------------------------------\n\n")
     }
 
@@ -193,7 +191,7 @@ extension ViewControllerCollection {
 
         time += dTime
         dispatch_after_main(time) {
-            self.dataStorage.cellModelComparator = { rhs, lhs in
+            self.calculator.cellModelComparator = { rhs, lhs in
                 return lhs.header < rhs.header
                        ? true
                        : lhs.header > rhs.header
@@ -203,10 +201,10 @@ extension ViewControllerCollection {
 
             print("••••••••••••••••••••••••••••••••••••• RESORTING all... :)")
 
-            let itemsToAnimate = try! self.dataStorage.resortItems()
+            let itemsToAnimate = try! self.calculator.resortItems()
 
             print("--------------------------------------------- NewItems:")
-            print("  " + self.dataStorage.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+            print("  " + self.calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
             print("---------------------------------------------\n\n")
 
             itemsToAnimate.applyTo(collectionView:self.collectionView);
@@ -214,18 +212,18 @@ extension ViewControllerCollection {
 
         time += dTime
         dispatch_after_main(time) {
-            let moved1 = ACellModelExample(copy:self.dataStorage.items[3])
-            let moved2 = ACellModelExample(copy:self.dataStorage.items[0])
+            let moved1 = ACellModelExample(copy:self.calculator.items[3])
+            let moved2 = ACellModelExample(copy:self.calculator.items[0])
 
             moved1.header = "D"
             moved2.header = "A"
 
             print("••••••••••••••••••••••••••••••••••••• RESORTING between sections... :)")
 
-            let itemsToAnimate = try! self.dataStorage.updateItems(addOrUpdate:[moved1, moved2], delete:[])
+            let itemsToAnimate = try! self.calculator.updateItems(addOrUpdate:[moved1, moved2], delete:[])
 
             print("--------------------------------------------- NewItems:")
-            print("  " + self.dataStorage.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+            print("  " + self.calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
             print("---------------------------------------------\n\n")
 
             itemsToAnimate.applyTo(collectionView:self.collectionView);
