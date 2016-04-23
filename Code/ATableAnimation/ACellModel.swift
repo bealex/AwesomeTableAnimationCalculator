@@ -22,20 +22,10 @@ import Foundation
   Calculator copies cell holders to ensure that it will detect cell changes after their external.
  */
 public protocol ACellModel: Equatable {
-    /// Section type for these cells
-    associatedtype ASectionModelType: ASectionModel, Equatable
-
     /// Copying constructor. It must copy all the cell contents. Otherwise
     /// if it will be changed outside (and simultaneously here), Calculator will not get that.
     init(copy: Self)
 
     /// Method that checks equality of the cell contents.
     func contentIsSameAsIn(another: Self) -> Bool
-
-    /// Checks, if this cell has same section as `another`.
-    /// Method is used to avoid unnecessary section creation during these checks
-    func isInSameSectionWith(another: Self) -> Bool
-
-    /// Creates section for the cell.
-    func createSection() -> ASectionModelType
 }

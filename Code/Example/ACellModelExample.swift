@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import AwesomeTableAnimationCalculator
 
-class ACellModelExample: ACellModel {
+@objc
+class ACellModelExample: NSObject, ACellModel {
     var id:String
     var text:String
     var header:String
@@ -27,18 +29,10 @@ class ACellModelExample: ACellModel {
     func contentIsSameAsIn(another: ACellModelExample) -> Bool {
         return text == another.text
     }
-
-    func isInSameSectionWith(another: ACellModelExample) -> Bool {
-        return header == another.header
-    }
-
-    func createSection() -> ASectionModelExample {
-        return ASectionModelExample(title:header)
-    }
 }
 
-extension ACellModelExample: CustomDebugStringConvertible {
-    var debugDescription: String {
+extension ACellModelExample {
+    override var debugDescription: String {
         return "Header: \"\(header)\"; Text: \"\(text)\"; id: \(id)"
     }
 }

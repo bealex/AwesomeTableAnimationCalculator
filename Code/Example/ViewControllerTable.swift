@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import AwesomeTableAnimationCalculator
 
 class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private let tableView:UITableView = UITableView(frame:CGRectZero, style:UITableViewStyle.Plain)
-    private let dataStorage = ATableAnimationCalculator<ACellModelExample>()
+    private let dataStorage = ATableAnimationCalculator(cellSectionModel: ACellSectionModelExample())
 
     override func prefersStatusBarHidden() -> Bool {
         return true

@@ -25,15 +25,23 @@ private extension ASectionModel {
 
  Public interface is built for easy usage with standard `UICollectionView` or `UITableView`.
  */
-public class ATableAnimationCalculator<ACellModelType:ACellModel> {
-    var items:[ACellModelType] = []
-    var sections:[ACellModelType.ASectionModelType] = []
+public class ATableAnimationCalculator<ACellSectionModelType:ACellSectionModel>: NSObject {
+    private let cellSectionFactory:ACellSectionModelType
+    private typealias ACellModelType = ACellSectionModelType.ACellModelType
+    private typealias ASectionModelType = ACellSectionModelType.ASectionModelType
+
+    public private(set) var items:[ACellModelType] = []
+    public private(set) var sections:[ASectionModelType] = []
 
     public lazy var cellModelComparator:(ACellModelType, ACellModelType) -> Bool = { left, right in
         let indexLeft = self.items.indexOf(left)
         let indexRight = self.items.indexOf(right)
 
         return indexLeft < indexRight
+    }
+
+    public init(cellSectionModel:ACellSectionModelType) {
+        self.cellSectionFactory = cellSectionModel
     }
 }
 
@@ -57,7 +65,7 @@ public extension ATableAnimationCalculator {
     /**
      - returns: section data by its index
      */
-    func section(withIndex sectionIndex:Int) -> ACellModelType.ASectionModelType {
+    func section(withIndex sectionIndex:Int) -> ASectionModelType {
         return sections[sectionIndex]
     }
 
@@ -131,7 +139,7 @@ private extension ATableAnimationCalculator {
     func calculateDiff(items newItems:[ACellModelType]) throws -> ATableDiff {
         let sortedNewItems = newItems.map({ ACellModelType(copy:$0) }).sort(cellModelComparator)
 
-        let newSections:[ACellModelType.ASectionModelType] = sections(fromItems:sortedNewItems)
+        let newSections:[ASectionModelType] = sections(fromItems:sortedNewItems)
 
         let numberOfUniqueSections = newSections
                 .map({ section in
@@ -249,7 +257,7 @@ private extension ATableAnimationCalculator {
         return result
     }
 
-    func findDeletedSections(from from:[ACellModelType.ASectionModelType], to:[ACellModelType.ASectionModelType]) -> NSIndexSet {
+    func findDeletedSections(from from:[ASectionModelType], to:[ASectionModelType]) -> NSIndexSet {
         let result = NSMutableIndexSet()
 
         var index = 0
@@ -264,7 +272,7 @@ private extension ATableAnimationCalculator {
         return result.copy() as! NSIndexSet
     }
 
-    func deleteSections(withIndexes withIndexes:NSIndexSet, from:[ACellModelType], usingSections sections:[ACellModelType.ASectionModelType]) -> [ACellModelType] {
+    func deleteSections(withIndexes withIndexes:NSIndexSet, from:[ACellModelType], usingSections sections:[ASectionModelType]) -> [ACellModelType] {
         guard withIndexes.count != 0 else {
             return from
         }
@@ -278,7 +286,7 @@ private extension ATableAnimationCalculator {
         return result
     }
 
-    func findDeletedItems(from from:[ACellModelType], to:[ACellModelType], usingSections sections:[ACellModelType.ASectionModelType], excludingDeletedSections deletedSections:NSIndexSet) -> [NSIndexPath] {
+    func findDeletedItems(from from:[ACellModelType], to:[ACellModelType], usingSections sections:[ASectionModelType], excludingDeletedSections deletedSections:NSIndexSet) -> [NSIndexPath] {
         var result = [NSIndexPath]()
 
         var index = 0
@@ -295,7 +303,7 @@ private extension ATableAnimationCalculator {
         return result
     }
 
-    func deleteItems(withIndexes withIndexes:[NSIndexPath], from:[ACellModelType], usingSections sections:[ACellModelType.ASectionModelType]) -> [ACellModelType] {
+    func deleteItems(withIndexes withIndexes:[NSIndexPath], from:[ACellModelType], usingSections sections:[ASectionModelType]) -> [ACellModelType] {
         guard withIndexes.count != 0 else {
             return from
         }
@@ -321,7 +329,7 @@ private extension ATableAnimationCalculator {
         return result
     }
 
-    func findMovedSections(from from:[ACellModelType.ASectionModelType], to:[ACellModelType.ASectionModelType]) -> [(Int, Int)] {
+    func findMovedSections(from from:[ASectionModelType], to:[ASectionModelType]) -> [(Int, Int)] {
         var result = [(Int, Int)]()
 
         for fromIndex in 0 ..< from.count {
@@ -334,8 +342,8 @@ private extension ATableAnimationCalculator {
     }
 
     func findMovedItems(from from:[ACellModelType], to:[ACellModelType],
-                        fromSections:[ACellModelType.ASectionModelType],
-                        toSections:[ACellModelType.ASectionModelType],
+                        fromSections:[ASectionModelType],
+                        toSections:[ASectionModelType],
                         mapWithMovedSections movedSectionsIndexes:[(Int, Int)]) -> [(NSIndexPath, NSIndexPath)] {
         var result = [(NSIndexPath, NSIndexPath)]()
 
@@ -360,7 +368,7 @@ private extension ATableAnimationCalculator {
         return result
     }
 
-    func moveSections(indexes indexes:[(Int, Int)], inside sourceItems:[ACellModelType], sourceSectionData:[ACellModelType.ASectionModelType]) -> [ACellModelType] {
+    func moveSections(indexes indexes:[(Int, Int)], inside sourceItems:[ACellModelType], sourceSectionData:[ASectionModelType]) -> [ACellModelType] {
         var itemsBySections:[[ACellModelType]] = []
 
         for section in sourceSectionData {
@@ -381,7 +389,7 @@ private extension ATableAnimationCalculator {
         return result
     }
 
-    func findInsertedSections(from from:[ACellModelType.ASectionModelType], to:[ACellModelType.ASectionModelType]) -> NSIndexSet {
+    func findInsertedSections(from from:[ASectionModelType], to:[ASectionModelType]) -> NSIndexSet {
         let result = NSMutableIndexSet()
 
         var index = 0
@@ -396,7 +404,7 @@ private extension ATableAnimationCalculator {
         return result.copy() as! NSIndexSet
     }
 
-    func findInsertedItems(from from:[ACellModelType], to:[ACellModelType], usingSections sections:[ACellModelType.ASectionModelType], excludingInsertedSections insertedSections:NSIndexSet) -> [NSIndexPath] {
+    func findInsertedItems(from from:[ACellModelType], to:[ACellModelType], usingSections sections:[ASectionModelType], excludingInsertedSections insertedSections:NSIndexSet) -> [NSIndexPath] {
         var result = [NSIndexPath]()
 
         var index = 0
@@ -416,7 +424,7 @@ private extension ATableAnimationCalculator {
 
 //MARK: Private helper methods
 private extension ATableAnimationCalculator {
-    func indexPath(forItemIndex itemIndex:Int, usingSections:[ACellModelType.ASectionModelType]) -> NSIndexPath? {
+    func indexPath(forItemIndex itemIndex:Int, usingSections:[ASectionModelType]) -> NSIndexPath? {
         var result:NSIndexPath? = nil
 
         var sectionIndex = 0
@@ -432,8 +440,8 @@ private extension ATableAnimationCalculator {
         return result;
     }
 
-    func sections(fromItems items:[ACellModelType]) -> [ACellModelType.ASectionModelType] {
-        var result:[ACellModelType.ASectionModelType] = []
+    func sections(fromItems items:[ACellModelType]) -> [ASectionModelType] {
+        var result:[ASectionModelType] = []
 
         if let firstItem = items.first {
             var currentSectionItem: ACellModelType = firstItem
@@ -443,8 +451,8 @@ private extension ATableAnimationCalculator {
             for item in items.suffix(items.count - 1) {
                 currentSectionEndIndex += 1
 
-                if !currentSectionItem.isInSameSectionWith(item) {
-                    let section = currentSectionItem.createSection()
+                if !cellSectionFactory.cellsHaveSameSection(one:currentSectionItem, another:item) {
+                    let section = cellSectionFactory.createSection(forCell:currentSectionItem)
                     section.update(startIndex:currentSectionStartIndex, endIndex:currentSectionEndIndex - 1)
 
                     result.append(section)
@@ -455,7 +463,7 @@ private extension ATableAnimationCalculator {
             }
 
             if currentSectionStartIndex != currentSectionEndIndex {
-                let section = currentSectionItem.createSection()
+                let section = cellSectionFactory.createSection(forCell:currentSectionItem)
                 section.update(startIndex:currentSectionStartIndex, endIndex:currentSectionEndIndex)
 
                 result.append(section)

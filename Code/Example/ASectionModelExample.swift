@@ -6,12 +6,15 @@
 //
 
 import Foundation
+import AwesomeTableAnimationCalculator
 
-public class ASectionModelExample: ASectionModel, Equatable {
+@objc
+public class ASectionModelExample: ASectionModel {
     public let title:String
 
     public init(title:String) {
         self.title = title
+        super.init()
     }
 }
 
@@ -19,8 +22,8 @@ public func ==(lhs: ASectionModelExample, rhs: ASectionModelExample) -> Bool {
     return lhs.title == rhs.title
 }
 
-extension ASectionModelExample: CustomDebugStringConvertible {
-    public var debugDescription: String {
+extension ASectionModelExample {
+    public override var debugDescription: String {
         return "\"\(title)\" (\(startIndex)–\(endIndex))"
     }
 }

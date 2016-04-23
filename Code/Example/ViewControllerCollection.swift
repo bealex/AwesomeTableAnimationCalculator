@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import AwesomeTableAnimationCalculator
 
 class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     private let collectionView:UICollectionView = UICollectionView(frame:CGRectZero, collectionViewLayout:UICollectionViewFlowLayout())
-    private let dataStorage = ATableAnimationCalculator<ACellModelExample>()
+    private let dataStorage = ATableAnimationCalculator(cellSectionModel: ACellSectionModelExample())
 
     override func prefersStatusBarHidden() -> Bool {
         return true
@@ -17,6 +18,8 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        ObjCTest()
 
         dataStorage.cellModelComparator = { lhs, rhs in
             return lhs.header < rhs.header

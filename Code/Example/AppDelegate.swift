@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AwesomeTableAnimationCalculator
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
 
         if let window = window {
-            viewController = ViewControllerTable()
+            viewController = ViewControllerCollection()
             viewController?.view.frame = window.bounds
 
             window.rootViewController = viewController
