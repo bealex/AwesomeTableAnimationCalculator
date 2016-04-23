@@ -18,7 +18,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ASectionModel.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ACellModel.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ATableAnimationCalculator.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ACellSectionFactory.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ACellSectionModel.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ATableDiff.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ATableDiff+UIKit.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Resources/CVDS-Info.plist" isTestSource="false" />

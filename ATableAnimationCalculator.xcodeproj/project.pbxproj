@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2DBA10B3E0A6EE61A51D18F6 /* ACellSectionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA19A4DAE08B4B95939592 /* ACellSectionFactory.swift */; };
+		2DBA10B3E0A6EE61A51D18F6 /* ACellSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA19A4DAE08B4B95939592 /* ACellSectionModel.swift */; };
 		2DBA113121608D47EF21293A /* ASectionModelExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1A1A4BA3C67910625F3A /* ASectionModelExample.swift */; };
 		2DBA13018BA60EB573F39643 /* ACellSectionFactoryExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1B89F2D598ECCFD41EDD /* ACellSectionFactoryExample.swift */; };
 		2DBA157305C5DB40925299AD /* ViewControllerCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA17980FDACD2DA68DF3AD /* ViewControllerCollection.swift */; };
@@ -60,7 +60,7 @@
 		2DBA15D7611602A5412C2C3B /* ObjCTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjCTest.h; sourceTree = "<group>"; };
 		2DBA16B1E13A6C59B5BD6E03 /* ATableAnimationCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATableAnimationCalculator.swift; sourceTree = "<group>"; };
 		2DBA17980FDACD2DA68DF3AD /* ViewControllerCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerCollection.swift; sourceTree = "<group>"; };
-		2DBA19A4DAE08B4B95939592 /* ACellSectionFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACellSectionFactory.swift; sourceTree = "<group>"; };
+		2DBA19A4DAE08B4B95939592 /* ACellSectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACellSectionModel.swift; sourceTree = "<group>"; };
 		2DBA19BAB4472CFD93C4710E /* ASectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASectionModel.swift; sourceTree = "<group>"; };
 		2DBA1A1A4BA3C67910625F3A /* ASectionModelExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASectionModelExample.swift; sourceTree = "<group>"; };
 		2DBA1A72A8B860BAD43D1C78 /* ACellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACellModel.swift; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 				2DBA1A72A8B860BAD43D1C78 /* ACellModel.swift */,
 				2DBA19BAB4472CFD93C4710E /* ASectionModel.swift */,
 				2DBA1F7CC3E71520B3E95460 /* ATableDiff+UIKit.swift */,
-				2DBA19A4DAE08B4B95939592 /* ACellSectionFactory.swift */,
+				2DBA19A4DAE08B4B95939592 /* ACellSectionModel.swift */,
 			);
 			path = ATableAnimation;
 			sourceTree = "<group>";
@@ -306,7 +306,7 @@
 				FAECAF391CC8D0D3000548EB /* ACellModel.swift in Sources */,
 				FAECAF3A1CC8D0D3000548EB /* ASectionModel.swift in Sources */,
 				FAECAF3B1CC8D0D3000548EB /* ATableDiff+UIKit.swift in Sources */,
-				2DBA10B3E0A6EE61A51D18F6 /* ACellSectionFactory.swift in Sources */,
+				2DBA10B3E0A6EE61A51D18F6 /* ACellSectionModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
