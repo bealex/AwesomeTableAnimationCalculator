@@ -17,20 +17,20 @@ private extension ASectionModelProtocol {
     }
 }
 
-private extension ASectionModelProtocol {
+internal extension ASectionModelProtocol {
     func update(startIndex startIndex:Int, endIndex:Int) {
     }
 }
 
-private extension ASectionModel {
-    func update(startIndex startIndex:Int, endIndex:Int) {
+public extension ASectionModel {
+    public func update(startIndex startIndex:Int, endIndex:Int) {
         self.startIndex = startIndex
         self.endIndex = endIndex
     }
 }
 
-private extension ASectionModelObjC {
-    func update(startIndex startIndex:Int, endIndex:Int) {
+public extension ASectionModelObjC {
+    public func update(startIndex startIndex:Int, endIndex:Int) {
         self.startIndex = startIndex
         self.endIndex = endIndex
     }
@@ -178,7 +178,7 @@ private extension ATableAnimationCalculator {
         var workingSections = sections
 
         // first of all find updated items in the source data
-        let updatedItemIndexPaths = findUpdatedItems(from:items, to:sortedNewItems)
+        var updatedItemIndexPaths = findUpdatedItems(from:items, to:sortedNewItems)
 
         // all deleted indexes must be relative to initial data
         let deletedSectionIndexes = findDeletedSections(from:workingSections, to:newSections)
@@ -193,12 +193,15 @@ private extension ATableAnimationCalculator {
         let movedSectionIndexes = findMovedSections(from:workingSections, to:newSortedSectionsWithoutInserted)
         workingItems = moveSections(indexes:movedSectionIndexes, inside:workingItems, sourceSectionData:workingSections)
         let movedItemIndexPaths = findMovedItems(
-                from:workingItems, to:newSortedItemsWithoutInserted,
+                from:workingItems,
+                to:newSortedItemsWithoutInserted,
                 fromSections:workingSections,
                 toSections:newSortedSectionsWithoutInserted,
                 mapWithMovedSections:movedSectionIndexes)
         workingItems = newSortedItemsWithoutInserted
         workingSections = newSortedSectionsWithoutInserted
+
+        updatedItemIndexPaths = removeMovedIndexPaths(movedItemIndexPaths, fromUpdated:updatedItemIndexPaths)
 
         // all inserted indexes must be relative to target data
         let insertedSectionIndexes = findInsertedSections(from:workingSections, to:newSections)
@@ -389,6 +392,11 @@ private extension ATableAnimationCalculator {
         }
 
         return result
+    }
+
+    func removeMovedIndexPaths(movedItemIndexPaths:[(NSIndexPath, NSIndexPath)], fromUpdated:[NSIndexPath]) -> [NSIndexPath] {
+        let allFromIndexPaths = movedItemIndexPaths.map { $0.0 }
+        return fromUpdated.filter { !allFromIndexPaths.contains($0) }
     }
 
     func moveSections(indexes indexes:[(Int, Int)], inside sourceItems:[ACellModelType], sourceSectionData:[ASectionModelType]) -> [ACellModelType] {

@@ -7,9 +7,6 @@ import Foundation
 import AwesomeTableAnimationCalculator
 
 class ACellSectionModelExample: ACellSectionModel {
-    required init() {
-    }
-
     func cellsHaveSameSection(one one:ACellModelExample, another:ACellModelExample) -> Bool {
         return one.header == another.header
     }
@@ -20,9 +17,6 @@ class ACellSectionModelExample: ACellSectionModel {
 }
 
 class ACellSectionModelExampleObjC: ACellSectionModel {
-    required init() {
-    }
-
     func cellsHaveSameSection(one one:ACellModelExampleObjC, another:ACellModelExampleObjC) -> Bool {
         return one.header == another.header
     }

@@ -46,6 +46,7 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .Vertical
             flowLayout.itemSize = CGSize(width:self.view.bounds.size.width, height:25)
+            flowLayout.estimatedItemSize = flowLayout.itemSize
             flowLayout.headerReferenceSize = CGSize(width:self.view.bounds.size.width, height:20)
         }
 
@@ -87,10 +88,11 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
 }
 
 extension ViewControllerCollection {
-    func update(items addedItems:[ACellModelExample], updateItemsWithIndexes:[Int], deleteItemsWithIndexes:[Int]) {
+    func update(addItems addedItems:[ACellModelExample], updateItemsWithIndexes:[Int], deleteItemsWithIndexes:[Int]) {
         var updatedItems:[ACellModelExample] = updateItemsWithIndexes.map { index in
             let updatedValue = ACellModelExample(copy:self.calculator.item(withIndex:index))
-            updatedValue.text = updatedValue.text + " •"
+            updatedValue.text = "\(Int(updatedValue.text)! - 2)"
+//            updatedValue.text = updatedValue.text + " •"
 
             return updatedValue
         }
@@ -136,7 +138,7 @@ extension ViewControllerCollection {
         var time = NSTimeInterval(dTime)
         dispatch_after_main(time) {
             self.update(
-                    items:[
+                    addItems:[
                             ACellModelExample(text:"6", header:"A")
                     ],
                     updateItemsWithIndexes:[2],
@@ -146,7 +148,7 @@ extension ViewControllerCollection {
         time += dTime
         dispatch_after_main(time) {
             self.update(
-                    items:[],
+                    addItems:[],
                     updateItemsWithIndexes:[],
                     deleteItemsWithIndexes:[1])
         }
@@ -154,7 +156,7 @@ extension ViewControllerCollection {
         time += dTime
         dispatch_after_main(time) {
             self.update(
-                    items:[
+                    addItems:[
                             ACellModelExample(text:"10", header:"C"),
                             ACellModelExample(text:"7", header:"D")
                     ],
@@ -165,7 +167,7 @@ extension ViewControllerCollection {
         time += dTime
         dispatch_after_main(time) {
             self.update(
-                    items:[],
+                    addItems:[],
                     updateItemsWithIndexes:[],
                     deleteItemsWithIndexes:[0, 4])
         }
@@ -173,7 +175,7 @@ extension ViewControllerCollection {
         time += dTime
         dispatch_after_main(time) {
             self.update(
-                    items:[
+                    addItems:[
                             ACellModelExample(text:"8", header:"A"),
                             ACellModelExample(text:"9", header:"C")
                     ],
@@ -184,7 +186,7 @@ extension ViewControllerCollection {
         time += dTime
         dispatch_after_main(time) {
             self.update(
-                    items:[],
+                    addItems:[],
                     updateItemsWithIndexes:[0, 1, 2, 3, 4],
                     deleteItemsWithIndexes:[])
         }

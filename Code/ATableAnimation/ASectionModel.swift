@@ -13,6 +13,8 @@ import Foundation
 public protocol ASectionModelProtocol {
     var startIndex:Int { get }
     var endIndex:Int { get }
+
+    func update(startIndex startIndex:Int, endIndex:Int)
 }
 
 /**
