@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
   # need to test with OS X, watchOS, tvOS
 
 
-  s.source       = { :git => "https://github.com/bealex/AwesomeTableAnimationCalculator.git", :tag => "0.9.6" }
+  s.source       = { :git => "https://github.com/bealex/AwesomeTableAnimationCalculator.git", :tag => "v0.9.6" }
   s.source_files  = "Code/ATableAnimation/**/*.swift"
   s.exclude_files = "Code/Example", "Resources", "ATableAnimationCalculator.xcodeproj/**"
 
