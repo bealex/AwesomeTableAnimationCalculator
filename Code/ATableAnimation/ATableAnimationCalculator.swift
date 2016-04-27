@@ -156,7 +156,7 @@ public extension ATableAnimationCalculator {
 //MARK: Private methods for finding lists difference
 private extension ATableAnimationCalculator {
     private var DEBUG_ENABLED: Bool {
-        return true
+        return false
     }
 
     func calculateDiff(items newShinyItems:[ACellModelType]) throws -> ATableDiff {
