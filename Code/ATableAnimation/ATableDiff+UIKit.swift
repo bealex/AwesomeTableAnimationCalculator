@@ -10,6 +10,10 @@ import UIKit
 
 //MARK: Applying calculation result to the UICollectionView
 public extension ATableDiff {
+    func applyTo(collectionView collectionView:UICollectionView) {
+        applyTo(collectionView:collectionView, completionHandler:nil)
+    }
+
     func applyTo(collectionView collectionView:UICollectionView, completionHandler:(() -> Void)?) {
         let updates = {
             if self.updatedPaths.count != 0 {
@@ -74,6 +78,10 @@ public extension ATableDiff {
 //MARK: Applying calculation result to the UITableView
 public extension ATableDiff {
     func applyTo(tableView tableView:UITableView) {
+        applyTo(tableView:tableView, completionHandler:nil)
+    }
+
+    func applyTo(tableView tableView:UITableView, completionHandler:(() -> Void)?) {
         let updates = {
             if self.updatedPaths.count != 0 {
                 tableView.reloadRowsAtIndexPaths(self.updatedPaths, withRowAnimation:.Automatic)
@@ -106,15 +114,28 @@ public extension ATableDiff {
         }
 
         let completion = { (_:Bool) in
-            if self.movedPaths.count != 0 {
-                // Hack, because move does not update target items
-                var updatedIndexPaths:[NSIndexPath] = []
+            let hackyUpdates = {
+                if self.movedPaths.count != 0 {
+                    // Hack, because move does not update target items
+                    var updatedIndexPaths:[NSIndexPath] = []
 
-                for (_, indexPathTo) in self.movedPaths {
-                    updatedIndexPaths.append(indexPathTo)
+                    for (_, indexPathTo) in self.movedPaths {
+                        updatedIndexPaths.append(indexPathTo)
+                    }
+
+                    tableView.reloadRowsAtIndexPaths(updatedIndexPaths, withRowAnimation:.Automatic)
                 }
 
-                tableView.reloadRowsAtIndexPaths(updatedIndexPaths, withRowAnimation:.Automatic)
+                if (self.updatedSectionHeaders.count != 0) {
+                    tableView.reloadSections(self.updatedSectionHeaders, withRowAnimation:.Automatic)
+                }
+            }
+
+            tableView.beginUpdates()
+            hackyUpdates()
+            tableView.endUpdates()
+            if let completionHandler = completionHandler {
+                completionHandler()
             }
         }
 
