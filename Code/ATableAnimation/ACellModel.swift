@@ -29,5 +29,5 @@ public protocol ACellModel: Equatable {
     /// Method that checks equality of the cell contents.
     func contentIsSameAsIn(another: Self) -> Bool
 
-    func shortDescription() -> String
+//    func shortDescription() -> String
 }

@@ -426,7 +426,8 @@ private extension ATableAnimationCalculator {
     }
 
     func debugPrint(cells:[ACellModelType]) -> String {
-        return debugPrint(name:"", strings:cells.map { "\($0.shortDescription())" })
+        return debugPrint(name:"", strings:cells.map { "\($0)" })
+//        return debugPrint(name:"", strings:cells.map { "\($0.shortDescription())" })
     }
 
     func debugPrint(sections:[ASectionModelType]) -> String {
