@@ -12,6 +12,8 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
     private let collectionView:UICollectionView = UICollectionView(frame:CGRectZero, collectionViewLayout:UICollectionViewFlowLayout())
     private let calculator = ATableAnimationCalculator(cellSectionModel: ACellSectionModelExample())
 
+    private var iterationIndex = 1
+
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
@@ -20,14 +22,16 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
         super.viewDidLoad()
 
         calculator.cellModelComparator = { lhs, rhs in
-            return lhs.header < rhs.header
-                   ? true
-                   : lhs.header > rhs.header
-                           ? false
-                           : lhs.text < rhs.text
+            if lhs.header < rhs.header {
+                return true
+            } else {
+                if lhs.header > rhs.header {
+                    return false
+                } else {
+                    return Int(lhs.text) < Int(rhs.text)
+                }
+            }
         }
-
-        initData()
 
         self.view.backgroundColor = UIColor.whiteColor()
 
@@ -52,8 +56,10 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
 
         self.view.addSubview(collectionView)
 
-        collectionView.reloadData()
+//        runTestFromBundledFile("1.Test_DBZ_small.txt")
+//        runTestFromBundledFile("2.Test_Assertion (not working).txt")
 
+        initData()
         startTest()
     }
 
@@ -88,6 +94,211 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
 }
 
 extension ViewControllerCollection {
+    func parseLineToACellExample(line:String) -> ACellModelExample {
+        let result = ACellModelExample(text:"", header:"")
+
+        let parts = line
+                .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+                .componentsSeparatedByString(";")
+
+        for part in parts {
+            if part.containsString("Header:") {
+                result.header = part
+                        .stringByReplacingOccurrencesOfString("Header:", withString:"")
+                        .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+                if result.header.hasPrefix("\"") {
+                    result.header = result.header.substringFromIndex(result.header.startIndex.successor())
+                }
+                if result.header.hasSuffix("\"") {
+                    result.header = result.header.substringToIndex(result.header.endIndex.predecessor())
+                }
+            } else if part.containsString("Text:") {
+                result.text = part
+                        .stringByReplacingOccurrencesOfString("Text:", withString:"")
+                        .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+                if result.text.hasPrefix("\"") {
+                    result.text = result.text.substringFromIndex(result.text.startIndex.successor())
+                }
+                if result.text.hasSuffix("\"") {
+                    result.text = result.text.substringToIndex(result.text.endIndex.predecessor())
+                }
+            } else if part.containsString("id:") {
+                result.id = part
+                        .stringByReplacingOccurrencesOfString("id:", withString:"")
+                        .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+                if result.id.hasPrefix("\"") {
+                    result.id = result.id.substringFromIndex(result.id.startIndex.successor())
+                }
+                if result.id.hasSuffix("\"") {
+                    result.id = result.id.substringToIndex(result.id.endIndex.predecessor())
+                }
+            }
+        }
+
+        return result
+    }
+
+    func runTestFromBundledFile(fileName:String) {
+        let filePath = NSBundle.mainBundle().pathForResource(fileName, ofType:nil)
+        let blocks = try! String(contentsOfFile:filePath!).componentsSeparatedByString("\n----------------")
+
+        var initialItems = [ACellModelExample]()
+        var addedItems = [ACellModelExample]()
+        var updatedItems = [ACellModelExample]()
+        var deletedItems = [ACellModelExample]()
+
+        for block in blocks {
+            let lines = block.componentsSeparatedByString("\n")
+
+            if block.containsString("--- Old items") {
+                for line in lines {
+                    if !line.containsString("---") {
+                        if !line.isEmpty {
+                            initialItems.append(parseLineToACellExample(line))
+                        }
+                    }
+                }
+            } else if block.containsString("--- Added") {
+                for line in lines {
+                    if !line.containsString("---") {
+                        if !line.isEmpty {
+                            addedItems.append(parseLineToACellExample(line))
+                        }
+                    }
+                }
+            } else if block.containsString("--- Updated") {
+                for line in lines {
+                    if !line.containsString("---") {
+                        if !line.isEmpty {
+                            updatedItems.append(parseLineToACellExample(line))
+                        }
+                    }
+                }
+            } else if block.containsString("--- Deleted") {
+                for line in lines {
+                    if !line.containsString("---") {
+                        if !line.isEmpty {
+                            deletedItems.append(parseLineToACellExample(line))
+                        }
+                    }
+                }
+            }
+        }
+
+        try! calculator.setItems(initialItems)
+
+        updatedItems.appendContentsOf(addedItems)
+
+        dispatch_after_main(1) {
+            let itemsToAnimate = try! self.calculator.updateItems(addOrUpdate:updatedItems, delete:deletedItems)
+            itemsToAnimate.applyTo(collectionView:self.collectionView) {}
+        }
+    }
+}
+
+// random tests
+extension ViewControllerCollection {
+    func initData() {
+        try! calculator.setItems([
+                ACellModelExample(text: "1", header: "A"),
+                ACellModelExample(text: "2", header: "B"),
+                ACellModelExample(text: "3", header: "C"),
+                ACellModelExample(text: "4", header: "D"),
+                ACellModelExample(text: "5", header: "E")
+        ])
+
+        print("--------------------------------------------- NewItems:")
+        print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("---------------------------------------------\n\n")
+
+        collectionView.reloadData()
+    }
+
+    func randomText() -> String {
+        return "\(arc4random_uniform(20))"
+    }
+
+    func randomHeader() -> String {
+        let code = UInt32("A".utf8.first!) + arc4random_uniform(UInt32("G".utf8.first!) - UInt32("A".utf8.first!))
+        return "\(Character(UnicodeScalar(code)))"
+    }
+
+    func runRandomTest() {
+        let items = calculator.items
+
+        var addedItems = [ACellModelExample]()
+        var updatedItems = [ACellModelExample]()
+        var deletedItems = [ACellModelExample]()
+
+        let maxItemsInEveryPart = UInt32(5)
+//        let maxItemsInEveryPart = UInt32(items.count)
+
+        let addedCount = arc4random_uniform(maxItemsInEveryPart)
+        let updatedCount = arc4random_uniform(maxItemsInEveryPart)
+        let deletedCount = arc4random_uniform(maxItemsInEveryPart)
+
+        for _ in 0 ..< addedCount {
+            addedItems.append(ACellModelExample(text:randomText(), header:randomHeader()))
+        }
+
+        var updatedIndexes = [Int]()
+        var deletedIndexes = [Int]()
+
+        if items.count != 0 {
+            for _ in 0 ..< updatedCount {
+                let index = Int(arc4random_uniform(UInt32(items.count)))
+
+                if !updatedIndexes.contains(index) {
+                    let updatedItem = ACellModelExample(copy:items[index])
+                    updatedItem.text = randomText()
+                    if (arc4random_uniform(500) > 250) {
+                        updatedItem.header = randomHeader()
+                    }
+
+//                    updatedItems.append(updatedItem)
+                    updatedIndexes.append(index)
+                }
+            }
+
+            for _ in 0 ..< deletedCount {
+                let index = Int(arc4random_uniform(UInt32(items.count)))
+
+                if !deletedIndexes.contains(index) {
+                    let item = items[index]
+
+                    deletedItems.append(ACellModelExample(copy:item))
+                    deletedIndexes.append(index)
+                }
+            }
+        }
+
+        print("\n\n\n")
+        print("--------------------------------------------- Old items (iteration \(iterationIndex)):")
+        print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("--------------------------------------------- Added:")
+        print("  " + addedItems.map({ $0.debugDescription }).joinWithSeparator(", \n  "))
+        print("--------------------------------------------- Updated:")
+        print("  " + updatedItems.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("--------------------------------------------- Deleted:")
+        print("  " + deletedItems.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("------------------------------------------------------")
+
+        updatedItems.appendContentsOf(addedItems)
+
+        let itemsToAnimate = try! calculator.updateItems(addOrUpdate:updatedItems, delete:deletedItems)
+
+        print("--------------------------------------------- New items:")
+        print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("---------------------------------------------\n\n")
+
+        itemsToAnimate.applyTo(collectionView:collectionView) {
+            self.iterationIndex += 1
+            dispatch_after_main(1) {
+                self.runRandomTest()
+            }
+        }
+    }
+
     func update(addItems addedItems:[ACellModelExample], updateItemsWithIndexes:[Int], deleteItemsWithIndexes:[Int]) {
         var updatedItems:[ACellModelExample] = updateItemsWithIndexes.map { index in
             let updatedValue = ACellModelExample(copy:self.calculator.item(withIndex:index))
@@ -115,120 +326,12 @@ extension ViewControllerCollection {
         print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
         print("---------------------------------------------\n\n")
 
-        itemsToAnimate.applyTo(collectionView:collectionView)
-    }
-
-    func initData() {
-        try! calculator.setItems([
-                ACellModelExample(text: "1", header: "A"),
-                ACellModelExample(text: "2", header: "B"),
-                ACellModelExample(text: "3", header: "B"),
-                ACellModelExample(text: "4", header: "C"),
-                ACellModelExample(text: "5", header: "C")
-        ])
-
-        print("--------------------------------------------- NewItems:")
-        print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
-        print("---------------------------------------------\n\n")
+        itemsToAnimate.applyTo(collectionView:collectionView, completionHandler:nil)
     }
 
     func startTest() {
-        let dTime:NSTimeInterval = 1
-
-        var time = NSTimeInterval(dTime)
-        dispatch_after_main(time) {
-            self.update(
-                    addItems:[
-                            ACellModelExample(text:"6", header:"A")
-                    ],
-                    updateItemsWithIndexes:[2],
-                    deleteItemsWithIndexes:[])
-        }
-
-        time += dTime
-        dispatch_after_main(time) {
-            self.update(
-                    addItems:[],
-                    updateItemsWithIndexes:[],
-                    deleteItemsWithIndexes:[1])
-        }
-
-        time += dTime
-        dispatch_after_main(time) {
-            self.update(
-                    addItems:[
-                            ACellModelExample(text:"10", header:"C"),
-                            ACellModelExample(text:"7", header:"D")
-                    ],
-                    updateItemsWithIndexes:[1],
-                    deleteItemsWithIndexes:[])
-        }
-
-        time += dTime
-        dispatch_after_main(time) {
-            self.update(
-                    addItems:[],
-                    updateItemsWithIndexes:[],
-                    deleteItemsWithIndexes:[0, 4])
-        }
-
-        time += dTime
-        dispatch_after_main(time) {
-            self.update(
-                    addItems:[
-                            ACellModelExample(text:"8", header:"A"),
-                            ACellModelExample(text:"9", header:"C")
-                    ],
-                    updateItemsWithIndexes:[0],
-                    deleteItemsWithIndexes:[1])
-        }
-
-        time += dTime
-        dispatch_after_main(time) {
-            self.update(
-                    addItems:[],
-                    updateItemsWithIndexes:[0, 1, 2, 3, 4],
-                    deleteItemsWithIndexes:[])
-        }
-
-        time += dTime
-        dispatch_after_main(time) {
-            self.calculator.cellModelComparator = { rhs, lhs in
-                return lhs.header < rhs.header
-                       ? true
-                       : lhs.header > rhs.header
-                               ? false
-                               : lhs.text < rhs.text
-            }
-
-            print("••••••••••••••••••••••••••••••••••••• RESORTING all... :)")
-
-            let itemsToAnimate = try! self.calculator.resortItems()
-
-            print("--------------------------------------------- NewItems:")
-            print("  " + self.calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
-            print("---------------------------------------------\n\n")
-
-            itemsToAnimate.applyTo(collectionView:self.collectionView);
-        }
-
-        time += dTime
-        dispatch_after_main(time) {
-            let moved1 = ACellModelExample(copy:self.calculator.items[3])
-            let moved2 = ACellModelExample(copy:self.calculator.items[0])
-
-            moved1.header = "D"
-            moved2.header = "A"
-
-            print("••••••••••••••••••••••••••••••••••••• RESORTING between sections... :)")
-
-            let itemsToAnimate = try! self.calculator.updateItems(addOrUpdate:[moved1, moved2], delete:[])
-
-            print("--------------------------------------------- NewItems:")
-            print("  " + self.calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
-            print("---------------------------------------------\n\n")
-
-            itemsToAnimate.applyTo(collectionView:self.collectionView);
+        dispatch_after_main(1) {
+            self.runRandomTest()
         }
     }
 }

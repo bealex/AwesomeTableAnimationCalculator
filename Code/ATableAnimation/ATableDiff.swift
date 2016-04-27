@@ -12,6 +12,7 @@ import Foundation
  */
 public struct ATableDiff {
     let updatedPaths:[NSIndexPath]
+    let updatedSectionHeaders:NSIndexSet
 
     let deletedPaths:[NSIndexPath]
     let deletedSections:NSIndexSet

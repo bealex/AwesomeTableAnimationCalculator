@@ -29,6 +29,15 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "FAECAF291CC8D0BB000548EB"
+            BuildableName = "AwesomeTableAnimationCalculator.framework"
+            BlueprintName = "AwesomeTableAnimationCalculator"
+            ReferencedContainer = "container:ATableAnimationCalculator.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -60,15 +69,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FAECAF291CC8D0BB000548EB"
-            BuildableName = "AwesomeTableAnimationCalculator.framework"
-            BlueprintName = "AwesomeTableAnimationCalculator"
+            BlueprintIdentifier = "FA3C828C1CC39305009A7E4D"
+            BuildableName = "ATableAnimationCalculator.app"
+            BlueprintName = "ATableAnimationCalculatorExample"
             ReferencedContainer = "container:ATableAnimationCalculator.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

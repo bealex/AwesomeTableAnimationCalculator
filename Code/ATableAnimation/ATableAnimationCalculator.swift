@@ -114,7 +114,7 @@ public extension ATableAnimationCalculator {
      Can be called after changing the comparator to update positions of elements.
      */
     func resortItems() throws -> ATableDiff {
-        return try calculateDiff(items:items)
+        return try setItems(items)
     }
 
     /**
@@ -159,10 +159,9 @@ private extension ATableAnimationCalculator {
         return true
     }
 
-    func calculateDiff(items newItems:[ACellModelType]) throws -> ATableDiff {
-        let sortedNewItems = newItems.map({ ACellModelType(copy:$0) }).sort(cellModelComparator)
-
-        let newSections:[ASectionModelType] = sections(fromItems:sortedNewItems)
+    func calculateDiff(items newShinyItems:[ACellModelType]) throws -> ATableDiff {
+        let newItems = newShinyItems.map({ ACellModelType(copy:$0) }).sort(cellModelComparator)
+        let newSections:[ASectionModelType] = sections(fromItems:newItems)
 
         let numberOfUniqueSections = newSections
                 .map({ section in
@@ -174,219 +173,125 @@ private extension ATableAnimationCalculator {
             throw NSError(domain:"ATableAnimationCalculator", code:1, userInfo:[NSLocalizedDescriptionKey: "Your data does have two same sections in the list. Possibly you forgot to setup comparator for the cells."])
         }
 
-        var workingItems = items
-        var workingSections = sections
-
-        // first of all find updated items in the source data
-        var updatedItemIndexPaths = findUpdatedItems(from:items, to:sortedNewItems)
-
-        // all deleted indexes must be relative to initial data
-        let deletedSectionIndexes = findDeletedSections(from:workingSections, to:newSections)
-        let deletedItemIndexPaths = findDeletedItems(from:workingItems, to:sortedNewItems, usingSections:workingSections, excludingDeletedSections:deletedSectionIndexes)
-        workingItems = deleteItems(withIndexes:deletedItemIndexPaths, from:workingItems, usingSections:workingSections)
-        workingItems = deleteSections(withIndexes:deletedSectionIndexes, from:workingItems, usingSections:workingSections)
-        workingSections = sections(fromItems:workingItems)
-
-        // let's find moved sections and items
-        let newSortedItemsWithoutInserted = removeItems(from:sortedNewItems, notExistingIn:workingItems)
-        let newSortedSectionsWithoutInserted = sections(fromItems:newSortedItemsWithoutInserted)
-        let movedSectionIndexes = findMovedSections(from:workingSections, to:newSortedSectionsWithoutInserted)
-        workingItems = moveSections(indexes:movedSectionIndexes, inside:workingItems, sourceSectionData:workingSections)
-        let movedItemIndexPaths = findMovedItems(
-                from:workingItems,
-                to:newSortedItemsWithoutInserted,
-                fromSections:workingSections,
-                toSections:newSortedSectionsWithoutInserted,
-                mapWithMovedSections:movedSectionIndexes)
-        workingItems = newSortedItemsWithoutInserted
-        workingSections = newSortedSectionsWithoutInserted
-
-        updatedItemIndexPaths = removeMovedIndexPaths(movedItemIndexPaths, fromUpdated:updatedItemIndexPaths)
-
-        // all inserted indexes must be relative to target data
-        let insertedSectionIndexes = findInsertedSections(from:workingSections, to:newSections)
-        workingSections = newSections
-        let insertedItemIndexPaths = findInsertedItems(from:workingItems, to:sortedNewItems, usingSections:workingSections, excludingInsertedSections:insertedSectionIndexes)
-        workingItems = sortedNewItems
+        let oldItems = items
+        let oldSections = sections
 
         if DEBUG_ENABLED {
-            print("Items count: \(items.count) --> \(sortedNewItems.count)");
+            print("Old: \(debugPrint(oldItems)) | \(debugPrint(oldSections))");
+            print("New: \(debugPrint(newItems)) | \(debugPrint(newSections))\n");
+        }
 
-            if (deletedSectionIndexes.count + insertedSectionIndexes.count != 0) {
-                print("Old sections:\n\(sections)");
+        var deletedItemIndexesOld = [NSIndexPath]()
+        var updatedItemIndexesOld = [NSIndexPath]()
+        var insertedItemIndexesNew = [NSIndexPath]()
+        var movedItemIndexesOldNew = [(NSIndexPath, NSIndexPath)]()
+
+        // найдем удаления перемещения и обновления
+        //ToDo: убрать все «!»
+        for oldIndex in 0 ..< oldItems.count {
+            let oldItem = oldItems[oldIndex]
+            let oldIndexPath = indexPath(forItemIndex:oldIndex, usingSections:oldSections)!
+
+            if let newIndex = newItems.indexOf(oldItem) {
+                let newIndexPath = indexPath(forItemIndex:newIndex, usingSections:newSections)!
+                let newItem = newItems[newIndex]
+
+                if !newItem.contentIsSameAsIn(oldItem) {
+                    updatedItemIndexesOld.append(oldIndexPath)
+                }
+
+                if newIndexPath != oldIndexPath {
+                    movedItemIndexesOldNew.append((oldIndexPath, newIndexPath))
+                }
             } else {
-                print("Sections:\n\(sections)");
-            }
-
-            if (updatedItemIndexPaths.count != 0) {
-                print("Updated items:\n\(debugPrint(updatedItemIndexPaths))");
-            }
-
-            if (deletedSectionIndexes.count != 0) {
-                print("Deleted sections:\n\(debugPrint(deletedSectionIndexes))");
-            }
-            if (deletedItemIndexPaths.count != 0) {
-                print("Deleted items:\n\(debugPrint(deletedItemIndexPaths))");
-            }
-
-            if (insertedSectionIndexes.count != 0) {
-                print("Inserted sections:\n\(debugPrint(insertedSectionIndexes))");
-            }
-            if (insertedItemIndexPaths.count != 0) {
-                print("Inserted items:\n\(debugPrint(insertedItemIndexPaths))");
-            }
-
-            if (movedSectionIndexes.count != 0) {
-                print("Moved sections:\n\(debugPrint(movedSectionIndexes))");
-            }
-            if (movedItemIndexPaths.count != 0) {
-                print("Moved items:\n\(debugPrint(movedItemIndexPaths))");
-            }
-
-            if (deletedSectionIndexes.count + insertedSectionIndexes.count != 0) {
-                print("New sections:\n\(newSections)");
+                deletedItemIndexesOld.append(oldIndexPath)
             }
         }
 
-        items = sortedNewItems
+        // найдем новые элементы
+        for newIndex in 0 ..< newItems.count {
+            let newItem = newItems[newIndex]
+            let newIndexPath = indexPath(forItemIndex:newIndex, usingSections:newSections)!
+
+            if oldItems.indexOf(newItem) == nil {
+                insertedItemIndexesNew.append(newIndexPath)
+            }
+        }
+
+        // почистим апдейты от тех, которые перемещаются
+        updatedItemIndexesOld = updatedItemIndexesOld.filter { updateIndex in
+            return movedItemIndexesOldNew.filter({ $0.0 == updateIndex || $0.1 == updateIndex }).isEmpty
+        }
+
+        if DEBUG_ENABLED {
+            print("- Index Paths (before section calculations):");
+            print("Deleted: \(debugPrint(deletedItemIndexesOld))");
+            print("Updated: \(debugPrint(updatedItemIndexesOld))");
+            print("Inserted: \(debugPrint(insertedItemIndexesNew))");
+            print("Moved: \(debugPrint(movedItemIndexesOldNew))");
+        }
+
+        // найдем уничтоженные секции
+        let deletedSectionIndexesOld = findTotallyDestroyedSectionsFrom(oldSections, byDeletedIndexes:deletedItemIndexesOld, insertedIndexes:insertedItemIndexesNew, movedIndexes:movedItemIndexesOldNew)
+        deletedItemIndexesOld = deletedItemIndexesOld.filter { !deletedSectionIndexesOld.contains($0.section) }
+
+        // если секция уничтожена, то переместить из нее не можем
+        let movedItemIndexesOldNewFromDestroyedSections = movedItemIndexesOldNew.filter { deletedSectionIndexesOld.contains($0.0.section) }
+        insertedItemIndexesNew.appendContentsOf(movedItemIndexesOldNewFromDestroyedSections.map { $0.1 })
+        movedItemIndexesOldNew = movedItemIndexesOldNew.filter { !deletedSectionIndexesOld.contains($0.0.section) }
+
+        // найдем добавленные секции
+        let insertedSectionIndexesNew = findInsertedSectionsTo(oldSections, byInsertedIndexes:insertedItemIndexesNew, movedIndexes:movedItemIndexesOldNew)
+
+        // если секция добавлена, то переместить в нее не можем
+        let movedItemIndexesOldNewToInsertedSections = movedItemIndexesOldNew.filter { insertedSectionIndexesNew.contains($0.1.section) }
+        deletedItemIndexesOld.appendContentsOf(movedItemIndexesOldNewToInsertedSections.map { $0.0 })
+        movedItemIndexesOldNew = movedItemIndexesOldNew.filter { !insertedSectionIndexesNew.contains($0.1.section) }
+
+        let updatedSectionIndexesNew = findUpdatedSections(old:oldSections, new:newSections)
+
+        if DEBUG_ENABLED {
+            print("\n");
+            print("- Index Paths (after section calculations):");
+            print("Deleted: \(debugPrint(deletedItemIndexesOld))");
+            print("Updated: \(debugPrint(updatedItemIndexesOld))");
+            print("Inserted: \(debugPrint(insertedItemIndexesNew))");
+            print("Moved: \(debugPrint(movedItemIndexesOldNew))");
+
+            print("- Section Indexes:");
+            print("Deleted: \(debugPrint(deletedSectionIndexesOld))");
+            print("Updated: \(debugPrint(updatedSectionIndexesNew))");
+            print("Inserted: \(debugPrint(insertedSectionIndexesNew))");
+//            print("Moved: \(debugPrint(movedItemIndexesOldNew))");
+        }
+
+        let movedSectionIndexes = [(Int, Int)]()
+
+        items = newItems
         sections = newSections
 
         return ATableDiff(
-                updatedPaths:updatedItemIndexPaths,
+            updatedPaths:updatedItemIndexesOld,
+            updatedSectionHeaders: updatedSectionIndexesNew,
 
-                deletedPaths:deletedItemIndexPaths,
-                deletedSections:deletedSectionIndexes,
+            deletedPaths:deletedItemIndexesOld,
+            deletedSections: deletedSectionIndexesOld,
 
-                addedPaths:insertedItemIndexPaths,
-                addedSections:insertedSectionIndexes,
+            addedPaths:insertedItemIndexesNew,
+            addedSections:insertedSectionIndexesNew,
 
-                movedSections:movedSectionIndexes,
-                movedPaths:movedItemIndexPaths)
+            movedSections:movedSectionIndexes,
+            movedPaths:movedItemIndexesOldNew
+        )
     }
 
-    func findUpdatedItems(from from:[ACellModelType], to:[ACellModelType]) -> [NSIndexPath] {
-        let result:[NSIndexPath] =
-                from.flatMap({ fromItem in
-                    if let fromIndex = from.indexOf(fromItem) {
-                        if let toIndex = to.indexOf(fromItem) {
-                            let toItem = to[toIndex]
-
-                            if !toItem.contentIsSameAsIn(fromItem) {
-                                return self.indexPath(forItemIndex:fromIndex, usingSections:self.sections)
-                            }
-                        }
-                    }
-
-                    return NSIndexPath?()
-                })
-
-        return result
-    }
-
-    func findDeletedSections(from from:[ASectionModelType], to:[ASectionModelType]) -> NSIndexSet {
+    func findUpdatedSections(old oldSections:[ASectionModelType], new newSections:[ASectionModelType]) -> NSIndexSet {
         let result = NSMutableIndexSet()
 
-        var index = 0
-        from.forEach { item in
-            if !to.contains(item) {
-                result.addIndex(index)
-            }
-
-            index += 1
-        }
-
-        return result.copy() as! NSIndexSet
-    }
-
-    func deleteSections(withIndexes withIndexes:NSIndexSet, from:[ACellModelType], usingSections sections:[ASectionModelType]) -> [ACellModelType] {
-        guard withIndexes.count != 0 else {
-            return from
-        }
-
-        var result = Array<ACellModelType>(from)
-
-        withIndexes.reverse().forEach { index in
-            result.removeRange(sections[index].range)
-        }
-
-        return result
-    }
-
-    func findDeletedItems(from from:[ACellModelType], to:[ACellModelType], usingSections sections:[ASectionModelType], excludingDeletedSections deletedSections:NSIndexSet) -> [NSIndexPath] {
-        var result = [NSIndexPath]()
-
-        var index = 0
-        from.forEach { fromItem in
-            if !to.contains(fromItem) {
-                if let indexPath = indexPath(forItemIndex:index, usingSections:sections) where !deletedSections.contains(indexPath.section) {
-                    result.append(indexPath)
-                }
-            }
-
-            index += 1
-        }
-
-        return result
-    }
-
-    func deleteItems(withIndexes withIndexes:[NSIndexPath], from:[ACellModelType], usingSections sections:[ASectionModelType]) -> [ACellModelType] {
-        guard withIndexes.count != 0 else {
-            return from
-        }
-
-        var result = Array<ACellModelType>(from)
-
-        withIndexes.reverse().forEach { indexPath in
-            result.removeAtIndex(sections[indexPath.section].startIndex + indexPath.row)
-        }
-
-        return result
-    }
-
-    func removeItems(from from:[ACellModelType], notExistingIn:[ACellModelType]) -> [ACellModelType] {
-        var result = Array<ACellModelType>(from)
-
-        for fromIndex in (0 ..< from.count).reverse() {
-            if !notExistingIn.contains(from[fromIndex]) {
-                result.removeAtIndex(fromIndex)
-            }
-        }
-
-        return result
-    }
-
-    func findMovedSections(from from:[ASectionModelType], to:[ASectionModelType]) -> [(Int, Int)] {
-        var result = [(Int, Int)]()
-
-        for fromIndex in 0 ..< from.count {
-            if let toIndex = to.indexOf(from[fromIndex]) where fromIndex != toIndex {
-                result.append((fromIndex, toIndex))
-            }
-        }
-
-        return result
-    }
-
-    func findMovedItems(from from:[ACellModelType], to:[ACellModelType],
-                        fromSections:[ASectionModelType],
-                        toSections:[ASectionModelType],
-                        mapWithMovedSections movedSectionsIndexes:[(Int, Int)]) -> [(NSIndexPath, NSIndexPath)] {
-        var result = [(NSIndexPath, NSIndexPath)]()
-
-        func mapSectionIndexToOld(index:Int) -> Int {
-            if let mappedIndexes = movedSectionsIndexes.filter({ $0.1 == index }).first {
-                return mappedIndexes.0
-            } else {
-                return index
-            }
-        }
-
-        for fromIndex in 0 ..< from.count {
-            if let toIndex = to.indexOf(from[fromIndex]) {
-                if let fromIndexPath = indexPath(forItemIndex:fromIndex, usingSections:fromSections),
-                         toIndexPath = indexPath(forItemIndex:toIndex, usingSections:toSections)
-                   where fromIndexPath != toIndexPath {
-                    result.append((fromIndexPath, toIndexPath))
+        for newIndex in 0 ..< newSections.count {
+            if newIndex < oldSections.count {
+                if newSections[newIndex] != oldSections[newIndex] {
+                    result.addIndex(newIndex)
                 }
             }
         }
@@ -394,59 +299,37 @@ private extension ATableAnimationCalculator {
         return result
     }
 
-    func removeMovedIndexPaths(movedItemIndexPaths:[(NSIndexPath, NSIndexPath)], fromUpdated:[NSIndexPath]) -> [NSIndexPath] {
-        let allFromIndexPaths = movedItemIndexPaths.map { $0.0 }
-        return fromUpdated.filter { !allFromIndexPaths.contains($0) }
-    }
-
-    func moveSections(indexes indexes:[(Int, Int)], inside sourceItems:[ACellModelType], sourceSectionData:[ASectionModelType]) -> [ACellModelType] {
-        var itemsBySections:[[ACellModelType]] = []
-
-        for section in sourceSectionData {
-            let sectionItems:[ACellModelType] = Array(sourceItems[section.startIndex ..< section.endIndex])
-            itemsBySections.append(sectionItems)
-        }
-
-        var result:[ACellModelType] = []
-
-        for sectionIndex in 0 ..< sourceSectionData.count {
-            if let moveIndexes = indexes.filter({ $0.1 == sectionIndex }).first {
-                result.appendContentsOf(itemsBySections[moveIndexes.0])
-            } else {
-                result.appendContentsOf(itemsBySections[sectionIndex])
-            }
-        }
-
-        return result
-    }
-
-    func findInsertedSections(from from:[ASectionModelType], to:[ASectionModelType]) -> NSIndexSet {
+    func findInsertedSectionsTo(sectionsData:[ASectionModelType], byInsertedIndexes insertedIndexes:[NSIndexPath], movedIndexes:[(NSIndexPath, NSIndexPath)]) -> NSIndexSet {
         let result = NSMutableIndexSet()
 
-        var index = 0
-        to.forEach { toSection in
-            if !from.contains(toSection) {
-                result.addIndex(index)
+        for insertedIndex in insertedIndexes {
+            if insertedIndex.section >= sectionsData.count {
+                result.addIndex(insertedIndex.section)
             }
-
-            index += 1
         }
 
-        return result.copy() as! NSIndexSet
+        for (_, toIndexNew) in movedIndexes {
+            if toIndexNew.section >= sectionsData.count {
+                result.addIndex(toIndexNew.section)
+            }
+        }
+
+        return result
     }
 
-    func findInsertedItems(from from:[ACellModelType], to:[ACellModelType], usingSections sections:[ASectionModelType], excludingInsertedSections insertedSections:NSIndexSet) -> [NSIndexPath] {
-        var result = [NSIndexPath]()
+    func findTotallyDestroyedSectionsFrom(sectionsData:[ASectionModelType], byDeletedIndexes deletedIndexes:[NSIndexPath], insertedIndexes:[NSIndexPath], movedIndexes:[(NSIndexPath, NSIndexPath)]) -> NSIndexSet {
+        let result = NSMutableIndexSet()
 
-        var index = 0
-        to.forEach { toItem in
-            if !from.contains(toItem) {
-                if let indexPath = indexPath(forItemIndex:index, usingSections:sections) where !insertedSections.contains(indexPath.section) {
-                    result.append(indexPath)
-                }
+        for sectionIndex in 0 ..< sectionsData.count {
+            let section = sectionsData[sectionIndex]
+            let insertedItemsCount = insertedIndexes.filter({ $0.section == sectionIndex }).count
+            let deletedItemsCount = deletedIndexes.filter({ $0.section == sectionIndex }).count
+            let movedOutItemsCount = movedIndexes.filter({ $0.0.section == sectionIndex && $0.1.section != sectionIndex }).count
+            let movedInItemsCount = movedIndexes.filter({ $0.1.section == sectionIndex && $0.0.section != sectionIndex }).count
+
+            if section.endIndex - section.startIndex == deletedItemsCount + movedOutItemsCount && movedInItemsCount + insertedItemsCount == 0 {
+                result.addIndex(sectionIndex)
             }
-
-            index += 1
         }
 
         return result
@@ -508,11 +391,22 @@ private extension ATableAnimationCalculator {
 //MARK: Some debug output methods
 private extension ATableAnimationCalculator {
     func debugPrint(name name:String, strings:[String]) -> String {
-        let separator = strings.count < 20 ? ", " : ",\n  "
-        let prefix = strings.count < 20 ? " " : "\n  "
-        let suffix = strings.count < 20 ? "" : "\n"
+        if strings.isEmpty {
+            return "—"
+        } else {
+            let separator = strings.count < 50 ? ", " : ",\n  "
+            var prefix = strings.count < 50 ? " " : "\n  "
+            var suffix = strings.count < 50 ? "" : "\n"
+            var nameColon = "\(name):"
 
-        return "[\(name):\(prefix)\(strings.joinWithSeparator(separator))\(suffix)]"
+            if name.isEmpty {
+                prefix = ""
+                suffix = ""
+                nameColon = ""
+            }
+
+            return "[\(nameColon)\(prefix)\(strings.joinWithSeparator(separator))\(suffix)]"
+        }
     }
 
     func debugPrint(indexSet:NSIndexSet) -> String {
@@ -529,5 +423,13 @@ private extension ATableAnimationCalculator {
 
     func debugPrint(indexPathPairs:[(Int, Int)]) -> String {
         return debugPrint(name:"indexPairs", strings:indexPathPairs.map { "\($0.0) -> \($0.1)" })
+    }
+
+    func debugPrint(cells:[ACellModelType]) -> String {
+        return debugPrint(name:"", strings:cells.map { "\($0.shortDescription())" })
+    }
+
+    func debugPrint(sections:[ASectionModelType]) -> String {
+        return debugPrint(name:"", strings:sections.map { "\($0)" })
     }
 }

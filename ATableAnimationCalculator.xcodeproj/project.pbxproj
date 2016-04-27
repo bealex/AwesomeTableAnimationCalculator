@@ -9,10 +9,15 @@
 /* Begin PBXBuildFile section */
 		2DBA10B3E0A6EE61A51D18F6 /* ACellSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA19A4DAE08B4B95939592 /* ACellSectionModel.swift */; };
 		2DBA1224A47EB6D63FF9216A /* ASectionModelExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1B1C3F63AAD74161FD1A /* ASectionModelExample.swift */; };
+		2DBA1247B25DEAA20B6D96B6 /* 2.Test_Assertion (not working 3).txt in Resources */ = {isa = PBXBuildFile; fileRef = 2DBA1BE3C3C33200BC72909C /* 2.Test_Assertion (not working 3).txt */; };
 		2DBA12A4CE509B0CAB712E44 /* ObjCTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1F6F426A6C6A15BAD6E3 /* ObjCTest.m */; };
+		2DBA152064359F9C040ABE3D /* 1.Test_DBZ_small.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2DBA1CA9C2F2AEAE01A394EB /* 1.Test_DBZ_small.txt */; };
 		2DBA157305C5DB40925299AD /* ViewControllerCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA17980FDACD2DA68DF3AD /* ViewControllerCollection.swift */; };
 		2DBA160646D4C3B3A43770FE /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1C7C0A270FBE5537552D /* Helpers.swift */; };
+		2DBA1687E27E14E4F9E471DD /* 1.Test_DBZ.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2DBA1F066197D944C812BD06 /* 1.Test_DBZ.txt */; };
 		2DBA17EB28EB678B8209E18C /* ATableAnimationCalculatorObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA18A0916CA80922E366D6 /* ATableAnimationCalculatorObjC.swift */; };
+		2DBA18A913707C06CAC0F981 /* 2.Test_Assertion (not working 2).txt in Resources */ = {isa = PBXBuildFile; fileRef = 2DBA11CD75321BA7F2FF9FE2 /* 2.Test_Assertion (not working 2).txt */; };
+		2DBA1A609953207686B3CADE /* 2.Test_Assertion (not working).txt in Resources */ = {isa = PBXBuildFile; fileRef = 2DBA1DA74B1E79C52A7FA372 /* 2.Test_Assertion (not working).txt */; };
 		2DBA1BAB7F2F7D352598F5E5 /* ViewControllerTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1EA8CE95FD828A357375 /* ViewControllerTable.swift */; };
 		2DBA1D7FFC82B605DE617569 /* ACellModelExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA1BBB98276639FF44C42A /* ACellModelExample.swift */; };
 		2DBA1ECC43F428953B1B2C9D /* ACellSectionFactoryExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBA132A74B89E34048A37C1 /* ACellSectionFactoryExample.swift */; };
@@ -55,6 +60,7 @@
 /* Begin PBXFileReference section */
 		2DBA106AC47ABD8CB4DEDFC6 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2DBA10F4CCF8E17E82A5FB6A /* ATableDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATableDiff.swift; sourceTree = "<group>"; };
+		2DBA11CD75321BA7F2FF9FE2 /* 2.Test_Assertion (not working 2).txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "2.Test_Assertion (not working 2).txt"; sourceTree = "<group>"; };
 		2DBA132A74B89E34048A37C1 /* ACellSectionFactoryExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACellSectionFactoryExample.swift; sourceTree = "<group>"; };
 		2DBA16B1E13A6C59B5BD6E03 /* ATableAnimationCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATableAnimationCalculator.swift; sourceTree = "<group>"; };
 		2DBA17592329DD01C1D224ED /* ObjCTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjCTest.h; sourceTree = "<group>"; };
@@ -65,9 +71,13 @@
 		2DBA1A72A8B860BAD43D1C78 /* ACellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACellModel.swift; sourceTree = "<group>"; };
 		2DBA1B1C3F63AAD74161FD1A /* ASectionModelExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASectionModelExample.swift; sourceTree = "<group>"; };
 		2DBA1BBB98276639FF44C42A /* ACellModelExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACellModelExample.swift; sourceTree = "<group>"; };
+		2DBA1BE3C3C33200BC72909C /* 2.Test_Assertion (not working 3).txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "2.Test_Assertion (not working 3).txt"; sourceTree = "<group>"; };
 		2DBA1C7A5CCFE62B97C10FCC /* ATableAnimationCalculator-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ATableAnimationCalculator-Bridging-Header.h"; sourceTree = "<group>"; };
 		2DBA1C7C0A270FBE5537552D /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		2DBA1CA9C2F2AEAE01A394EB /* 1.Test_DBZ_small.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1.Test_DBZ_small.txt; sourceTree = "<group>"; };
+		2DBA1DA74B1E79C52A7FA372 /* 2.Test_Assertion (not working).txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "2.Test_Assertion (not working).txt"; sourceTree = "<group>"; };
 		2DBA1EA8CE95FD828A357375 /* ViewControllerTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTable.swift; sourceTree = "<group>"; };
+		2DBA1F066197D944C812BD06 /* 1.Test_DBZ.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1.Test_DBZ.txt; sourceTree = "<group>"; };
 		2DBA1F6F426A6C6A15BAD6E3 /* ObjCTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjCTest.m; sourceTree = "<group>"; };
 		2DBA1F7CC3E71520B3E95460 /* ATableDiff+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ATableDiff+UIKit.swift"; sourceTree = "<group>"; };
 		FA3C828D1CC39305009A7E4D /* ATableAnimationCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATableAnimationCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,6 +141,18 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		2DBA1B35956F02A9249DF750 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				2DBA1F066197D944C812BD06 /* 1.Test_DBZ.txt */,
+				2DBA1CA9C2F2AEAE01A394EB /* 1.Test_DBZ_small.txt */,
+				2DBA1DA74B1E79C52A7FA372 /* 2.Test_Assertion (not working).txt */,
+				2DBA11CD75321BA7F2FF9FE2 /* 2.Test_Assertion (not working 2).txt */,
+				2DBA1BE3C3C33200BC72909C /* 2.Test_Assertion (not working 3).txt */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		2DBA1F1B8DF95D708A4D2B19 /* Example */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +199,7 @@
 			children = (
 				FA3C82AB1CC3933C009A7E4D /* CVDS-Info.plist */,
 				FA3C82B21CC3CC86009A7E4D /* Launch Screen.storyboard */,
+				2DBA1B35956F02A9249DF750 /* Tests */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -284,6 +307,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA3C82B31CC3CC86009A7E4D /* Launch Screen.storyboard in Resources */,
+				2DBA1687E27E14E4F9E471DD /* 1.Test_DBZ.txt in Resources */,
+				2DBA152064359F9C040ABE3D /* 1.Test_DBZ_small.txt in Resources */,
+				2DBA1A609953207686B3CADE /* 2.Test_Assertion (not working).txt in Resources */,
+				2DBA18A913707C06CAC0F981 /* 2.Test_Assertion (not working 2).txt in Resources */,
+				2DBA1247B25DEAA20B6D96B6 /* 2.Test_Assertion (not working 3).txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

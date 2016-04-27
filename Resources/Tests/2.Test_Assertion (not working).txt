@@ -1,0 +1,109 @@
+--------------------------------------------- Old items (iteration 86):
+  Header: "B"; Text: "3"; id: 0F3BDBAF-1361-4914-BAD8-A2EDEF10A827,
+  Header: "B"; Text: "6"; id: DD0F9158-A554-4040-A7E0-2007B64CD515,
+  Header: "B"; Text: "12"; id: C14D9946-AE08-4CA2-9E3C-3F6DED24B8F7,
+  Header: "C"; Text: "5"; id: 80C2F428-40C1-44DE-943C-97B34050A6A0,
+  Header: "C"; Text: "18"; id: 12D82B2F-EF28-49D2-A50C-CE1676A73CE6,
+  Header: "D"; Text: "7"; id: 912A4E11-E6C3-4CDF-AD28-CE5B7695B571,
+  Header: "D"; Text: "15"; id: 103D5B2E-FBC6-47F8-A57D-F7F78D0B1C7F,
+  Header: "E"; Text: "10"; id: 7618863D-86F1-4D71-98DB-4010FAFE9F73,
+  Header: "G"; Text: "1"; id: C5C1EF58-6D85-4938-9563-579A0B98C391,
+  Header: "G"; Text: "17"; id: 8E19E20A-6157-4CE7-B02A-82BDB93A94AF,
+  Header: "H"; Text: "7"; id: E8ABEAC0-6479-41F2-BB91-A1ACEE5F4B3D,
+  Header: "I"; Text: "4"; id: 16240D7F-37D6-4A34-ABF1-64E5939F62EF,
+  Header: "I"; Text: "5"; id: 35AE1C84-28D0-44E3-A514-44FC84193F8E,
+  Header: "J"; Text: "7"; id: 8802135A-52D2-4CCE-97E5-45EDA1CAE3DD,
+  Header: "K"; Text: "1"; id: 3023DBB8-51F4-4918-A817-9C4000451A18,
+  Header: "K"; Text: "3"; id: 321F1A3B-1BF2-47F5-94D5-D4C3CE4CB293,
+  Header: "K"; Text: "10"; id: 1921DD77-F361-4E21-B9EF-185079028761,
+  Header: "K"; Text: "18"; id: 66EF7707-BDD8-491D-A899-BCC725CDC9B4,
+  Header: "L"; Text: "5"; id: CEAAC182-882D-4F73-A88D-5F774C3ED7CE,
+  Header: "M"; Text: "1"; id: 5C12C5EA-7E0D-4E39-97A0-9B424127AE85,
+  Header: "M"; Text: "11"; id: 38EAD723-ACE5-4CA1-9559-49522B08CEB6,
+  Header: "M"; Text: "14"; id: CCB7BE39-87F9-4249-9049-7F3473330A70,
+  Header: "M"; Text: "18"; id: 369C0555-88B7-4CC2-A223-339A122FE04B,
+  Header: "N"; Text: "6"; id: F74FBC0D-E296-4A0C-A8F8-BFE11E114BC5,
+  Header: "N"; Text: "9"; id: 92C41829-0DC9-475C-ABB1-1D40D979EBF9,
+  Header: "N"; Text: "10"; id: 27F19761-6340-4B30-82DC-7B2788DD4DE9,
+  Header: "O"; Text: "6"; id: B34C4B31-583E-42FC-AE80-7D347C33006E,
+  Header: "P"; Text: "9"; id: D1DA861F-A27A-4EE9-AB72-5AFB0AF60368,
+  Header: "P"; Text: "14"; id: 1CE6AFCC-DD6A-4402-B77E-EB7E395D7C56,
+  Header: "Q"; Text: "0"; id: DD80AB13-321E-4266-8FEC-464BD4CDF643,
+  Header: "Q"; Text: "9"; id: 3EB93E62-C1A9-4159-83C5-7230DFE082FF,
+  Header: "R"; Text: "1"; id: 625FB777-564C-4C0F-B2BA-1FE5D325BC85,
+  Header: "S"; Text: "9"; id: C3DE3FD9-6695-4593-BA68-4DA757A16043
+--------------------------------------------- Added:
+  Header: "G"; Text: "18"; id: 1FAA93D1-5FEA-45C7-B33F-AFCB6FA5CC46,
+  Header: "J"; Text: "1"; id: 75C8CA36-9A51-46F3-9C06-5D579C189E30,
+  Header: "D"; Text: "1"; id: 10DE76FB-FE83-47F0-A7AA-3838EAE84303,
+  Header: "E"; Text: "17"; id: 1F5E9E79-FA48-4F9C-9ACC-C7035E424CC2,
+  Header: "S"; Text: "16"; id: B102DBD5-A46D-46BE-B34A-BC01408EC7FA,
+  Header: "J"; Text: "2"; id: 3268096F-934F-4616-8862-0CE4A8691921
+--------------------------------------------- Updated:
+  Header: "M"; Text: "14"; id: 5C12C5EA-7E0D-4E39-97A0-9B424127AE85,
+  Header: "R"; Text: "18"; id: D1DA861F-A27A-4EE9-AB72-5AFB0AF60368,
+  Header: "B"; Text: "11"; id: 0F3BDBAF-1361-4914-BAD8-A2EDEF10A827,
+  Header: "C"; Text: "0"; id: 12D82B2F-EF28-49D2-A50C-CE1676A73CE6,
+  Header: "B"; Text: "15"; id: DD0F9158-A554-4040-A7E0-2007B64CD515
+--------------------------------------------- Deleted:
+  Header: "K"; Text: "10"; id: 1921DD77-F361-4E21-B9EF-185079028761,
+  Header: "R"; Text: "1"; id: 625FB777-564C-4C0F-B2BA-1FE5D325BC85,
+  Header: "S"; Text: "9"; id: C3DE3FD9-6695-4593-BA68-4DA757A16043,
+  Header: "B"; Text: "3"; id: 0F3BDBAF-1361-4914-BAD8-A2EDEF10A827,
+  Header: "J"; Text: "7"; id: 8802135A-52D2-4CCE-97E5-45EDA1CAE3DD,
+  Header: "M"; Text: "14"; id: CCB7BE39-87F9-4249-9049-7F3473330A70,
+  Header: "M"; Text: "11"; id: 38EAD723-ACE5-4CA1-9559-49522B08CEB6,
+  Header: "I"; Text: "4"; id: 16240D7F-37D6-4A34-ABF1-64E5939F62EF
+------------------------------------------------------
+Old: [B/3, B/6, B/12, C/5, C/18, D/7, D/15, E/10, G/1, G/17, H/7, I/4, I/5, J/7, K/1, K/3, K/10, K/18, L/5, M/1, M/11, M/14, M/18, N/6, N/9, N/10, O/6, P/9, P/14, Q/0, Q/9, R/1, S/9] | ["B" (0–3), "C" (3–5), "D" (5–7), "E" (7–8), "G" (8–10), "H" (10–11), "I" (11–13), "J" (13–14), "K" (14–18), "L" (18–19), "M" (19–23), "N" (23–26), "O" (26–27), "P" (27–29), "Q" (29–31), "R" (31–32), "S" (32–33)]
+New: [B/12, B/15, C/0, C/5, D/1, D/7, D/15, E/10, E/17, G/1, G/17, G/18, H/7, I/5, J/1, J/2, K/1, K/3, K/18, L/5, M/14, M/18, N/6, N/9, N/10, O/6, P/14, Q/0, Q/9, R/18, S/16] | ["B" (0–2), "C" (2–4), "D" (4–7), "E" (7–9), "G" (9–12), "H" (12–13), "I" (13–14), "J" (14–16), "K" (16–19), "L" (19–20), "M" (20–22), "N" (22–25), "O" (25–26), "P" (26–27), "Q" (27–29), "R" (29–30), "S" (30–31)]
+
+- Index Paths (before section calculations):
+Deleted: [indexPaths: 0-0, 6-0, 7-0, 8-2, 10-1, 10-2, 15-0, 16-0]
+Updated: [indexPaths: 0-1, 10-0]
+Inserted: [indexPaths: 2-0, 3-1, 4-2, 7-0, 7-1, 16-0]
+Moved: [indexPathPairs: 0-2 -> 0-0, 1-0 -> 1-1, 1-1 -> 1-0, 2-0 -> 2-1, 2-1 -> 2-2, 6-1 -> 6-0, 8-3 -> 8-2, 10-3 -> 10-1, 13-0 -> 15-0, 13-1 -> 13-0]
+
+
+- Index Paths (after section calculations):
+Deleted: [indexPaths: 0-0, 6-0, 7-0, 8-2, 10-1, 10-2, 15-0, 16-0]
+Updated: [indexPaths: 0-1, 10-0]
+Inserted: [indexPaths: 2-0, 3-1, 4-2, 7-0, 7-1, 16-0]
+Moved: [indexPathPairs: 0-2 -> 0-0, 1-0 -> 1-1, 1-1 -> 1-0, 2-0 -> 2-1, 2-1 -> 2-2, 6-1 -> 6-0, 8-3 -> 8-2, 10-3 -> 10-1, 13-0 -> 15-0, 13-1 -> 13-0]
+- Section Indexes:
+Deleted: —
+Updated: —
+Inserted: —
+--------------------------------------------- New items:
+  Header: "B"; Text: "12"; id: C14D9946-AE08-4CA2-9E3C-3F6DED24B8F7,
+  Header: "B"; Text: "15"; id: DD0F9158-A554-4040-A7E0-2007B64CD515,
+  Header: "C"; Text: "0"; id: 12D82B2F-EF28-49D2-A50C-CE1676A73CE6,
+  Header: "C"; Text: "5"; id: 80C2F428-40C1-44DE-943C-97B34050A6A0,
+  Header: "D"; Text: "1"; id: 10DE76FB-FE83-47F0-A7AA-3838EAE84303,
+  Header: "D"; Text: "7"; id: 912A4E11-E6C3-4CDF-AD28-CE5B7695B571,
+  Header: "D"; Text: "15"; id: 103D5B2E-FBC6-47F8-A57D-F7F78D0B1C7F,
+  Header: "E"; Text: "10"; id: 7618863D-86F1-4D71-98DB-4010FAFE9F73,
+  Header: "E"; Text: "17"; id: 1F5E9E79-FA48-4F9C-9ACC-C7035E424CC2,
+  Header: "G"; Text: "1"; id: C5C1EF58-6D85-4938-9563-579A0B98C391,
+  Header: "G"; Text: "17"; id: 8E19E20A-6157-4CE7-B02A-82BDB93A94AF,
+  Header: "G"; Text: "18"; id: 1FAA93D1-5FEA-45C7-B33F-AFCB6FA5CC46,
+  Header: "H"; Text: "7"; id: E8ABEAC0-6479-41F2-BB91-A1ACEE5F4B3D,
+  Header: "I"; Text: "5"; id: 35AE1C84-28D0-44E3-A514-44FC84193F8E,
+  Header: "J"; Text: "1"; id: 75C8CA36-9A51-46F3-9C06-5D579C189E30,
+  Header: "J"; Text: "2"; id: 3268096F-934F-4616-8862-0CE4A8691921,
+  Header: "K"; Text: "1"; id: 3023DBB8-51F4-4918-A817-9C4000451A18,
+  Header: "K"; Text: "3"; id: 321F1A3B-1BF2-47F5-94D5-D4C3CE4CB293,
+  Header: "K"; Text: "18"; id: 66EF7707-BDD8-491D-A899-BCC725CDC9B4,
+  Header: "L"; Text: "5"; id: CEAAC182-882D-4F73-A88D-5F774C3ED7CE,
+  Header: "M"; Text: "14"; id: 5C12C5EA-7E0D-4E39-97A0-9B424127AE85,
+  Header: "M"; Text: "18"; id: 369C0555-88B7-4CC2-A223-339A122FE04B,
+  Header: "N"; Text: "6"; id: F74FBC0D-E296-4A0C-A8F8-BFE11E114BC5,
+  Header: "N"; Text: "9"; id: 92C41829-0DC9-475C-ABB1-1D40D979EBF9,
+  Header: "N"; Text: "10"; id: 27F19761-6340-4B30-82DC-7B2788DD4DE9,
+  Header: "O"; Text: "6"; id: B34C4B31-583E-42FC-AE80-7D347C33006E,
+  Header: "P"; Text: "14"; id: 1CE6AFCC-DD6A-4402-B77E-EB7E395D7C56,
+  Header: "Q"; Text: "0"; id: DD80AB13-321E-4266-8FEC-464BD4CDF643,
+  Header: "Q"; Text: "9"; id: 3EB93E62-C1A9-4159-83C5-7230DFE082FF,
+  Header: "R"; Text: "18"; id: D1DA861F-A27A-4EE9-AB72-5AFB0AF60368,
+  Header: "S"; Text: "16"; id: B102DBD5-A46D-46BE-B34A-BC01408EC7FA
+---------------------------------------------

@@ -10,7 +10,7 @@ import UIKit
 
 //MARK: Applying calculation result to the UICollectionView
 public extension ATableDiff {
-    func applyTo(collectionView collectionView:UICollectionView) {
+    func applyTo(collectionView collectionView:UICollectionView, completionHandler:(() -> Void)?) {
         let updates = {
             if self.updatedPaths.count != 0 {
                 collectionView.reloadItemsAtIndexPaths(self.updatedPaths)
@@ -43,15 +43,27 @@ public extension ATableDiff {
         }
 
         let completion = { (_:Bool) in
-            if self.movedPaths.count != 0 {
-                // Hack, because move does not update target items
-                var updatedIndexPaths:[NSIndexPath] = []
+            let hackyUpdates = {
+                if self.movedPaths.count != 0 {
+                    // Hack, because move does not update target items
+                    var updatedIndexPaths:[NSIndexPath] = []
 
-                for (_, indexPathTo) in self.movedPaths {
-                    updatedIndexPaths.append(indexPathTo)
+                    for (_, indexPathTo) in self.movedPaths {
+                        updatedIndexPaths.append(indexPathTo)
+                    }
+
+                    collectionView.reloadItemsAtIndexPaths(updatedIndexPaths)
                 }
 
-                collectionView.reloadItemsAtIndexPaths(updatedIndexPaths)
+                if (self.updatedSectionHeaders.count != 0) {
+                    collectionView.reloadSections(self.updatedSectionHeaders)
+                }
+            }
+
+            collectionView.performBatchUpdates(hackyUpdates) { (_:Bool) in
+                if let completionHandler = completionHandler {
+                    completionHandler()
+                }
             }
         }
 

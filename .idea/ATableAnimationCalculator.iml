@@ -3,24 +3,31 @@
   <component name="NewModuleRootManager">
     <content url="file://$USER_HOME$/Library/Caches/AppCode2016.1/DerivedData/Build/Intermediates/ATableAnimationCalculator.build/Debug-iphoneos/ATableAnimationCalculatorExample.build/DerivedSources" />
     <content url="file://$USER_HOME$/Library/Caches/AppCode2016.1/DerivedData/Build/Intermediates/ATableAnimationCalculator.build/Debug-iphoneos/AwesomeTableAnimationCalculator.build/DerivedSources" />
+    <content url="file://$USER_HOME$/Library/Caches/AppCode2016.1/DerivedData/Build/Intermediates/ATableAnimationCalculator.build/Release-iphoneos/ATableAnimationCalculatorExample.build/DerivedSources" />
+    <content url="file://$USER_HOME$/Library/Caches/AppCode2016.1/DerivedData/Build/Intermediates/ATableAnimationCalculator.build/Release-iphoneos/AwesomeTableAnimationCalculator.build/DerivedSources" />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/Code/Example/ViewControllerCollection.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/Example/AppDelegate.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Code/Example/ObjC/ObjCTest.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Code/Example/ObjC/ATableAnimationCalculatorObjC.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Code/Example/ObjC/ObjCTest.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Code/Example/ObjC/ATableAnimationCalculator-Bridging-Header.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Code/Example/ViewControllerCollection.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/Example/Helpers.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/Example/Model/ASectionModelExample.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/Example/Model/ACellModelExample.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/Example/Model/ACellSectionFactoryExample.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/Example/ViewControllerTable.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Code/Example/ObjC/ObjCTest.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Code/Example/ObjC/ATableAnimationCalculatorObjC.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Code/Example/ObjC/ObjCTest.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Code/Example/ObjC/ATableAnimationCalculator-Bridging-Header.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ACellSectionModel.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ACellModel.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ASectionModel.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ATableAnimationCalculator.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ATableDiff.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ACellModel.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Code/ATableAnimation/ATableDiff+UIKit.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Resources/Tests/1.Test_DBZ.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Resources/Tests/2.Test_Assertion (not working 3).txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Resources/Tests/2.Test_Assertion (not working).txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Resources/Tests/1.Test_DBZ_small.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Resources/Tests/2.Test_Assertion (not working 2).txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Resources/CVDS-Info.plist" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Resources/Launch Screen.storyboard" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ATableAnimationCalculator/ATableAnimationCalculator.h" isTestSource="false" />

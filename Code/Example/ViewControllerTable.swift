@@ -19,12 +19,16 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        calculator.cellModelComparator = { left, right in
-            return left.header < right.header
-                   ? true
-                   : left.header > right.header
-                       ? false
-                       : left.text < right.text
+        calculator.cellModelComparator = { lhs, rhs in
+            if lhs.header < rhs.header {
+                return true
+            } else {
+                if lhs.header > rhs.header {
+                    return false
+                } else {
+                    return Int(lhs.text) < Int(rhs.text)
+                }
+            }
         }
 
         initData()
@@ -176,11 +180,15 @@ extension ViewControllerTable {
         time += dTime
         dispatch_after_main(time) {
             self.calculator.cellModelComparator = { rhs, lhs in
-                return lhs.header < rhs.header
-                       ? true
-                       : lhs.header > rhs.header
-                               ? false
-                               : lhs.text < rhs.text
+                if lhs.header < rhs.header {
+                    return true
+                } else {
+                    if lhs.header > rhs.header {
+                        return false
+                    } else {
+                        return Int(lhs.text) < Int(rhs.text)
+                    }
+                }
             }
 
             print("••••••••••••••••••••••••••••••••••••• RESORTING all... :)")

@@ -1,0 +1,28 @@
+--------------------------------------------- Old items:
+  Header: "A"; Text: "1"; id: 7828EC06-9910-408B-AF68-34AE86D6AEF3,
+  Header: "A"; Text: "4"; id: 69B05217-4BCE-49E7-9471-29120D2DAAC7,
+  Header: "A"; Text: "12"; id: 8FCC57A3-3D41-4769-8E68-C155ECEDAD6F,
+  Header: "A"; Text: "13"; id: 14345914-8E99-4C19-8E5F-B20242324F82,
+  Header: "B"; Text: "3"; id: C68844A4-E837-41AA-B12C-B9FD25706082,
+  Header: "B"; Text: "7"; id: 355F791F-8FA0-4D7F-89AF-7B46C98EBCC5,
+  Header: "B"; Text: "7"; id: 7B75A88E-531F-42FB-944E-8890BDBDCDAC,
+  Header: "B"; Text: "10"; id: 04506F89-A9F4-4258-A031-49927EE58DA4,
+  Header: "C"; Text: "1"; id: BB98C676-2A35-4B5D-B361-3A3C101B2567,
+  Header: "C"; Text: "4"; id: 365DAB9E-3133-4FB9-BDD1-75F3CAE6EF3D,
+  Header: "C"; Text: "10"; id: B17A3815-AF55-4CB7-8FA0-1320B80E9E1A,
+  Header: "C"; Text: "11"; id: 16139CCF-5747-4530-AA65-FE32F4D471DD,
+  Header: "C"; Text: "13"; id: 6875D6F6-1331-46CB-A18C-83B78A6D6FE0,
+  Header: "C"; Text: "15"; id: 4951345F-9A67-4CB9-9F74-6AFF07CA90B5,
+  Header: "C"; Text: "16"; id: E7C6D452-DFF0-428C-AC51-80424D78714C,
+  Header: "C"; Text: "19"; id: 1ABC46DA-EEE0-4EAA-9084-4DF965F2BCFB,
+  Header: "D"; Text: "9"; id: 2F161B19-72C6-444B-8AA3-AAD07F8BE914,
+  Header: "D"; Text: "14"; id: DCF29FEC-9E8F-4D2C-BE6A-85C29E88985A,
+  Header: "D"; Text: "14"; id: 34B8D630-E74F-4C28-A546-4CCB49974727,
+  Header: "D"; Text: "19"; id: 61365B89-A92E-41A0-B42E-BA24A016BE63,
+  Header: "E"; Text: "4"; id: 8B42F8F1-B45C-4DD8-B570-B21CA39A2171,
+  Header: "E"; Text: "9"; id: 47F4CD79-EA8B-498F-8AEF-44F3F5F8F4C7,
+--------------------------------------------- Added:
+  Header: "E"; Text: "10"; id: BDCD9C37-FBA6-4B8A-AD10-1A7168F81E2A,
+  Header: "C"; Text: "6"; id: 1370F97D-1C90-4398-B369-4EFA82CBE220
+--------------------------------------------- Updated:
+--------------------------------------------- Deleted:

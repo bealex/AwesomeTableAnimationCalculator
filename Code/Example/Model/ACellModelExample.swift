@@ -28,6 +28,10 @@ class ACellModelExample: ACellModel {
     func contentIsSameAsIn(another: ACellModelExample) -> Bool {
         return text == another.text
     }
+
+    func shortDescription() -> String {
+        return "\(header)/\(text)"
+    }
 }
 
 extension ACellModelExample: CustomDebugStringConvertible {
@@ -64,6 +68,10 @@ class ACellModelExampleObjC: NSObject, ACellModel {
 
     override var debugDescription: String {
         return "Header: \"\(header)\"; Text: \"\(text)\"; id: \(id)"
+    }
+
+    func shortDescription() -> String {
+        return "\(header)/\(text)"
     }
 }
 
