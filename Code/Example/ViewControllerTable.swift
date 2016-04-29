@@ -9,11 +9,11 @@ import UIKit
 import AwesomeTableAnimationCalculator
 
 class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    private let tableView:UITableView = UITableView(frame:CGRectZero, style:UITableViewStyle.Plain)
-    private let calculator = ATableAnimationCalculator(cellSectionModel: ACellSectionModelExample())
+    let tableView:UITableView = UITableView(frame:CGRectZero, style:UITableViewStyle.Plain)
+    let calculator = ATableAnimationCalculator(cellSectionModel: ACellSectionModelExample())
 
     override func prefersStatusBarHidden() -> Bool {
-        return true
+        return false
     }
 
     override func viewDidLoad() {
@@ -31,8 +31,6 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
             }
         }
 
-        initData()
-
         self.view.backgroundColor = UIColor.whiteColor()
 
         tableView.backgroundColor = UIColor.clearColor()
@@ -46,9 +44,10 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
 
         self.view.addSubview(tableView)
 
-        tableView.reloadData()
+        initData()
+//        startTest()
 
-        startTest()
+        enableEditing()
     }
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -107,15 +106,17 @@ extension ViewControllerTable {
     func initData() {
         try! calculator.setItems([
                 ACellModelExample(text: "1", header: "A"),
-                ACellModelExample(text: "2", header: "B"),
-                ACellModelExample(text: "3", header: "B"),
-                ACellModelExample(text: "4", header: "C"),
-                ACellModelExample(text: "5", header: "C")
+                ACellModelExample(text: "2", header: "A"),
+                ACellModelExample(text: "3", header: "A"),
+                ACellModelExample(text: "4", header: "A"),
+                ACellModelExample(text: "5", header: "A")
         ])
 
         print("--------------------------------------------- NewItems:")
         print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
         print("---------------------------------------------\n\n")
+
+        tableView.reloadData()
     }
 
     func startTest() {
@@ -223,3 +224,40 @@ extension ViewControllerTable {
     }
 }
 
+extension ViewControllerTable {
+    func enableEditing() {
+        calculator.cellModelComparator = { lhs, rhs in
+            return false
+        }
+
+        self.tableView.setEditing(true, animated:true)
+    }
+
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            let itemsToAnimate = try! calculator.removeItem(withIndex:indexPath)
+            itemsToAnimate.applyTo(tableView:self.tableView);
+
+            print("\n\n\n--------------------------------------------- NewItems:")
+            print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+            print("---------------------------------------------\n\n")
+        }
+    }
+
+    func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        let itemsToAnimate = try! calculator.swapItems(withIndex:sourceIndexPath, toIndex:destinationIndexPath)
+        itemsToAnimate.applyTo(tableView:self.tableView);
+
+        print("\n\n\n--------------------------------------------- NewItems:")
+        print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("---------------------------------------------\n\n")
+    }
+}

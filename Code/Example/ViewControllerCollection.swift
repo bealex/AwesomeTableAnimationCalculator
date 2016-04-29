@@ -15,7 +15,7 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
     private var iterationIndex = 1
 
     override func prefersStatusBarHidden() -> Bool {
-        return true
+        return false
     }
 
     override func viewDidLoad() {
@@ -60,7 +60,7 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
 //        runTestFromBundledFile("2.Test_Assertion (not working).txt")
 
         initData()
-        startTest()
+//        startTest()
     }
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -335,4 +335,3 @@ extension ViewControllerCollection {
         }
     }
 }
-

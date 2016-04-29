@@ -151,12 +151,44 @@ public extension ATableAnimationCalculator {
 
         return try setItems(itemsToProcess)
     }
+
+    func removeItem(withIndex indexPath:NSIndexPath) throws -> ATableDiff {
+        var itemsToProcess = Array<ACellModelType>(items)
+        itemsToProcess.removeAtIndex(section(withIndex:indexPath.section).startIndex + indexPath.row)
+        return try setItems(itemsToProcess)
+    }
+
+    func swapItems(withIndex sourceIndexPath:NSIndexPath, toIndex destinationIndexPath:NSIndexPath) throws -> ATableDiff {
+        var itemsToProcess = Array<ACellModelType>(items)
+
+        let sourceIndex = section(withIndex:sourceIndexPath.section).startIndex + sourceIndexPath.row
+        let destinationIndex = section(withIndex:destinationIndexPath.section).startIndex + destinationIndexPath.row
+
+        let tmpValue = itemsToProcess.removeAtIndex(sourceIndex)
+        itemsToProcess.insert(tmpValue, atIndex:destinationIndex)
+
+        items = itemsToProcess
+
+        return ATableDiff(
+                updatedPaths:[],
+                updatedSectionHeaders:NSIndexSet(),
+
+                deletedPaths:[],
+                deletedSections:NSIndexSet(),
+
+                addedPaths:[],
+                addedSections:NSIndexSet(),
+
+                movedSections:[],
+                movedPaths:[(sourceIndexPath, destinationIndexPath)]
+        )
+    }
 }
 
 //MARK: Private methods for finding lists difference
 private extension ATableAnimationCalculator {
     private var DEBUG_ENABLED: Bool {
-        return false
+        return true
     }
 
     func calculateDiff(items newShinyItems:[ACellModelType]) throws -> ATableDiff {

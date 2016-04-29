@@ -17,10 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
 
         if let window = window {
-            viewController = ViewControllerCollection()
-            viewController?.view.frame = window.bounds
+            viewController = ViewControllerTable()
 
-            window.rootViewController = viewController
+            let navigationController = UINavigationController(rootViewController:viewController!)
+
+            navigationController.view.frame = window.bounds
+            window.rootViewController = navigationController
 
             window.makeKeyAndVisible()
         }

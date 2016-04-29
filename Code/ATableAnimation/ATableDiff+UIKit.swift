@@ -115,7 +115,7 @@ public extension ATableDiff {
 
         let completion = { (_:Bool) in
             let hackyUpdates = {
-                if self.movedPaths.count != 0 {
+                if self.movedPaths.count > 0 {
                     // Hack, because move does not update target items
                     var updatedIndexPaths:[NSIndexPath] = []
 
@@ -123,11 +123,11 @@ public extension ATableDiff {
                         updatedIndexPaths.append(indexPathTo)
                     }
 
-                    tableView.reloadRowsAtIndexPaths(updatedIndexPaths, withRowAnimation:.Automatic)
+                    tableView.reloadRowsAtIndexPaths(updatedIndexPaths, withRowAnimation:.None)
                 }
 
                 if (self.updatedSectionHeaders.count != 0) {
-                    tableView.reloadSections(self.updatedSectionHeaders, withRowAnimation:.Automatic)
+                    tableView.reloadSections(self.updatedSectionHeaders, withRowAnimation:.None)
                 }
             }
 
@@ -142,6 +142,9 @@ public extension ATableDiff {
         tableView.beginUpdates()
         updates()
         tableView.endUpdates()
-        completion(true)
+
+        dispatch_async(dispatch_get_main_queue()) {
+            completion(true)
+        }
     }
 }
