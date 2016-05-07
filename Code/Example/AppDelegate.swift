@@ -17,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
 
         if let window = window {
-            viewController = ViewControllerTable()
+            viewController = ViewControllerCollection()
+//            viewController = ViewControllerTable()
 
             let navigationController = UINavigationController(rootViewController:viewController!)
 
