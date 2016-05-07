@@ -48,6 +48,8 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
 //        startTest()
 
         enableEditing()
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title:"Add Random", style:.Plain, target:self, action:#selector(addRandomTapped))
     }
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -259,5 +261,16 @@ extension ViewControllerTable {
         print("\n\n\n--------------------------------------------- NewItems:")
         print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
         print("---------------------------------------------\n\n")
+    }
+
+    func addRandomTapped(sender:AnyObject?) {
+        let newIndex = Int(arc4random_uniform(UInt32(calculator.items.count)))
+        let newIndexTitle = "\(newIndex) +"
+
+        var newItems = calculator.items
+        newItems.insert(ACellModelExample(text:newIndexTitle, header: "A"), atIndex:newIndex)
+
+        let itemsToAnimate = try! calculator.setItems(newItems)
+        itemsToAnimate.applyTo(tableView:self.tableView);
     }
 }

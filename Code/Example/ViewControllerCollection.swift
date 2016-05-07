@@ -60,7 +60,7 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
 //        runTestFromBundledFile("2.Test_Assertion (not working).txt")
 
         initData()
-//        startTest()
+        startTest()
     }
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -293,7 +293,7 @@ extension ViewControllerCollection {
 
         itemsToAnimate.applyTo(collectionView:collectionView) {
             self.iterationIndex += 1
-            dispatch_after_main(1) {
+            dispatch_after_main(0.6) {
                 self.runRandomTest()
             }
         }

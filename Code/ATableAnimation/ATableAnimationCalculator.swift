@@ -167,21 +167,23 @@ public extension ATableAnimationCalculator {
         let tmpValue = itemsToProcess.removeAtIndex(sourceIndex)
         itemsToProcess.insert(tmpValue, atIndex:destinationIndex)
 
-        items = itemsToProcess
+        return try setItems(itemsToProcess)
 
-        return ATableDiff(
-                updatedPaths:[],
-                updatedSectionHeaders:NSIndexSet(),
-
-                deletedPaths:[],
-                deletedSections:NSIndexSet(),
-
-                addedPaths:[],
-                addedSections:NSIndexSet(),
-
-                movedSections:[],
-                movedPaths:[(sourceIndexPath, destinationIndexPath)]
-        )
+//        items = itemsToProcess
+//
+//        return ATableDiff(
+//                updatedPaths:[],
+//                updatedSectionHeaders:NSIndexSet(),
+//
+//                deletedPaths:[],
+//                deletedSections:NSIndexSet(),
+//
+//                addedPaths:[],
+//                addedSections:NSIndexSet(),
+//
+//                movedSections:[],
+//                movedPaths:[(sourceIndexPath, destinationIndexPath)]
+//        )
     }
 }
 
@@ -213,12 +215,285 @@ private extension ATableAnimationCalculator {
             print("New: \(debugPrint(newItems)) | \(debugPrint(newSections))\n");
         }
 
+        var (deletedItemIndexesOld, updatedItemIndexesOld, movedItemIndexesOldNew) =
+                findDeletedUpdatedMovedItems(oldItems:oldItems, oldSections:oldSections, newItems:newItems, newSections:newSections)
+
+        var insertedItemIndexesNew = findInsertedItems(oldItems:oldItems, newItems:newItems, newSections:newSections)
+
+        // if item is being moved, it must not be updated at the same time
+        updatedItemIndexesOld = updatedItemIndexesOld.filter { updateIndex in
+            return movedItemIndexesOldNew.filter({ $0.0 == updateIndex || $0.1 == updateIndex }).isEmpty
+        }
+
+        if DEBUG_ENABLED {
+            print("- Index Paths (before section calculations):");
+            print("Deleted: \(debugPrint(deletedItemIndexesOld))");
+            print("Updated: \(debugPrint(updatedItemIndexesOld))");
+            print("Inserted: \(debugPrint(insertedItemIndexesNew))");
+            print("Moved: \(debugPrint(movedItemIndexesOldNew))");
+        }
+
+        // removed sections
+        let deletedSectionIndexesOld = findTotallyDestroyedSectionsFrom(oldSections, byDeletedIndexes:deletedItemIndexesOld, insertedIndexes:insertedItemIndexesNew, movedIndexes:movedItemIndexesOldNew)
+        deletedItemIndexesOld = deletedItemIndexesOld.filter { !deletedSectionIndexesOld.contains($0.section) }
+
+        // if section is deleted, we must not delete items from it
+        let movedItemIndexesOldNewFromDestroyedSections = movedItemIndexesOldNew.filter { deletedSectionIndexesOld.contains($0.0.section) }
+        insertedItemIndexesNew.appendContentsOf(movedItemIndexesOldNewFromDestroyedSections.map { $0.1 })
+        movedItemIndexesOldNew = movedItemIndexesOldNew.filter { !deletedSectionIndexesOld.contains($0.0.section) }
+
+        // let's find added sections
+        let insertedSectionIndexesNew = findInsertedSectionsTo(oldSections, byInsertedIndexes:insertedItemIndexesNew, movedIndexes:movedItemIndexesOldNew)
+
+        // if section is added, we must not insert into it
+        let movedItemIndexesOldNewToInsertedSections = movedItemIndexesOldNew.filter { insertedSectionIndexesNew.contains($0.1.section) }
+        deletedItemIndexesOld.appendContentsOf(movedItemIndexesOldNewToInsertedSections.map { $0.0 })
+        movedItemIndexesOldNew = movedItemIndexesOldNew.filter { !insertedSectionIndexesNew.contains($0.1.section) }
+
+        // moved sections are not used in this version of the algorythm
+        let movedSectionIndexes = [(Int, Int)]()
+
+        let updatedSectionIndexesNew = findUpdatedSections(old:oldSections, new:newSections)
+
+        if DEBUG_ENABLED {
+            print("\n");
+            print("- Index Paths (after section calculations):");
+            print("Deleted: \(debugPrint(deletedItemIndexesOld))");
+            print("Updated: \(debugPrint(updatedItemIndexesOld))");
+            print("Inserted: \(debugPrint(insertedItemIndexesNew))");
+            print("Moved: \(debugPrint(movedItemIndexesOldNew))");
+            print("- Section Indexes:");
+            print("Deleted: \(debugPrint(deletedSectionIndexesOld))");
+            print("Updated: \(debugPrint(updatedSectionIndexesNew))");
+            print("Inserted: \(debugPrint(insertedSectionIndexesNew))");
+            print("Moved: \(debugPrint(movedSectionIndexes))");
+        }
+
+        movedItemIndexesOldNew = removeRedundantMovesAfterDeletesAndInsertions(
+                from:movedItemIndexesOldNew,
+                deletedIndexes:deletedItemIndexesOld,
+                deletedSections:deletedSectionIndexesOld,
+                insertedIndexes:insertedItemIndexesNew,
+                insertedSections:insertedSectionIndexesNew)
+
+        movedItemIndexesOldNew = removeRedundantMovesAfterOtherMoves(movedItemIndexesOldNew)
+
+        if DEBUG_ENABLED {
+            print("\n");
+            print("- Index Paths (after optimizations):");
+            print("Deleted: \(debugPrint(deletedItemIndexesOld))");
+            print("Updated: \(debugPrint(updatedItemIndexesOld))");
+            print("Inserted: \(debugPrint(insertedItemIndexesNew))");
+            print("Moved: \(debugPrint(movedItemIndexesOldNew))");
+            print("- Section Indexes:");
+            print("Deleted: \(debugPrint(deletedSectionIndexesOld))");
+            print("Updated: \(debugPrint(updatedSectionIndexesNew))");
+            print("Inserted: \(debugPrint(insertedSectionIndexesNew))");
+            print("Moved: \(debugPrint(movedSectionIndexes))");
+        }
+
+        items = newItems
+        sections = newSections
+
+        return ATableDiff(
+            updatedPaths:updatedItemIndexesOld,
+            updatedSectionHeaders: updatedSectionIndexesNew,
+
+            deletedPaths:deletedItemIndexesOld,
+            deletedSections: deletedSectionIndexesOld,
+
+            addedPaths:insertedItemIndexesNew,
+            addedSections:insertedSectionIndexesNew,
+
+            movedSections:movedSectionIndexes,
+            movedPaths:movedItemIndexesOldNew
+        )
+    }
+
+    // [indexPathPairs: 0-0 -> 0-1, 0-1 -> 0-2, 0-2 -> 0-3, 0-3 -> 0-4, 0-4 -> 0-0]
+    // must be resolved to
+    // [indexPathPairs: 0-4 -> 0-0]
+    // and
+    // [indexPathPairs: 0-0 -> 0-4, 0-1 -> 0-0, 0-2 -> 0-1, 0-3 -> 0-2, 0-4 -> 0-3]
+    // to
+    // [indexPathPairs: 0-0 -> 0-4]
+    func removeRedundantMovesAfterOtherMoves(movedIndexes:[(NSIndexPath, NSIndexPath)]) -> [(NSIndexPath, NSIndexPath)] {
+        var newMovedIndexes = [(NSIndexPath, NSIndexPath)]()
+        var indexesToProcess = movedIndexes
+
+        while !indexesToProcess.isEmpty {
+            let moveIndex = indexesToProcess.removeFirst()
+
+            if moveIndex.0.section != moveIndex.1.section {
+                // skip moves between sections
+                newMovedIndexes.append(moveIndex)
+            } else {
+                let chain = findChain(startingFrom:moveIndex, indexes:movedIndexes)
+                if chain.count == 1 {
+                    newMovedIndexes.append(moveIndex)
+                } else {
+                    if let longestMove = findLongestMoveFor(chain) {
+                        newMovedIndexes.append(longestMove)
+                        chain.forEach { itemToRemove in
+                            if let indexToRemove = indexesToProcess.indexOf({$0 == itemToRemove}) {
+                                indexesToProcess.removeAtIndex(indexToRemove)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return newMovedIndexes
+    }
+
+    func findLongestMoveFor(chain:[(NSIndexPath, NSIndexPath)]) -> (NSIndexPath, NSIndexPath)? {
+        if let longJump = chain.filter({ abs($0.0.row - $0.1.row) > 1 }).first {
+            return longJump
+        } else if chain.count == 2 && chain.filter({ abs($0.0.row - $0.1.row) == 1 }).count == chain.count {
+            // close swap
+            return chain.first
+        }
+
+        return nil
+    }
+
+    func findChain(startingFrom startIndexes:(NSIndexPath, NSIndexPath), indexes:[(NSIndexPath, NSIndexPath)]) -> [(NSIndexPath, NSIndexPath)] {
+        assert(startIndexes.0.section == startIndexes.1.section)
+
+        var chain = [(NSIndexPath, NSIndexPath)]()
+        chain.append(startIndexes)
+
+        var lastIndexes = startIndexes
+        var weHaveLongJump = abs(startIndexes.0.row - startIndexes.1.row) > 1
+
+        var chainIsCyclic = false
+
+        while let nextInChain = indexes.filter({ $0.0 == lastIndexes.1 && $0.1.section == lastIndexes.0.section }).first {
+            if nextInChain == startIndexes {
+                chainIsCyclic = true
+                break
+            }
+
+            // we are searching for the continiuos cyclic move chain.
+            let longJump = abs(nextInChain.0.row - nextInChain.1.row) > 1
+            if weHaveLongJump && longJump {
+                chain.removeAll()
+                chain.append(startIndexes)
+                break
+            }
+            weHaveLongJump = longJump
+
+            chain.append(nextInChain)
+            lastIndexes = nextInChain
+        }
+
+        if !chainIsCyclic {
+            chain.removeAll()
+            chain.append(startIndexes)
+        }
+
+        return chain
+    }
+
+    func removeRedundantMovesAfterDeletesAndInsertions(from from:[(NSIndexPath, NSIndexPath)],
+                                                       deletedIndexes:[NSIndexPath], deletedSections:NSIndexSet,
+                                                       insertedIndexes:[NSIndexPath], insertedSections:NSIndexSet) -> [(NSIndexPath, NSIndexPath)] {
+        var originalMoveIndexes = from
+
+        // process deleted sections
+        var movedIndexes:[(NSIndexPath, NSIndexPath)] = from.map { (oldIndex, newIndex) in
+            let movedDownBy = deletedSections.indexesPassingTest ({ (index, finished) in
+                return index < oldIndex.section
+            }).count
+
+            return (NSIndexPath(forItem:oldIndex.row, inSection:oldIndex.section - movedDownBy), newIndex)
+        }
+
+        // process deleted items
+        movedIndexes = movedIndexes.map { (oldIndex, newIndex) in
+            if oldIndex.section != newIndex.section {
+                return (oldIndex, newIndex)
+            } else {
+                let movedDownBy = deletedIndexes.filter({ deletedIndex in
+                    return deletedIndex.section == oldIndex.section && deletedIndex.row < oldIndex.row
+                }).count
+
+                return (NSIndexPath(forItem:oldIndex.row - movedDownBy, inSection:oldIndex.section), newIndex)
+            }
+        }
+
+        // remove items that became the same
+        var newMovedIndexes = [(NSIndexPath, NSIndexPath)]()
+        for i in 0 ..< movedIndexes.count {
+            let movedIndex = movedIndexes[i]
+            if movedIndex.0 != movedIndex.1 {
+                newMovedIndexes.append(originalMoveIndexes[i])
+            }
+        }
+
+        movedIndexes = newMovedIndexes
+        originalMoveIndexes = movedIndexes
+
+        // process inserted sections
+        movedIndexes = movedIndexes.map { (oldIndex, newIndex) in
+            let movedDownBy = insertedSections.indexesPassingTest ({ (index, finished) in
+                return index < newIndex.section
+            }).count
+
+            return (oldIndex, NSIndexPath(forItem:newIndex.row, inSection:newIndex.section - movedDownBy))
+        }
+
+        // process inserted items
+        movedIndexes = movedIndexes.map { (oldIndex, newIndex) in
+            if oldIndex.section != newIndex.section {
+                return (oldIndex, newIndex)
+            } else {
+                let movedDownBy = insertedIndexes.filter({ insertedIndex in
+                    return insertedIndex.section == oldIndex.section && insertedIndex.row < newIndex.row
+                }).count
+
+                return (oldIndex, NSIndexPath(forItem:newIndex.row - movedDownBy, inSection:newIndex.section))
+            }
+        }
+
+        // remove items that became the same
+        newMovedIndexes.removeAll()
+        for i in 0 ..< movedIndexes.count {
+            let movedIndex = movedIndexes[i]
+            if movedIndex.0 != movedIndex.1 {
+                newMovedIndexes.append(originalMoveIndexes[i])
+            }
+        }
+
+        movedIndexes = newMovedIndexes
+
+        return movedIndexes
+    }
+
+    func findInsertedItems(oldItems oldItems:[ACellModelType], newItems:[ACellModelType], newSections:[ASectionModelType]) -> [NSIndexPath] {
+        var insertedItemIndexesNew = [NSIndexPath]()
+
+        // let's find new elements
+        for newIndex in 0 ..< newItems.count {
+            let newItem = newItems[newIndex]
+            let newIndexPath = indexPath(forItemIndex:newIndex, usingSections:newSections)!
+
+            if oldItems.indexOf(newItem) == nil {
+                insertedItemIndexesNew.append(newIndexPath)
+            }
+        }
+
+        return insertedItemIndexesNew
+    }
+
+    func findDeletedUpdatedMovedItems(oldItems oldItems:[ACellModelType], oldSections:[ASectionModelType], newItems:[ACellModelType], newSections:[ASectionModelType])
+                    -> ([NSIndexPath], [NSIndexPath], [(NSIndexPath, NSIndexPath)]) {
         var deletedItemIndexesOld = [NSIndexPath]()
         var updatedItemIndexesOld = [NSIndexPath]()
-        var insertedItemIndexesNew = [NSIndexPath]()
         var movedItemIndexesOldNew = [(NSIndexPath, NSIndexPath)]()
 
-        // найдем удаления перемещения и обновления
+        // let's find item updates and deletions
         //ToDo: убрать все «!»
         for oldIndex in 0 ..< oldItems.count {
             let oldItem = oldItems[oldIndex]
@@ -240,81 +515,7 @@ private extension ATableAnimationCalculator {
             }
         }
 
-        // найдем новые элементы
-        for newIndex in 0 ..< newItems.count {
-            let newItem = newItems[newIndex]
-            let newIndexPath = indexPath(forItemIndex:newIndex, usingSections:newSections)!
-
-            if oldItems.indexOf(newItem) == nil {
-                insertedItemIndexesNew.append(newIndexPath)
-            }
-        }
-
-        // почистим апдейты от тех, которые перемещаются
-        updatedItemIndexesOld = updatedItemIndexesOld.filter { updateIndex in
-            return movedItemIndexesOldNew.filter({ $0.0 == updateIndex || $0.1 == updateIndex }).isEmpty
-        }
-
-        if DEBUG_ENABLED {
-            print("- Index Paths (before section calculations):");
-            print("Deleted: \(debugPrint(deletedItemIndexesOld))");
-            print("Updated: \(debugPrint(updatedItemIndexesOld))");
-            print("Inserted: \(debugPrint(insertedItemIndexesNew))");
-            print("Moved: \(debugPrint(movedItemIndexesOldNew))");
-        }
-
-        // найдем уничтоженные секции
-        let deletedSectionIndexesOld = findTotallyDestroyedSectionsFrom(oldSections, byDeletedIndexes:deletedItemIndexesOld, insertedIndexes:insertedItemIndexesNew, movedIndexes:movedItemIndexesOldNew)
-        deletedItemIndexesOld = deletedItemIndexesOld.filter { !deletedSectionIndexesOld.contains($0.section) }
-
-        // если секция уничтожена, то переместить из нее не можем
-        let movedItemIndexesOldNewFromDestroyedSections = movedItemIndexesOldNew.filter { deletedSectionIndexesOld.contains($0.0.section) }
-        insertedItemIndexesNew.appendContentsOf(movedItemIndexesOldNewFromDestroyedSections.map { $0.1 })
-        movedItemIndexesOldNew = movedItemIndexesOldNew.filter { !deletedSectionIndexesOld.contains($0.0.section) }
-
-        // найдем добавленные секции
-        let insertedSectionIndexesNew = findInsertedSectionsTo(oldSections, byInsertedIndexes:insertedItemIndexesNew, movedIndexes:movedItemIndexesOldNew)
-
-        // если секция добавлена, то переместить в нее не можем
-        let movedItemIndexesOldNewToInsertedSections = movedItemIndexesOldNew.filter { insertedSectionIndexesNew.contains($0.1.section) }
-        deletedItemIndexesOld.appendContentsOf(movedItemIndexesOldNewToInsertedSections.map { $0.0 })
-        movedItemIndexesOldNew = movedItemIndexesOldNew.filter { !insertedSectionIndexesNew.contains($0.1.section) }
-
-        let updatedSectionIndexesNew = findUpdatedSections(old:oldSections, new:newSections)
-
-        if DEBUG_ENABLED {
-            print("\n");
-            print("- Index Paths (after section calculations):");
-            print("Deleted: \(debugPrint(deletedItemIndexesOld))");
-            print("Updated: \(debugPrint(updatedItemIndexesOld))");
-            print("Inserted: \(debugPrint(insertedItemIndexesNew))");
-            print("Moved: \(debugPrint(movedItemIndexesOldNew))");
-
-            print("- Section Indexes:");
-            print("Deleted: \(debugPrint(deletedSectionIndexesOld))");
-            print("Updated: \(debugPrint(updatedSectionIndexesNew))");
-            print("Inserted: \(debugPrint(insertedSectionIndexesNew))");
-//            print("Moved: \(debugPrint(movedItemIndexesOldNew))");
-        }
-
-        let movedSectionIndexes = [(Int, Int)]()
-
-        items = newItems
-        sections = newSections
-
-        return ATableDiff(
-            updatedPaths:updatedItemIndexesOld,
-            updatedSectionHeaders: updatedSectionIndexesNew,
-
-            deletedPaths:deletedItemIndexesOld,
-            deletedSections: deletedSectionIndexesOld,
-
-            addedPaths:insertedItemIndexesNew,
-            addedSections:insertedSectionIndexesNew,
-
-            movedSections:movedSectionIndexes,
-            movedPaths:movedItemIndexesOldNew
-        )
+        return (deletedItemIndexesOld, updatedItemIndexesOld, movedItemIndexesOldNew)
     }
 
     func findUpdatedSections(old oldSections:[ASectionModelType], new newSections:[ASectionModelType]) -> NSIndexSet {
@@ -331,7 +532,9 @@ private extension ATableAnimationCalculator {
         return result
     }
 
-    func findInsertedSectionsTo(sectionsData:[ASectionModelType], byInsertedIndexes insertedIndexes:[NSIndexPath], movedIndexes:[(NSIndexPath, NSIndexPath)]) -> NSIndexSet {
+    func findInsertedSectionsTo(sectionsData:[ASectionModelType],
+                                byInsertedIndexes insertedIndexes:[NSIndexPath],
+                                movedIndexes:[(NSIndexPath, NSIndexPath)]) -> NSIndexSet {
         let result = NSMutableIndexSet()
 
         for insertedIndex in insertedIndexes {
@@ -349,7 +552,10 @@ private extension ATableAnimationCalculator {
         return result
     }
 
-    func findTotallyDestroyedSectionsFrom(sectionsData:[ASectionModelType], byDeletedIndexes deletedIndexes:[NSIndexPath], insertedIndexes:[NSIndexPath], movedIndexes:[(NSIndexPath, NSIndexPath)]) -> NSIndexSet {
+    func findTotallyDestroyedSectionsFrom(sectionsData:[ASectionModelType],
+                                          byDeletedIndexes deletedIndexes:[NSIndexPath],
+                                          insertedIndexes:[NSIndexPath],
+                                          movedIndexes:[(NSIndexPath, NSIndexPath)]) -> NSIndexSet {
         let result = NSMutableIndexSet()
 
         for sectionIndex in 0 ..< sectionsData.count {
