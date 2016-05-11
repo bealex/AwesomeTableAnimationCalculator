@@ -106,6 +106,24 @@ public extension ATableAnimationCalculator {
     func item(withIndex index:Int) -> ACellModelType {
         return items[index]
     }
+
+    /**
+     - returns: NSIndexPath of a specified item, or nil if item is not in the model
+     */
+    func indexPath(forItem item:ACellModelType) -> NSIndexPath? {
+        if let index = items.indexOf(item) {
+            return indexPath(forItemIndex:index, usingSections:sections)
+        } else {
+            return nil
+        }
+    }
+
+    /**
+     - returns: NSIndexPath of a specified item index, or nil if item is not in the model
+     */
+    func indexPath(forItemIndex itemIndex:Int) -> NSIndexPath? {
+        return indexPath(forItemIndex:itemIndex, usingSections:sections)
+    }
 }
 
 //MARK: Public methods for adding/removing items
