@@ -55,7 +55,9 @@ public class ATableAnimationCalculator<ACellSectionModelType:ACellSectionModel>:
 
     public private(set) var items:[ACellModelType] = []
     public private(set) var sections:[ASectionModelType] = []
-
+    
+    public var printDebugLogs: Bool = false
+    
     public lazy var cellModelComparator:(ACellModelType, ACellModelType) -> Bool = { left, right in
         let indexLeft = self.items.indexOf(left)
         let indexRight = self.items.indexOf(right)
@@ -186,31 +188,11 @@ public extension ATableAnimationCalculator {
         itemsToProcess.insert(tmpValue, atIndex:destinationIndex)
 
         return try setItems(itemsToProcess)
-
-//        items = itemsToProcess
-//
-//        return ATableDiff(
-//                updatedPaths:[],
-//                updatedSectionHeaders:NSIndexSet(),
-//
-//                deletedPaths:[],
-//                deletedSections:NSIndexSet(),
-//
-//                addedPaths:[],
-//                addedSections:NSIndexSet(),
-//
-//                movedSections:[],
-//                movedPaths:[(sourceIndexPath, destinationIndexPath)]
-//        )
     }
 }
 
 //MARK: Private methods for finding lists difference
 private extension ATableAnimationCalculator {
-    private var DEBUG_ENABLED: Bool {
-        return true
-    }
-
     func calculateDiff(items newShinyItems:[ACellModelType]) throws -> ATableDiff {
         let newItems = newShinyItems.map({ ACellModelType(copy:$0) }).sort(cellModelComparator)
         let newSections:[ASectionModelType] = sections(fromItems:newItems)
@@ -228,7 +210,7 @@ private extension ATableAnimationCalculator {
         let oldItems = items
         let oldSections = sections
 
-        if DEBUG_ENABLED {
+        if self.printDebugLogs {
             print("Old: \(debugPrint(oldItems)) | \(debugPrint(oldSections))");
             print("New: \(debugPrint(newItems)) | \(debugPrint(newSections))\n");
         }
@@ -243,7 +225,7 @@ private extension ATableAnimationCalculator {
             return movedItemIndexesOldNew.filter({ $0.0 == updateIndex || $0.1 == updateIndex }).isEmpty
         }
 
-        if DEBUG_ENABLED {
+        if self.printDebugLogs {
             print("- Index Paths (before section calculations):");
             print("Deleted: \(debugPrint(deletedItemIndexesOld))");
             print("Updated: \(debugPrint(updatedItemIndexesOld))");
@@ -273,7 +255,7 @@ private extension ATableAnimationCalculator {
 
         let updatedSectionIndexesNew = findUpdatedSections(old:oldSections, new:newSections)
 
-        if DEBUG_ENABLED {
+        if self.printDebugLogs {
             print("\n");
             print("- Index Paths (after section calculations):");
             print("Deleted: \(debugPrint(deletedItemIndexesOld))");
@@ -296,7 +278,7 @@ private extension ATableAnimationCalculator {
 
         movedItemIndexesOldNew = removeRedundantMovesAfterOtherMoves(movedItemIndexesOldNew)
 
-        if DEBUG_ENABLED {
+        if self.printDebugLogs {
             print("\n");
             print("- Index Paths (after optimizations):");
             print("Deleted: \(debugPrint(deletedItemIndexesOld))");
@@ -683,7 +665,6 @@ private extension ATableAnimationCalculator {
 
     func debugPrint(cells:[ACellModelType]) -> String {
         return debugPrint(name:"", strings:cells.map { "\($0)" })
-//        return debugPrint(name:"", strings:cells.map { "\($0.shortDescription())" })
     }
 
     func debugPrint(sections:[ASectionModelType]) -> String {

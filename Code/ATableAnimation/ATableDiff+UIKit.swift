@@ -15,6 +15,13 @@ public extension ATableDiff {
     }
 
     func applyTo(collectionView collectionView:UICollectionView, completionHandler:(() -> Void)?) {
+        if self.isEmpty() {
+            if let completionHandler = completionHandler {
+                completionHandler()
+            }
+            return
+        }
+        
         let updates = {
             if self.updatedPaths.count != 0 {
                 collectionView.reloadItemsAtIndexPaths(self.updatedPaths)
@@ -82,6 +89,13 @@ public extension ATableDiff {
     }
 
     func applyTo(tableView tableView:UITableView, completionHandler:(() -> Void)?) {
+        if self.isEmpty() {
+            if let completionHandler = completionHandler {
+                completionHandler()
+            }
+            return
+        }
+        
         let updates = {
             if self.updatedPaths.count != 0 {
                 tableView.reloadRowsAtIndexPaths(self.updatedPaths, withRowAnimation:.Automatic)
