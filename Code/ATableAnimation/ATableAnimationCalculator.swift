@@ -210,7 +210,7 @@ private extension ATableAnimationCalculator {
         let oldItems = items
         let oldSections = sections
 
-        if self.printDebugLogs {
+        if printDebugLogs {
             print("Old: \(debugPrint(oldItems)) | \(debugPrint(oldSections))");
             print("New: \(debugPrint(newItems)) | \(debugPrint(newSections))\n");
         }
@@ -225,7 +225,7 @@ private extension ATableAnimationCalculator {
             return movedItemIndexesOldNew.filter({ $0.0 == updateIndex || $0.1 == updateIndex }).isEmpty
         }
 
-        if self.printDebugLogs {
+        if printDebugLogs {
             print("- Index Paths (before section calculations):");
             print("Deleted: \(debugPrint(deletedItemIndexesOld))");
             print("Updated: \(debugPrint(updatedItemIndexesOld))");
@@ -255,7 +255,7 @@ private extension ATableAnimationCalculator {
 
         let updatedSectionIndexesNew = findUpdatedSections(old:oldSections, new:newSections)
 
-        if self.printDebugLogs {
+        if printDebugLogs {
             print("\n");
             print("- Index Paths (after section calculations):");
             print("Deleted: \(debugPrint(deletedItemIndexesOld))");
@@ -278,7 +278,7 @@ private extension ATableAnimationCalculator {
 
         movedItemIndexesOldNew = removeRedundantMovesAfterOtherMoves(movedItemIndexesOldNew)
 
-        if self.printDebugLogs {
+        if printDebugLogs {
             print("\n");
             print("- Index Paths (after optimizations):");
             print("Deleted: \(debugPrint(deletedItemIndexesOld))");
