@@ -17,10 +17,10 @@ public protocol ACellSectionModel {
     /**
      Checks, if two cells are in the same section.
      */
-    func cellsHaveSameSection(one one:ACellModelType, another:ACellModelType) -> Bool
+    func cellsHaveSameSection(one: ACellModelType, another: ACellModelType) -> Bool
 
     /**
      Creates a section for the specified cell.
      */
-    func createSection(forCell cell:ACellModelType) -> ASectionModelType
+    func createSection(forCell cell: ACellModelType) -> ASectionModelType
 }

@@ -13,14 +13,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var viewController: UIViewController?
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject:AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]?) -> Bool {
         window = UIWindow()
 
         if let window = window {
             viewController = ViewControllerCollection()
 //            viewController = ViewControllerTable()
 
-            let navigationController = UINavigationController(rootViewController:viewController!)
+            let navigationController = UINavigationController(rootViewController: viewController!)
 
             navigationController.view.frame = window.bounds
             window.rootViewController = navigationController
@@ -28,25 +28,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window.makeKeyAndVisible()
         }
 
-//        // just a small test of ObjC code
+        // just a small test of ObjC code
 //        ObjCTest().test()
 
         return true
     }
 
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
     }
 }
 

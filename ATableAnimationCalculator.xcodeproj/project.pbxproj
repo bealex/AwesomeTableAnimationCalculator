@@ -276,9 +276,11 @@
 				TargetAttributes = {
 					FA3C828C1CC39305009A7E4D = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 					};
 					FAECAF291CC8D0BB000548EB = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -452,6 +454,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Babaev (H8VN44VCRU)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/CVDS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -461,6 +464,7 @@
 				PROVISIONING_PROFILE = "f81becb9-de47-4324-8fef-555b3cc4f88e";
 				SWIFT_OBJC_BRIDGING_HEADER = "Code/Example/ObjC/ATableAnimationCalculator-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -477,6 +481,7 @@
 				PROVISIONING_PROFILE = "f81becb9-de47-4324-8fef-555b3cc4f88e";
 				SWIFT_OBJC_BRIDGING_HEADER = "Code/Example/ObjC/ATableAnimationCalculator-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -485,6 +490,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Babaev (H8VN44VCRU)";
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -496,6 +502,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lonelybytes.ATableAnimationCalculator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -518,6 +525,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lonelybytes.ATableAnimationCalculator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";

@@ -9,16 +9,16 @@ import Foundation
 import UIKit
 
 
-func dispatch_async_main(closure:() -> Void) {
-    dispatch_async(dispatch_get_main_queue(), closure)
+func dispatch_async_main(_ closure: @escaping () -> Void) {
+    DispatchQueue.main.async(execute: closure)
 }
 
-func dispatch_async_background(closure:() -> Void) {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), closure)
+func dispatch_async_background(_ closure: @escaping () -> Void) {
+    DispatchQueue.global(qos: .background).async(execute: closure)
 }
 
-func dispatch_after_main(sec:NSTimeInterval, closure:() -> Void) {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(sec*Double(NSEC_PER_SEC))), dispatch_get_main_queue(), closure)
+func dispatch_after_main(_ sec: TimeInterval, closure: @escaping () -> Void) {
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + sec, execute: closure)
 }
 
 
@@ -36,9 +36,9 @@ class CellViewCollection: UICollectionViewCell {
     }
 
     func createLabel() {
-        label.frame = self.contentView.bounds.insetBy(dx:15, dy:0)
-        label.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        label.backgroundColor = UIColor.clearColor()
+        label.frame = self.contentView.bounds.insetBy(dx: 15, dy: 0)
+        label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        label.backgroundColor = .clear
 
         self.contentView.addSubview(label)
     }
@@ -65,14 +65,14 @@ class CellHeaderViewCollection: UICollectionReusableView {
     }
 
     func createLabel() {
-        self.backgroundColor = UIColor(colorLiteralRed:0.95, green:0.95, blue:0.95, alpha:1)
+        self.backgroundColor = UIColor(colorLiteralRed: 0.95, green: 0.95, blue: 0.95, alpha: 1)
 
-        label.frame = self.bounds.insetBy(dx:15, dy:0)
+        label.frame = self.bounds.insetBy(dx: 15, dy: 0)
         label.frame.origin.y += 0
 
-        label.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        label.backgroundColor = UIColor.clearColor()
-        label.font = UIFont.boldSystemFontOfSize(9)
+        label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        label.backgroundColor = .clear
+        label.font = UIFont.boldSystemFont(ofSize: 9)
 
         self.addSubview(label)
     }

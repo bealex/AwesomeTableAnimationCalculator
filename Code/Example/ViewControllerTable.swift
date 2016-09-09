@@ -9,10 +9,10 @@ import UIKit
 import AwesomeTableAnimationCalculator
 
 class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    let tableView:UITableView = UITableView(frame:CGRectZero, style:UITableViewStyle.Plain)
+    let tableView: UITableView = UITableView(frame: .zero, style: UITableViewStyle.plain)
     let calculator = ATableAnimationCalculator(cellSectionModel: ACellSectionModelExample())
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden: Bool {
         return false
     }
 
@@ -26,17 +26,17 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
                 if lhs.header > rhs.header {
                     return false
                 } else {
-                    return Int(lhs.text) < Int(rhs.text)
+                    return lhs.text < rhs.text
                 }
             }
         }
 
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = .white
 
-        tableView.backgroundColor = UIColor.clearColor()
+        tableView.backgroundColor = .clear
 
         tableView.frame = self.view.bounds
-        tableView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         tableView.alwaysBounceVertical = true
 
         tableView.dataSource = self
@@ -45,68 +45,67 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
         self.view.addSubview(tableView)
 
         initData()
-//        startTest()
+        startTest()
 
-        enableEditing()
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title:"Add Random", style:.Plain, target:self, action:#selector(addRandomTapped))
+//        enableEditing()
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add Random", style: .plain, target: self, action: #selector(addRandomTapped))
     }
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return calculator.sectionsCount()
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return calculator.itemsCount(inSection:section)
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return calculator.itemsCount(inSection: section)
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("generalCell")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "generalCell")
         if (cell == nil) {
-            cell = UITableViewCell(style:.Default, reuseIdentifier:"generalCell")
+            cell = UITableViewCell(style: .default, reuseIdentifier: "generalCell")
         }
-        cell!.textLabel!.text = calculator.item(forIndexPath:indexPath).text
+        cell!.textLabel!.text = calculator.item(forIndexPath: indexPath).text
         return cell!
     }
 
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let sectionData = calculator.section(withIndex:section)
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let sectionData = calculator.section(withIndex: section)
         return "Header: \(sectionData.title)"
     }
-}
 
-extension ViewControllerTable {
-    func update(items addedItems:[ACellModelExample], updateItemsWithIndexes:[Int], deleteItemsWithIndexes:[Int]) {
-        var updatedItems:[ACellModelExample] = updateItemsWithIndexes.map { index in
-            let updatedValue = ACellModelExample(copy:self.calculator.item(withIndex:index))
+    // MARK: - Updater
+
+    func update(items addedItems: [ACellModelExample], updateItemsWithIndexes: [Int], deleteItemsWithIndexes: [Int]) {
+        var updatedItems: [ACellModelExample] = updateItemsWithIndexes.map { index in
+            let updatedValue = ACellModelExample(copy: self.calculator.item(withIndex: index))
             updatedValue.text = updatedValue.text + " •"
 
             return updatedValue
         }
 
         let deletedItems = deleteItemsWithIndexes.map { index in
-            return self.calculator.item(withIndex:index)
+            return self.calculator.item(withIndex: index)
         }
 
-        updatedItems.appendContentsOf(addedItems)
+        updatedItems.append(contentsOf: addedItems)
 
-        print("\n\n\n--------------------------------------------- Updated:")
-        print("  " + updatedItems.map({ $0.debugDescription }).joinWithSeparator("\n  "))
-        print("--------------------------------------------- Deleted:")
-        print("  " + deletedItems.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
-        print("--------------------------------------------- Changes:")
+        print("\n\n\n--------------------------------------------- Updated: ")
+        print("  " + updatedItems.map({ $0.debugDescription }).joined(separator: "\n  "))
+        print("--------------------------------------------- Deleted: ")
+        print("  " + deletedItems.map({ $0.debugDescription }).joined(separator: ",\n  "))
+        print("--------------------------------------------- Changes: ")
 
-        let itemsToAnimate = try! calculator.updateItems(addOrUpdate:updatedItems, delete:deletedItems)
+        let itemsToAnimate = try! calculator.updateItems(addOrUpdate: updatedItems, delete: deletedItems)
 
-        print("--------------------------------------------- NewItems:")
-        print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("--------------------------------------------- NewItems: ")
+        print("  " + calculator.items.map({ $0.debugDescription }).joined(separator: ",\n  "))
         print("---------------------------------------------\n\n")
 
-        itemsToAnimate.applyTo(tableView:tableView)
+        itemsToAnimate.applyTo(tableView: tableView)
     }
 
     func initData() {
-        try! calculator.setItems([
+        let _ = try! calculator.setItems([
                 ACellModelExample(text: "1", header: "A"),
                 ACellModelExample(text: "2", header: "A"),
                 ACellModelExample(text: "3", header: "A"),
@@ -114,70 +113,70 @@ extension ViewControllerTable {
                 ACellModelExample(text: "5", header: "A")
         ])
 
-        print("--------------------------------------------- NewItems:")
-        print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("--------------------------------------------- NewItems: ")
+        print("  " + calculator.items.map({ $0.debugDescription }).joined(separator: ",\n  "))
         print("---------------------------------------------\n\n")
 
         tableView.reloadData()
     }
 
     func startTest() {
-        let dTime:NSTimeInterval = 1
+        let dTime: TimeInterval = 1
 
-        var time = NSTimeInterval(dTime)
+        var time = TimeInterval(dTime)
         dispatch_after_main(time) {
             self.update(
-                    items:[
-                            ACellModelExample(text:"6", header:"A")
+                    items: [
+                            ACellModelExample(text: "6", header: "A")
                     ],
-                    updateItemsWithIndexes:[2],
-                    deleteItemsWithIndexes:[])
+                    updateItemsWithIndexes: [2],
+                    deleteItemsWithIndexes: [])
         }
 
         time += dTime
         dispatch_after_main(time) {
             self.update(
-                    items:[],
-                    updateItemsWithIndexes:[],
-                    deleteItemsWithIndexes:[1])
+                    items: [],
+                    updateItemsWithIndexes: [],
+                    deleteItemsWithIndexes: [1])
         }
 
         time += dTime
         dispatch_after_main(time) {
             self.update(
-                    items:[
-                            ACellModelExample(text:"10", header:"C"),
-                            ACellModelExample(text:"7", header:"D")
+                    items: [
+                            ACellModelExample(text: "10", header: "C"),
+                            ACellModelExample(text: "7", header: "D")
                     ],
-                    updateItemsWithIndexes:[1],
-                    deleteItemsWithIndexes:[])
+                    updateItemsWithIndexes: [1],
+                    deleteItemsWithIndexes: [])
         }
 
         time += dTime
         dispatch_after_main(time) {
             self.update(
-                    items:[],
-                    updateItemsWithIndexes:[],
-                    deleteItemsWithIndexes:[0, 4])
+                    items: [],
+                    updateItemsWithIndexes: [],
+                    deleteItemsWithIndexes: [0, 4])
         }
 
         time += dTime
         dispatch_after_main(time) {
             self.update(
-                    items:[
-                            ACellModelExample(text:"8", header:"A"),
-                            ACellModelExample(text:"9", header:"C")
+                    items: [
+                            ACellModelExample(text: "8", header: "A"),
+                            ACellModelExample(text: "9", header: "C")
                     ],
-                    updateItemsWithIndexes:[0],
-                    deleteItemsWithIndexes:[1])
+                    updateItemsWithIndexes: [0],
+                    deleteItemsWithIndexes: [1])
         }
 
         time += dTime
         dispatch_after_main(time) {
             self.update(
-                    items:[],
-                    updateItemsWithIndexes:[0, 1, 2, 3, 4],
-                    deleteItemsWithIndexes:[])
+                    items: [],
+                    updateItemsWithIndexes: [0, 1, 2, 3, 4],
+                    deleteItemsWithIndexes: [])
         }
 
         time += dTime
@@ -189,7 +188,7 @@ extension ViewControllerTable {
                     if lhs.header > rhs.header {
                         return false
                     } else {
-                        return Int(lhs.text) < Int(rhs.text)
+                        return lhs.text < rhs.text
                     }
                 }
             }
@@ -198,79 +197,79 @@ extension ViewControllerTable {
 
             let itemsToAnimate = try! self.calculator.resortItems()
 
-            print("--------------------------------------------- NewItems:")
-            print("  " + self.calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+            print("--------------------------------------------- NewItems: ")
+            print("  " + self.calculator.items.map({ $0.debugDescription }).joined(separator: ",\n  "))
             print("---------------------------------------------\n\n")
 
-            itemsToAnimate.applyTo(tableView:self.tableView);
+            itemsToAnimate.applyTo(tableView: self.tableView);
         }
 
         time += dTime
         dispatch_after_main(time) {
-            let moved1 = ACellModelExample(copy:self.calculator.items[3])
-            let moved2 = ACellModelExample(copy:self.calculator.items[0])
+            let moved1 = ACellModelExample(copy: self.calculator.items[3])
+            let moved2 = ACellModelExample(copy: self.calculator.items[0])
 
             moved1.header = "D"
             moved2.header = "A"
 
             print("••••••••••••••••••••••••••••••••••••• RESORTING between sections... :)")
 
-            let itemsToAnimate = try! self.calculator.updateItems(addOrUpdate:[moved1, moved2], delete:[])
+            let itemsToAnimate = try! self.calculator.updateItems(addOrUpdate: [moved1, moved2], delete: [])
 
-            print("--------------------------------------------- NewItems:")
-            print("  " + self.calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+            print("--------------------------------------------- NewItems: ")
+            print("  " + self.calculator.items.map({ $0.debugDescription }).joined(separator: ",\n  "))
             print("---------------------------------------------\n\n")
 
-            itemsToAnimate.applyTo(tableView:self.tableView);
+            itemsToAnimate.applyTo(tableView: self.tableView);
         }
     }
-}
 
-extension ViewControllerTable {
+    // MARK: - TableView Delegate
+
     func enableEditing() {
         calculator.cellModelComparator = { lhs, rhs in
             return false
         }
 
-        self.tableView.setEditing(true, animated:true)
+        self.tableView.setEditing(true, animated: true)
     }
 
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
 
-    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
     }
 
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            let itemsToAnimate = try! calculator.removeItem(withIndex:indexPath)
-            itemsToAnimate.applyTo(tableView:self.tableView);
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let itemsToAnimate = try! calculator.removeItem(withIndex: indexPath)
+            itemsToAnimate.applyTo(tableView: self.tableView);
 
-            print("\n\n\n--------------------------------------------- NewItems:")
-            print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+            print("\n\n\n--------------------------------------------- NewItems: ")
+            print("  " + calculator.items.map({ $0.debugDescription }).joined(separator: ",\n  "))
             print("---------------------------------------------\n\n")
         }
     }
 
-    func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        let itemsToAnimate = try! calculator.swapItems(withIndex:sourceIndexPath, toIndex:destinationIndexPath)
-        itemsToAnimate.applyTo(tableView:self.tableView);
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let itemsToAnimate = try! calculator.swapItems(withIndex: sourceIndexPath, toIndex: destinationIndexPath)
+        itemsToAnimate.applyTo(tableView: self.tableView);
 
-        print("\n\n\n--------------------------------------------- NewItems:")
-        print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("\n\n\n--------------------------------------------- NewItems: ")
+        print("  " + calculator.items.map({ $0.debugDescription }).joined(separator: ",\n  "))
         print("---------------------------------------------\n\n")
     }
 
-    func addRandomTapped(sender:AnyObject?) {
+    func addRandomTapped(sender: AnyObject?) {
         let newIndex = Int(arc4random_uniform(UInt32(calculator.items.count)))
         let newIndexTitle = "\(newIndex) +"
 
         var newItems = calculator.items
-        newItems.insert(ACellModelExample(text:newIndexTitle, header: "A"), atIndex:newIndex)
+        newItems.insert(ACellModelExample(text: newIndexTitle, header: "A"), at: newIndex)
 
         let itemsToAnimate = try! calculator.setItems(newItems)
-        itemsToAnimate.applyTo(tableView:self.tableView);
+        itemsToAnimate.applyTo(tableView: self.tableView);
     }
 }

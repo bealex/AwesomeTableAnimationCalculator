@@ -11,18 +11,18 @@ import Foundation
  Calculation result
  */
 public struct ATableDiff {
-    public let updatedPaths:[NSIndexPath]
-    public let updatedSectionHeaders:NSIndexSet
+    public let updatedPaths: [IndexPath]
+    public let updatedSectionHeaders: IndexSet
 
-    public let deletedPaths:[NSIndexPath]
-    public let deletedSections:NSIndexSet
+    public let deletedPaths: [IndexPath]
+    public let deletedSections: IndexSet
 
-    public let addedPaths:[NSIndexPath]
-    public let addedSections:NSIndexSet
+    public let addedPaths: [IndexPath]
+    public let addedSections: IndexSet
 
-    public let movedSections:[(Int, Int)]
-    public let movedPaths:[(NSIndexPath, NSIndexPath)]
-    
+    public let movedSections: [(Int, Int)]
+    public let movedPaths: [(IndexPath, IndexPath)]
+
     public func isEmpty() -> Bool {
         return updatedPaths.count == 0 &&
             updatedSectionHeaders.count == 0 &&

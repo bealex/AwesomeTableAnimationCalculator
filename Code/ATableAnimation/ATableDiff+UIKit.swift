@@ -10,138 +10,138 @@ import UIKit
 
 //MARK: Applying calculation result to the UICollectionView
 public extension ATableDiff {
-    func applyTo(collectionView collectionView:UICollectionView) {
-        applyTo(collectionView:collectionView, completionHandler:nil)
+    func applyTo(collectionView: UICollectionView) {
+        applyTo(collectionView: collectionView, completionHandler: nil)
     }
 
-    func applyTo(collectionView collectionView:UICollectionView, completionHandler:(() -> Void)?) {
+    func applyTo(collectionView: UICollectionView, completionHandler: (() -> Void)?) {
         if self.isEmpty() {
             if let completionHandler = completionHandler {
                 completionHandler()
             }
             return
         }
-        
+
         let updates = {
             if self.updatedPaths.count != 0 {
-                collectionView.reloadItemsAtIndexPaths(self.updatedPaths)
+                collectionView.reloadItems(at: self.updatedPaths as [IndexPath])
             }
 
             if self.deletedSections.count != 0 {
-                collectionView.deleteSections(self.deletedSections)
+                collectionView.deleteSections(self.deletedSections as IndexSet)
             }
             if self.deletedPaths.count != 0 {
-                collectionView.deleteItemsAtIndexPaths(self.deletedPaths)
+                collectionView.deleteItems(at: self.deletedPaths as [IndexPath])
             }
 
             if self.movedSections.count != 0 {
                 for (sectionFrom, sectionTo) in self.movedSections {
-                    collectionView.moveSection(sectionFrom, toSection:sectionTo)
+                    collectionView.moveSection(sectionFrom, toSection: sectionTo)
                 }
             }
             if self.movedPaths.count != 0 {
                 for (indexPathFrom, indexPathTo) in self.movedPaths {
-                    collectionView.moveItemAtIndexPath(indexPathFrom, toIndexPath:indexPathTo)
+                    collectionView.moveItem(at: indexPathFrom as IndexPath, to: indexPathTo as IndexPath)
                 }
             }
 
             if self.addedSections.count != 0 {
-                collectionView.insertSections(self.addedSections)
+                collectionView.insertSections(self.addedSections as IndexSet)
             }
             if self.addedPaths.count != 0 {
-                collectionView.insertItemsAtIndexPaths(self.addedPaths)
+                collectionView.insertItems(at: self.addedPaths as [IndexPath])
             }
         }
 
-        let completion = { (_:Bool) in
+        let completion = { (_: Bool) in
             let hackyUpdates = {
                 if self.movedPaths.count != 0 {
                     // Hack, because move does not update target items
-                    var updatedIndexPaths:[NSIndexPath] = []
+                    var updatedIndexPaths: [IndexPath] = []
 
                     for (_, indexPathTo) in self.movedPaths {
-                        updatedIndexPaths.append(indexPathTo)
+                        updatedIndexPaths.append(indexPathTo as IndexPath)
                     }
 
-                    collectionView.reloadItemsAtIndexPaths(updatedIndexPaths)
+                    collectionView.reloadItems(at: updatedIndexPaths)
                 }
 
                 if (self.updatedSectionHeaders.count != 0) {
-                    collectionView.reloadSections(self.updatedSectionHeaders)
+                    collectionView.reloadSections(self.updatedSectionHeaders as IndexSet)
                 }
             }
 
-            collectionView.performBatchUpdates(hackyUpdates) { (_:Bool) in
+            collectionView.performBatchUpdates(hackyUpdates) { (_: Bool) in
                 if let completionHandler = completionHandler {
                     completionHandler()
                 }
             }
         }
 
-        collectionView.performBatchUpdates(updates, completion:completion)
+        collectionView.performBatchUpdates(updates, completion: completion)
     }
 }
 
 //MARK: Applying calculation result to the UITableView
 public extension ATableDiff {
-    func applyTo(tableView tableView:UITableView) {
-        applyTo(tableView:tableView, completionHandler:nil)
+    func applyTo(tableView: UITableView) {
+        applyTo(tableView: tableView, completionHandler: nil)
     }
 
-    func applyTo(tableView tableView:UITableView, completionHandler:(() -> Void)?) {
+    func applyTo(tableView: UITableView, completionHandler: (() -> Void)?) {
         if self.isEmpty() {
             if let completionHandler = completionHandler {
                 completionHandler()
             }
             return
         }
-        
+
         let updates = {
             if self.updatedPaths.count != 0 {
-                tableView.reloadRowsAtIndexPaths(self.updatedPaths, withRowAnimation:.Automatic)
+                tableView.reloadRows(at: self.updatedPaths as [IndexPath], with: .automatic)
             }
 
             if self.deletedSections.count != 0 {
-                tableView.deleteSections(self.deletedSections, withRowAnimation:.Automatic)
+                tableView.deleteSections(self.deletedSections as IndexSet, with: .automatic)
             }
             if self.deletedPaths.count != 0 {
-                tableView.deleteRowsAtIndexPaths(self.deletedPaths, withRowAnimation:.Automatic)
+                tableView.deleteRows(at: self.deletedPaths as [IndexPath], with: .automatic)
             }
 
             if self.movedSections.count != 0 {
                 for (sectionFrom, sectionTo) in self.movedSections {
-                    tableView.moveSection(sectionFrom, toSection:sectionTo)
+                    tableView.moveSection(sectionFrom, toSection: sectionTo)
                 }
             }
             if self.movedPaths.count != 0 {
                 for (indexPathFrom, indexPathTo) in self.movedPaths {
-                    tableView.moveRowAtIndexPath(indexPathFrom, toIndexPath:indexPathTo)
+                    tableView.moveRow(at: indexPathFrom as IndexPath, to: indexPathTo as IndexPath)
                 }
             }
 
             if self.addedSections.count != 0 {
-                tableView.insertSections(self.addedSections, withRowAnimation:.Automatic)
+                tableView.insertSections(self.addedSections as IndexSet, with: .automatic)
             }
             if self.addedPaths.count != 0 {
-                tableView.insertRowsAtIndexPaths(self.addedPaths, withRowAnimation:.Automatic)
+                tableView.insertRows(at: self.addedPaths as [IndexPath], with: .automatic)
             }
         }
 
-        let completion = { (_:Bool) in
+        let completion = { (_: Bool) in
             let hackyUpdates = {
                 if self.movedPaths.count > 0 {
                     // Hack, because move does not update target items
-                    var updatedIndexPaths:[NSIndexPath] = []
+                    var updatedIndexPaths: [IndexPath] = []
 
                     for (_, indexPathTo) in self.movedPaths {
-                        updatedIndexPaths.append(indexPathTo)
+                        updatedIndexPaths.append(indexPathTo as IndexPath)
                     }
 
-                    tableView.reloadRowsAtIndexPaths(updatedIndexPaths, withRowAnimation:.None)
+                    tableView.reloadRows(at: updatedIndexPaths, with: .none)
                 }
 
                 if (self.updatedSectionHeaders.count != 0) {
-                    tableView.reloadSections(self.updatedSectionHeaders, withRowAnimation:.None)
+                    tableView.reloadSections(self.updatedSectionHeaders as IndexSet, with: .none)
                 }
             }
 
@@ -157,7 +157,7 @@ public extension ATableDiff {
         updates()
         tableView.endUpdates()
 
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             completion(true)
         }
     }

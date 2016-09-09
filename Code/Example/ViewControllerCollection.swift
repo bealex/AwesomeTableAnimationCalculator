@@ -9,12 +9,12 @@ import UIKit
 import AwesomeTableAnimationCalculator
 
 class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    private let collectionView:UICollectionView = UICollectionView(frame:CGRectZero, collectionViewLayout:UICollectionViewFlowLayout())
+    private let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let calculator = ATableAnimationCalculator(cellSectionModel: ACellSectionModelExample())
 
     private var iterationIndex = 1
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden: Bool {
         return false
     }
 
@@ -28,30 +28,31 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
                 if lhs.header > rhs.header {
                     return false
                 } else {
-                    return Int(lhs.text) < Int(rhs.text)
+                    return lhs.text < rhs.text
+//                    return Int(lhs.text) < Int(rhs.text)
                 }
             }
         }
 
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = .white
 
-        collectionView.backgroundColor = UIColor.clearColor()
+        collectionView.backgroundColor = .clear
 
         collectionView.frame = self.view.bounds
-        collectionView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.alwaysBounceVertical = true
 
         collectionView.dataSource = self
         collectionView.delegate = self
 
-        collectionView.registerClass(CellViewCollection.self, forCellWithReuseIdentifier:"generalCell")
-        collectionView.registerClass(CellHeaderViewCollection.self, forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier:"generalHeader")
+        collectionView.register(CellViewCollection.self, forCellWithReuseIdentifier: "generalCell")
+        collectionView.register(CellHeaderViewCollection.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "generalHeader")
 
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.scrollDirection = .Vertical
-            flowLayout.itemSize = CGSize(width:self.view.bounds.size.width, height:25)
+            flowLayout.scrollDirection = .vertical
+            flowLayout.itemSize = CGSize(width: self.view.bounds.size.width, height: 25)
             flowLayout.estimatedItemSize = flowLayout.itemSize
-            flowLayout.headerReferenceSize = CGSize(width:self.view.bounds.size.width, height:20)
+            flowLayout.headerReferenceSize = CGSize(width: self.view.bounds.size.width, height: 20)
         }
 
         self.view.addSubview(collectionView)
@@ -59,88 +60,77 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
 //        runTestFromBundledFile("1.Test_DBZ_small.txt")
 //        runTestFromBundledFile("2.Test_Assertion (not working).txt")
 
+//        initBigData()
+
         initData()
         startTest()
     }
 
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return calculator.sectionsCount()
     }
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return calculator.itemsCount(inSection:section)
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return calculator.itemsCount(inSection: section)
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("generalCell", forIndexPath:indexPath)
-        cell.selectedBackgroundView?.backgroundColor = UIColor.lightGrayColor()
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "generalCell", for: indexPath)
+        cell.selectedBackgroundView?.backgroundColor = .lightGray
         if let cellView = cell as? CellViewCollection {
-            cellView.label.text = calculator.item(forIndexPath:indexPath).text
+            cellView.label.text = calculator.item(forIndexPath: indexPath).text
         }
 
         return cell
     }
 
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier:"generalHeader", forIndexPath:indexPath)
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "generalHeader", for: indexPath)
 
         if let headerView = header as? CellHeaderViewCollection {
-            let sectionData = calculator.section(withIndex:indexPath.section)
+            let sectionData = calculator.section(withIndex: indexPath.section)
             headerView.label.text = "Header: \(sectionData.title)"
         }
 
         return header
     }
-}
 
-extension ViewControllerCollection {
-    func parseLineToACellExample(line:String) -> ACellModelExample {
-        let result = ACellModelExample(text:"", header:"")
+    // MARK: - Helpers
+
+    func parseLineToACellExample(_ line: String) -> ACellModelExample {
+        let result = ACellModelExample(text: "", header: "")
 
         let parts = line
-                .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-                .componentsSeparatedByString(";")
+                .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                .components(separatedBy: ";")
 
         for part in parts {
-            if part.containsString("Header:") {
+            if part.contains("Header: ") {
                 result.header = part
-                        .stringByReplacingOccurrencesOfString("Header:", withString:"")
-                        .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-                if result.header.hasPrefix("\"") {
-                    result.header = result.header.substringFromIndex(result.header.startIndex.successor())
-                }
-                if result.header.hasSuffix("\"") {
-                    result.header = result.header.substringToIndex(result.header.endIndex.predecessor())
-                }
-            } else if part.containsString("Text:") {
+                        .replacingOccurrences(of: "Header: ", with: "")
+                        .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                        .trimmingCharacters(in: CharacterSet(charactersIn: "\""))
+            } else if part.contains("Text: ") {
                 result.text = part
-                        .stringByReplacingOccurrencesOfString("Text:", withString:"")
-                        .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-                if result.text.hasPrefix("\"") {
-                    result.text = result.text.substringFromIndex(result.text.startIndex.successor())
-                }
-                if result.text.hasSuffix("\"") {
-                    result.text = result.text.substringToIndex(result.text.endIndex.predecessor())
-                }
-            } else if part.containsString("id:") {
-                result.id = part
-                        .stringByReplacingOccurrencesOfString("id:", withString:"")
-                        .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-                if result.id.hasPrefix("\"") {
-                    result.id = result.id.substringFromIndex(result.id.startIndex.successor())
-                }
-                if result.id.hasSuffix("\"") {
-                    result.id = result.id.substringToIndex(result.id.endIndex.predecessor())
-                }
+                        .replacingOccurrences(of: "Text: ", with: "")
+                        .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                        .trimmingCharacters(in: CharacterSet(charactersIn: "\""))
+            } else if part.contains("id: ") {
+                let resultId = part
+                        .replacingOccurrences(of: "id: ", with: "")
+                        .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                        .trimmingCharacters(in: CharacterSet(charactersIn: "\""))
+
+                result.id = NSUUID(uuidString: resultId)!
             }
         }
 
         return result
     }
 
-    func runTestFromBundledFile(fileName:String) {
-        let filePath = NSBundle.mainBundle().pathForResource(fileName, ofType:nil)
-        let blocks = try! String(contentsOfFile:filePath!).componentsSeparatedByString("\n----------------")
+    func runTestFromBundledFile(fileName: String) {
+        let filePath = Bundle.main.path(forResource: fileName, ofType: nil)
+        let blocks = try! String(contentsOfFile: filePath!).components(separatedBy: "\n----------------")
 
         var initialItems = [ACellModelExample]()
         var addedItems = [ACellModelExample]()
@@ -148,35 +138,35 @@ extension ViewControllerCollection {
         var deletedItems = [ACellModelExample]()
 
         for block in blocks {
-            let lines = block.componentsSeparatedByString("\n")
+            let lines = block.components(separatedBy: "\n")
 
-            if block.containsString("--- Old items") {
+            if block.contains("--- Old items") {
                 for line in lines {
-                    if !line.containsString("---") {
+                    if !line.contains("---") {
                         if !line.isEmpty {
                             initialItems.append(parseLineToACellExample(line))
                         }
                     }
                 }
-            } else if block.containsString("--- Added") {
+            } else if block.contains("--- Added") {
                 for line in lines {
-                    if !line.containsString("---") {
+                    if !line.contains("---") {
                         if !line.isEmpty {
                             addedItems.append(parseLineToACellExample(line))
                         }
                     }
                 }
-            } else if block.containsString("--- Updated") {
+            } else if block.contains("--- Updated") {
                 for line in lines {
-                    if !line.containsString("---") {
+                    if !line.contains("---") {
                         if !line.isEmpty {
                             updatedItems.append(parseLineToACellExample(line))
                         }
                     }
                 }
-            } else if block.containsString("--- Deleted") {
+            } else if block.contains("--- Deleted") {
                 for line in lines {
-                    if !line.containsString("---") {
+                    if !line.contains("---") {
                         if !line.isEmpty {
                             deletedItems.append(parseLineToACellExample(line))
                         }
@@ -185,21 +175,20 @@ extension ViewControllerCollection {
             }
         }
 
-        try! calculator.setItems(initialItems)
+        let _ = try! calculator.setItems(initialItems)
 
-        updatedItems.appendContentsOf(addedItems)
+        updatedItems.append(contentsOf: addedItems)
 
         dispatch_after_main(1) {
-            let itemsToAnimate = try! self.calculator.updateItems(addOrUpdate:updatedItems, delete:deletedItems)
-            itemsToAnimate.applyTo(collectionView:self.collectionView) {}
+            let itemsToAnimate = try! self.calculator.updateItems(addOrUpdate: updatedItems, delete: deletedItems)
+            itemsToAnimate.applyTo(collectionView: self.collectionView) {}
         }
     }
-}
 
-// random tests
-extension ViewControllerCollection {
+    // MARK: - Random tests
+
     func initData() {
-        try! calculator.setItems([
+        let _ = try! calculator.setItems([
                 ACellModelExample(text: "1", header: "A"),
                 ACellModelExample(text: "2", header: "B"),
                 ACellModelExample(text: "3", header: "C"),
@@ -207,11 +196,38 @@ extension ViewControllerCollection {
                 ACellModelExample(text: "5", header: "E")
         ])
 
-        print("--------------------------------------------- NewItems:")
-        print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("--------------------------------------------- NewItems: ")
+        print("  " + calculator.items.map({ $0.debugDescription }).joined(separator: ",\n  "))
         print("---------------------------------------------\n\n")
 
         collectionView.reloadData()
+    }
+
+    func initBigData() {
+        var headers = [
+            "A",
+//            "B", "C", "D", "E", "F", "G", "H"
+        ]
+        var headerIndex = 0
+
+        var bigDataSet: [ACellModelExample] = []
+        for i in 1...100000 {
+//            bigDataSet.append(ACellModelExample(text: "1", header: headers[headerIndex]))
+            bigDataSet.append(ACellModelExample(text: "\(i)", header: headers[headerIndex]))
+            headerIndex += 1
+            if headerIndex >= headers.count {
+                headerIndex = 0
+            }
+        }
+
+//        calculator.cellModelComparator = nil
+
+        dispatch_async_main {
+            Thread.sleep(forTimeInterval: 5)
+
+            let _ = try! self.calculator.setItems(bigDataSet)
+            self.collectionView.reloadData()
+        }
     }
 
     func randomText() -> String {
@@ -220,7 +236,7 @@ extension ViewControllerCollection {
 
     func randomHeader() -> String {
         let code = UInt32("A".utf8.first!) + arc4random_uniform(UInt32("G".utf8.first!) - UInt32("A".utf8.first!))
-        return "\(Character(UnicodeScalar(code)))"
+        return "\(Character(UnicodeScalar(code)!))"
     }
 
     func runRandomTest() {
@@ -238,7 +254,7 @@ extension ViewControllerCollection {
         let deletedCount = arc4random_uniform(maxItemsInEveryPart)
 
         for _ in 0 ..< addedCount {
-            addedItems.append(ACellModelExample(text:randomText(), header:randomHeader()))
+            addedItems.append(ACellModelExample(text: randomText(), header: randomHeader()))
         }
 
         var updatedIndexes = [Int]()
@@ -249,7 +265,7 @@ extension ViewControllerCollection {
                 let index = Int(arc4random_uniform(UInt32(items.count)))
 
                 if !updatedIndexes.contains(index) {
-                    let updatedItem = ACellModelExample(copy:items[index])
+                    let updatedItem = ACellModelExample(copy: items[index])
                     updatedItem.text = randomText()
                     if (arc4random_uniform(500) > 250) {
                         updatedItem.header = randomHeader()
@@ -266,32 +282,32 @@ extension ViewControllerCollection {
                 if !deletedIndexes.contains(index) {
                     let item = items[index]
 
-                    deletedItems.append(ACellModelExample(copy:item))
+                    deletedItems.append(ACellModelExample(copy: item))
                     deletedIndexes.append(index)
                 }
             }
         }
 
         print("\n\n\n")
-        print("--------------------------------------------- Old items (iteration \(iterationIndex)):")
-        print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
-        print("--------------------------------------------- Added:")
-        print("  " + addedItems.map({ $0.debugDescription }).joinWithSeparator(", \n  "))
-        print("--------------------------------------------- Updated:")
-        print("  " + updatedItems.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
-        print("--------------------------------------------- Deleted:")
-        print("  " + deletedItems.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("--------------------------------------------- Old items (iteration \(iterationIndex)): ")
+        print("  " + calculator.items.map({ $0.debugDescription }).joined(separator: ",\n  "))
+        print("--------------------------------------------- Added: ")
+        print("  " + addedItems.map({ $0.debugDescription }).joined(separator: ", \n  "))
+        print("--------------------------------------------- Updated: ")
+        print("  " + updatedItems.map({ $0.debugDescription }).joined(separator: ",\n  "))
+        print("--------------------------------------------- Deleted: ")
+        print("  " + deletedItems.map({ $0.debugDescription }).joined(separator: ",\n  "))
         print("------------------------------------------------------")
 
-        updatedItems.appendContentsOf(addedItems)
+        updatedItems.append(contentsOf: addedItems)
 
-        let itemsToAnimate = try! calculator.updateItems(addOrUpdate:updatedItems, delete:deletedItems)
+        let itemsToAnimate = try! calculator.updateItems(addOrUpdate: updatedItems, delete: deletedItems)
 
-        print("--------------------------------------------- New items:")
-        print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("--------------------------------------------- New items: ")
+        print("  " + calculator.items.map({ $0.debugDescription }).joined(separator: ",\n  "))
         print("---------------------------------------------\n\n")
 
-        itemsToAnimate.applyTo(collectionView:collectionView) {
+        itemsToAnimate.applyTo(collectionView: collectionView) {
             self.iterationIndex += 1
             dispatch_after_main(0.6) {
                 self.runRandomTest()
@@ -299,9 +315,9 @@ extension ViewControllerCollection {
         }
     }
 
-    func update(addItems addedItems:[ACellModelExample], updateItemsWithIndexes:[Int], deleteItemsWithIndexes:[Int]) {
-        var updatedItems:[ACellModelExample] = updateItemsWithIndexes.map { index in
-            let updatedValue = ACellModelExample(copy:self.calculator.item(withIndex:index))
+    func update(addItems addedItems: [ACellModelExample], updateItemsWithIndexes: [Int], deleteItemsWithIndexes: [Int]) {
+        var updatedItems: [ACellModelExample] = updateItemsWithIndexes.map { index in
+            let updatedValue = ACellModelExample(copy: self.calculator.item(withIndex: index))
             updatedValue.text = "\(Int(updatedValue.text)! - 2)"
 //            updatedValue.text = updatedValue.text + " •"
 
@@ -309,24 +325,24 @@ extension ViewControllerCollection {
         }
 
         let deletedItems = deleteItemsWithIndexes.map { index in
-            return self.calculator.item(withIndex:index)
+            return self.calculator.item(withIndex: index)
         }
 
-        updatedItems.appendContentsOf(addedItems)
+        updatedItems.append(contentsOf: addedItems)
 
-        print("\n\n\n--------------------------------------------- Updated:")
-        print("  " + updatedItems.map({ $0.debugDescription }).joinWithSeparator("\n  "))
-        print("--------------------------------------------- Deleted:")
-        print("  " + deletedItems.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
-        print("--------------------------------------------- Changes:")
+        print("\n\n\n--------------------------------------------- Updated: ")
+        print("  " + updatedItems.map({ $0.debugDescription }).joined(separator: "\n  "))
+        print("--------------------------------------------- Deleted: ")
+        print("  " + deletedItems.map({ $0.debugDescription }).joined(separator: ",\n  "))
+        print("--------------------------------------------- Changes: ")
 
-        let itemsToAnimate = try! calculator.updateItems(addOrUpdate:updatedItems, delete:deletedItems)
+        let itemsToAnimate = try! calculator.updateItems(addOrUpdate: updatedItems, delete: deletedItems)
 
-        print("--------------------------------------------- NewItems:")
-        print("  " + calculator.items.map({ $0.debugDescription }).joinWithSeparator(",\n  "))
+        print("--------------------------------------------- NewItems: ")
+        print("  " + calculator.items.map({ $0.debugDescription }).joined(separator: ",\n  "))
         print("---------------------------------------------\n\n")
 
-        itemsToAnimate.applyTo(collectionView:collectionView, completionHandler:nil)
+        itemsToAnimate.applyTo(collectionView: collectionView, completionHandler: nil)
     }
 
     func startTest() {

@@ -8,7 +8,7 @@
 import Foundation
 
 /**
- Cell representation for Diff calculation algorythm.
+ Cell representation for Diff calculation algorithm.
 
  Equality must determine, if the cell is the same, even when its contents was changed.
  Usually it is something like id-based equals.
@@ -27,7 +27,7 @@ public protocol ACellModel: Equatable {
     init(copy: Self)
 
     /// Method that checks equality of the cell contents.
-    func contentIsSameAsIn(another: Self) -> Bool
+    func contentIsSameAsIn(_ another: Self) -> Bool
 
 //    func shortDescription() -> String
 }

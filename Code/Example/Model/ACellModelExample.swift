@@ -8,13 +8,13 @@
 import Foundation
 import AwesomeTableAnimationCalculator
 
-class ACellModelExample: ACellModel {
-    var id:String
-    var text:String
-    var header:String
+class ACellModelExample: ACellModel, Comparable {
+    var id: NSUUID
+    var text: String
+    var header: String
 
-    init(text:String, header:String) {
-        id = NSUUID().UUIDString
+    init(text: String, header: String) {
+        id = NSUUID()
         self.text = text
         self.header = header
     }
@@ -25,7 +25,7 @@ class ACellModelExample: ACellModel {
         header = copy.header
     }
 
-    func contentIsSameAsIn(another: ACellModelExample) -> Bool {
+    func contentIsSameAsIn(_ another: ACellModelExample) -> Bool {
         return text == another.text
     }
 
@@ -44,14 +44,20 @@ func ==(lhs: ACellModelExample, rhs: ACellModelExample) -> Bool {
     return lhs.id == rhs.id
 }
 
+func <(lhs: ACellModelExample, rhs: ACellModelExample) -> Bool {
+    return lhs.header < rhs.header ? true : (
+            lhs.header > rhs.header ? false : (
+                lhs.text < rhs.text))
+}
+
 @objc
 class ACellModelExampleObjC: NSObject, ACellModel {
-    var id:String
-    var text:String
-    var header:String
+    var id: NSUUID
+    var text: String
+    var header: String
 
-    init(text:String, header:String) {
-        id = NSUUID().UUIDString
+    init(text: String, header: String) {
+        id = NSUUID()
         self.text = text
         self.header = header
     }
@@ -62,7 +68,7 @@ class ACellModelExampleObjC: NSObject, ACellModel {
         header = copy.header
     }
 
-    func contentIsSameAsIn(another: ACellModelExampleObjC) -> Bool {
+    func contentIsSameAsIn(_ another: ACellModelExampleObjC) -> Bool {
         return text == another.text
     }
 

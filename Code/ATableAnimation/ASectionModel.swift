@@ -8,21 +8,21 @@
 import Foundation
 
 /**
- This protocol is needed because I want to provide two versions of the base class: Swift and Objective-C supproted.
+ This protocol is needed because I want to provide two versions of the base class: Swift and Objective-C supported.
  */
 public protocol ASectionModelProtocol {
-    var startIndex:Int { get }
-    var endIndex:Int { get }
+    var startIndex: Int { get }
+    var endIndex: Int { get }
 
-    func update(startIndex startIndex:Int, endIndex:Int)
+    func update(startIndex: Int, endIndex: Int)
 }
 
 /**
  Here is the pure Swift version
  */
-public class ASectionModel: ASectionModelProtocol {
-    public internal (set) var startIndex:Int = 0
-    public internal (set) var endIndex:Int = 0
+open class ASectionModel: ASectionModelProtocol {
+    open internal (set) var startIndex: Int = 0
+    open internal (set) var endIndex: Int = 0
 
     public init() {}
 }
@@ -30,7 +30,7 @@ public class ASectionModel: ASectionModelProtocol {
 /**
  This version must be used for Objective-C supported classes
  */
-public class ASectionModelObjC: NSObject, ASectionModelProtocol {
-    public internal (set) var startIndex:Int = 0
-    public internal (set) var endIndex:Int = 0
+open class ASectionModelObjC: NSObject, ASectionModelProtocol {
+    open internal (set) var startIndex: Int = 0
+    open internal (set) var endIndex: Int = 0
 }

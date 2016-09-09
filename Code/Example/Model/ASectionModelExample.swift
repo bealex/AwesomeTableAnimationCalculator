@@ -9,9 +9,9 @@ import Foundation
 import AwesomeTableAnimationCalculator
 
 public class ASectionModelExample: ASectionModel, Equatable {
-    public let title:String
+    public let title: String
 
-    public init(title:String) {
+    public init(title: String) {
         self.title = title
         super.init()
     }
@@ -29,9 +29,9 @@ extension ASectionModelExample: CustomDebugStringConvertible {
 
 @objc
 public class ASectionModelExampleObjC: ASectionModelObjC {
-    public let title:String
+    public let title: String
 
-    public init(title:String) {
+    public init(title: String) {
         self.title = title
         super.init()
     }

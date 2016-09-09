@@ -9,15 +9,15 @@ import AwesomeTableAnimationCalculator
 
 @objc
 class ATableAnimationCalculatorObjC: NSObject {
-    private let calculator = ATableAnimationCalculator(cellSectionModel:ACellSectionModelExampleObjC())
+    private let calculator = ATableAnimationCalculator(cellSectionModel: ACellSectionModelExampleObjC())
 
     func getCalculator() -> AnyObject? {
         return calculator
     }
 
-    func setItems(items:[ACellModelExampleObjC], andApplyToTableView tableView:UITableView) {
+    func setItems(_ items: [ACellModelExampleObjC], andApplyToTableView tableView: UITableView) {
         let diff = try! calculator.setItems(items)
         NSLog("Values: %@", calculator.items)
-        diff.applyTo(tableView:tableView)
+        diff.applyTo(tableView: tableView)
     }
 }

@@ -3,6 +3,7 @@
 // Copyright (c) 2016 LonelyBytes. All rights reserved.
 //
 
+@import UIKit;
 #import "ObjCTest.h"
 #import "ATableAnimationCalculator-Swift.h"
 
