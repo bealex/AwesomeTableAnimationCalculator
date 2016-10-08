@@ -17,7 +17,7 @@ public class ASectionModelExample: ASectionModel, Equatable {
     }
 }
 
-public func ==(lhs: ASectionModelExample, rhs: ASectionModelExample) -> Bool {
+public func == (lhs: ASectionModelExample, rhs: ASectionModelExample) -> Bool {
     return lhs.title == rhs.title
 }
 
@@ -41,6 +41,6 @@ public class ASectionModelExampleObjC: ASectionModelObjC {
     }
 }
 
-public func ==(lhs: ASectionModelExampleObjC, rhs: ASectionModelExampleObjC) -> Bool {
+public func == (lhs: ASectionModelExampleObjC, rhs: ASectionModelExampleObjC) -> Bool {
     return lhs.title == rhs.title
 }

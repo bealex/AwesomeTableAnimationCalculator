@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 
-
 func dispatch_async_main(_ closure: @escaping () -> Void) {
     DispatchQueue.main.async(execute: closure)
 }
@@ -20,7 +19,6 @@ func dispatch_async_background(_ closure: @escaping () -> Void) {
 func dispatch_after_main(_ sec: TimeInterval, closure: @escaping () -> Void) {
     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + sec, execute: closure)
 }
-
 
 class CellViewCollection: UICollectionViewCell {
     let label = UILabel()
@@ -43,7 +41,6 @@ class CellViewCollection: UICollectionViewCell {
         self.contentView.addSubview(label)
     }
 }
-
 
 class CellHeaderViewCollection: UICollectionReusableView {
     let label = UILabel()

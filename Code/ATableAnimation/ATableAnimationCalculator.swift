@@ -7,7 +7,7 @@
 
 import Foundation
 
-//MARK: Some helper extensions
+// MARK: - Some helper extensions
 
 private extension ASectionModelProtocol {
     var range: CountableRange<Int> {
@@ -36,17 +36,17 @@ public extension ASectionModelObjC {
     }
 }
 
-//MARK: Calculator class
+// MARK: - Calculator class
 
 /**
- This class can tell you, which sections and/or items must
- be updated (inserted, deleted) during DataSource update.
+    This class can tell you, which sections and/or items must
+    be updated (inserted, deleted) during DataSource update.
 
- It must solve common problem with complex CollectionViews, when new cells
- can appear/disappear/change in different places. Examples include chat messages,
- moderated comments list etc.
+    It must solve common problem with complex CollectionViews, when new cells
+    can appear/disappear/change in different places. Examples include chat messages,
+    moderated comments list etc.
 
- Public interface is built for easy usage with standard `UICollectionView` or `UITableView`.
+    Public interface is built for easy usage with standard `UICollectionView` or `UITableView`.
  */
 open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: NSObject {
     fileprivate let cellSectionFactory: ACellSectionModelType
@@ -64,7 +64,7 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
         self.cellSectionFactory = cellSectionModel
     }
 
-    //MARK: - Public methods for easy use with UICollectionView DataSource
+    // MARK: - Public methods for easy use with UICollectionView DataSource
 
     /**
      - returns: number of sections
@@ -82,14 +82,14 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
     }
 
     /**
-     - returns: section data by its index
+        - returns: section data by its index
      */
     public func section(withIndex sectionIndex: Int) -> ASectionModelType {
         return sections[sectionIndex]
     }
 
     /**
-     - returns: item data by IndexPath (section/row indexes)
+        - returns: item data by IndexPath (section/row indexes)
      */
     public func item(forIndexPath indexPath: IndexPath) -> ACellModelType {
         let section = sections[indexPath.section]
@@ -97,14 +97,14 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
     }
 
     /**
-     - returns: item data by item index (as if there were no sections)
+        - returns: item data by item index (as if there were no sections)
      */
     public func item(withIndex index: Int) -> ACellModelType {
         return items[index]
     }
 
     /**
-     - returns: IndexPath of a specified item, or nil if item is not in the model
+        - returns: IndexPath of a specified item, or nil if item is not in the model
      */
     public func indexPath(forItem item: ACellModelType) -> IndexPath? {
         if let index = items.index(of: item) {
@@ -115,36 +115,34 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
     }
 
     /**
-     - returns: IndexPath of a specified item index, or nil if item is not in the model
+        - returns: IndexPath of a specified item index, or nil if item is not in the model
      */
     public func indexPath(forItemIndex itemIndex: Int) -> IndexPath? {
         return indexPath(forItemIndex: itemIndex, usingSections: sections)
     }
 
-    //MARK: - Public methods for adding/removing items
+    // MARK: - Public methods for adding/removing items
 
     /**
-     Can be called after changing the comparator to update positions of elements.
+        Can be called after changing the comparator to update positions of elements.
      */
     public func resortItems() throws -> ATableDiff {
         return try setItems(items, alreadySorted: false)
     }
 
     /**
-     Changes all items in the DataSource.
-
-     - returns: `AnimatableData` with the items to animate
+         Changes all items in the DataSource.
+            - returns: `AnimatableData` with the items to animate
      */
     public func setItems(_ newItems: [ACellModelType], alreadySorted: Bool = false) throws -> ATableDiff {
-        //ToDo: we can call this method if we need to insert only one item as well. Let's try to remove sort dependency here
+        // ToDo: we can call this method if we need to insert only one item as well. Let's try to remove sort dependency here
         return try calculateDiff(items: newItems, alreadySorted: alreadySorted)
     }
 
     /**
-     Inserts/updates/deletes items in the DataSource. Is useful if we've got a new list of items,
-     but we don't know what exactly actions were applied to the list.
-
-     - returns: `AnimatableData` with the items to animate
+         Inserts/updates/deletes items in the DataSource. Is useful if we've got a new list of items,
+         but we don't know what exactly actions were applied to the list.
+            - returns: `AnimatableData` with the items to animate
      */
     public func updateItems(addOrUpdate addedOrUpdatedItems: [ACellModelType], delete: [ACellModelType]) throws -> ATableDiff {
         var itemsToProcess = Array<ACellModelType>(items)
@@ -188,7 +186,7 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
         return try setItems(itemsToProcess, alreadySorted: true)
     }
 
-    //MARK: Private methods for finding lists difference
+    // MARK: - Private methods for finding lists difference
 
     private func calculateDiff(items newShinyItems: [ACellModelType], alreadySorted: Bool) throws -> ATableDiff {
         var newItems = newShinyItems.map({ ACellModelType(copy: $0) })
@@ -204,18 +202,21 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
                 .map({ section in
                     return newSections.filter({ $0 == section }).count == 1 ? 1 : 0
                 })
-                .reduce(0, { result, value in result + value });
+                .reduce(0, { result, value in result + value })
 
         if numberOfUniqueSections != newSections.count {
-            throw NSError(domain: "ATableAnimationCalculator", code: 1, userInfo: [NSLocalizedDescriptionKey: "Your data does have two same sections in the list. Possibly you forgot to setup comparator for the cells."])
+            throw NSError(domain: "ATableAnimationCalculator", code: 1, userInfo:
+                [NSLocalizedDescriptionKey:
+                         "Your data does have two same sections in the list. " +
+                         "Possibly you forgot to setup comparator for the cells."])
         }
 
         let oldItems = items
         let oldSections = sections
 
         if printDebugLogs {
-            print("Old: \(debugPrint(oldItems)) | \(debugPrint(oldSections))");
-            print("New: \(debugPrint(newItems)) | \(debugPrint(newSections))\n");
+            print("Old: \(debugPrint(oldItems)) | \(debugPrint(oldSections))")
+            print("New: \(debugPrint(newItems)) | \(debugPrint(newSections))\n")
         }
 
         var (deletedItemIndexesOld, updatedItemIndexesOld, movedItemIndexesOldNew) =
@@ -229,15 +230,17 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
         }
 
         if printDebugLogs {
-            print("- Index Paths (before section calculations): ");
-            print("Deleted: \(debugPrint(deletedItemIndexesOld))");
-            print("Updated: \(debugPrint(updatedItemIndexesOld))");
-            print("Inserted: \(debugPrint(insertedItemIndexesNew))");
-            print("Moved: \(debugPrint(movedItemIndexesOldNew))");
+            print("- Index Paths (before section calculations): ")
+            print("Deleted: \(debugPrint(deletedItemIndexesOld))")
+            print("Updated: \(debugPrint(updatedItemIndexesOld))")
+            print("Inserted: \(debugPrint(insertedItemIndexesNew))")
+            print("Moved: \(debugPrint(movedItemIndexesOldNew))")
         }
 
         // removed sections
-        let deletedSectionIndexesOld = findTotallyDestroyedSectionsFrom(oldSections, byDeletedIndexes: deletedItemIndexesOld, insertedIndexes: insertedItemIndexesNew, movedIndexes: movedItemIndexesOldNew)
+        let deletedSectionIndexesOld = findTotallyDestroyedSectionsFrom(
+                oldSections, byDeletedIndexes: deletedItemIndexesOld,
+                insertedIndexes: insertedItemIndexesNew, movedIndexes: movedItemIndexesOldNew)
         deletedItemIndexesOld = deletedItemIndexesOld.filter { !deletedSectionIndexesOld.contains($0.section) }
 
         // if section is deleted, we must not delete items from it
@@ -246,7 +249,8 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
         movedItemIndexesOldNew = movedItemIndexesOldNew.filter { !deletedSectionIndexesOld.contains($0.0.section) }
 
         // let's find added sections
-        let insertedSectionIndexesNew = findInsertedSectionsTo(oldSections, byInsertedIndexes: insertedItemIndexesNew, movedIndexes: movedItemIndexesOldNew)
+        let insertedSectionIndexesNew = findInsertedSectionsTo(oldSections, byInsertedIndexes: insertedItemIndexesNew,
+                movedIndexes: movedItemIndexesOldNew)
 
         // if section is added, we must not insert into it
         let movedItemIndexesOldNewToInsertedSections = movedItemIndexesOldNew.filter { insertedSectionIndexesNew.contains($0.1.section) }
@@ -259,17 +263,17 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
         let updatedSectionIndexesNew = findUpdatedSections(old: oldSections, new: newSections)
 
         if printDebugLogs {
-            print("\n");
-            print("- Index Paths (after section calculations): ");
-            print("Deleted: \(debugPrint(deletedItemIndexesOld))");
-            print("Updated: \(debugPrint(updatedItemIndexesOld))");
-            print("Inserted: \(debugPrint(insertedItemIndexesNew))");
-            print("Moved: \(debugPrint(movedItemIndexesOldNew))");
-            print("- Section Indexes: ");
-            print("Deleted: \(debugPrint(deletedSectionIndexesOld))");
-            print("Updated: \(debugPrint(updatedSectionIndexesNew))");
-            print("Inserted: \(debugPrint(insertedSectionIndexesNew))");
-            print("Moved: \(debugPrint(movedSectionIndexes))");
+            print("\n")
+            print("- Index Paths (after section calculations): ")
+            print("Deleted: \(debugPrint(deletedItemIndexesOld))")
+            print("Updated: \(debugPrint(updatedItemIndexesOld))")
+            print("Inserted: \(debugPrint(insertedItemIndexesNew))")
+            print("Moved: \(debugPrint(movedItemIndexesOldNew))")
+            print("- Section Indexes: ")
+            print("Deleted: \(debugPrint(deletedSectionIndexesOld))")
+            print("Updated: \(debugPrint(updatedSectionIndexesNew))")
+            print("Inserted: \(debugPrint(insertedSectionIndexesNew))")
+            print("Moved: \(debugPrint(movedSectionIndexes))")
         }
 
         movedItemIndexesOldNew = removeRedundantMovesAfterDeletesAndInsertions(
@@ -282,17 +286,17 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
         movedItemIndexesOldNew = removeRedundantMovesAfterOtherMoves(movedItemIndexesOldNew)
 
         if printDebugLogs {
-            print("\n");
-            print("- Index Paths (after optimizations): ");
-            print("Deleted: \(debugPrint(deletedItemIndexesOld))");
-            print("Updated: \(debugPrint(updatedItemIndexesOld))");
-            print("Inserted: \(debugPrint(insertedItemIndexesNew))");
-            print("Moved: \(debugPrint(movedItemIndexesOldNew))");
-            print("- Section Indexes: ");
-            print("Deleted: \(debugPrint(deletedSectionIndexesOld))");
-            print("Updated: \(debugPrint(updatedSectionIndexesNew))");
-            print("Inserted: \(debugPrint(insertedSectionIndexesNew))");
-            print("Moved: \(debugPrint(movedSectionIndexes))");
+            print("\n")
+            print("- Index Paths (after optimizations): ")
+            print("Deleted: \(debugPrint(deletedItemIndexesOld))")
+            print("Updated: \(debugPrint(updatedItemIndexesOld))")
+            print("Inserted: \(debugPrint(insertedItemIndexesNew))")
+            print("Moved: \(debugPrint(movedItemIndexesOldNew))")
+            print("- Section Indexes: ")
+            print("Deleted: \(debugPrint(deletedSectionIndexesOld))")
+            print("Updated: \(debugPrint(updatedSectionIndexesNew))")
+            print("Inserted: \(debugPrint(insertedSectionIndexesNew))")
+            print("Moved: \(debugPrint(movedSectionIndexes))")
         }
 
         items = newItems
@@ -361,7 +365,8 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
         return nil
     }
 
-    private func findChain(startingFrom startIndexes: (IndexPath, IndexPath), indexes: [(IndexPath, IndexPath)]) -> [(IndexPath, IndexPath)] {
+    private func findChain(startingFrom startIndexes: (IndexPath, IndexPath), indexes: [(IndexPath, IndexPath)])
+                    -> [(IndexPath, IndexPath)] {
         assert(startIndexes.0.section == startIndexes.1.section)
 
         var chain = [(IndexPath, IndexPath)]()
@@ -400,8 +405,8 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
     }
 
     private func removeRedundantMovesAfterDeletesAndInsertions(from: [(IndexPath, IndexPath)],
-                                                       deletedIndexes: [IndexPath], deletedSections: IndexSet,
-                                                       insertedIndexes: [IndexPath], insertedSections: IndexSet) -> [(IndexPath, IndexPath)] {
+            deletedIndexes: [IndexPath], deletedSections: IndexSet,
+            insertedIndexes: [IndexPath], insertedSections: IndexSet) -> [(IndexPath, IndexPath)] {
         var originalMoveIndexes = from
 
         // process deleted sections
@@ -474,7 +479,8 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
         return movedIndexes
     }
 
-    private func findInsertedItems(oldItems: [ACellModelType], newItems: [ACellModelType], newSections: [ASectionModelType]) -> [IndexPath] {
+    private func findInsertedItems(
+            oldItems: [ACellModelType], newItems: [ACellModelType], newSections: [ASectionModelType]) -> [IndexPath] {
         var insertedItemIndexesNew = [IndexPath]()
 
         // let's find new elements
@@ -490,14 +496,14 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
         return insertedItemIndexesNew
     }
 
-    private func findDeletedUpdatedMovedItems(oldItems: [ACellModelType], oldSections: [ASectionModelType], newItems: [ACellModelType], newSections: [ASectionModelType])
-                    -> ([IndexPath], [IndexPath], [(IndexPath, IndexPath)]) {
+    private func findDeletedUpdatedMovedItems(oldItems: [ACellModelType], oldSections: [ASectionModelType],
+            newItems: [ACellModelType], newSections: [ASectionModelType]) -> ([IndexPath], [IndexPath], [(IndexPath, IndexPath)]) {
         var deletedItemIndexesOld = [IndexPath]()
         var updatedItemIndexesOld = [IndexPath]()
         var movedItemIndexesOldNew = [(IndexPath, IndexPath)]()
 
         // let's find item updates and deletions
-        //ToDo: убрать все «!»
+        // ToDo: убрать все «!»
         for oldIndex in 0 ..< oldItems.count {
             let oldItem = oldItems[oldIndex]
             let oldIndexPath = indexPath(forItemIndex: oldIndex, usingSections: oldSections)!
@@ -568,7 +574,8 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
             let movedOutItemsCount = movedIndexes.filter({ $0.0.section == sectionIndex && $0.1.section != sectionIndex }).count
             let movedInItemsCount = movedIndexes.filter({ $0.1.section == sectionIndex && $0.0.section != sectionIndex }).count
 
-            if section.endIndex - section.startIndex == deletedItemsCount + movedOutItemsCount && movedInItemsCount + insertedItemsCount == 0 {
+            if section.endIndex - section.startIndex == deletedItemsCount + movedOutItemsCount &&
+                       movedInItemsCount + insertedItemsCount == 0 {
                 result.add(sectionIndex)
             }
         }
@@ -576,7 +583,7 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
         return result as IndexSet
     }
 
-    //MARK: Private helper methods
+    // MARK: Private helper methods
 
     private func indexPath(forItemIndex itemIndex: Int, usingSections: [ASectionModelType]) -> IndexPath? {
         var result: IndexPath? = nil
@@ -591,7 +598,7 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
             sectionIndex += 1
         }
 
-        return result;
+        return result
     }
 
     private func sections(fromItems items: [ACellModelType]) -> [ASectionModelType] {
@@ -627,7 +634,7 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
         return result
     }
 
-    //MARK: Some debug output methods
+    // MARK: - Some debug output methods
 
     private func debugPrint(name: String, strings: [String]) -> String {
         if strings.isEmpty {
@@ -657,7 +664,9 @@ open class ATableAnimationCalculator<ACellSectionModelType: ACellSectionModel>: 
     }
 
     private func debugPrint(_ indexPathPairs: [(IndexPath, IndexPath)]) -> String {
-        return debugPrint(name: "indexPathPairs", strings: indexPathPairs.map { "\($0.0.section)-\($0.0.row) -> \($0.1.section)-\($0.1.row)" })
+        return debugPrint(name: "indexPathPairs", strings: indexPathPairs.map {
+            "\($0.0.section)-\($0.0.row) -> \($0.1.section)-\($0.1.row)"
+        })
     }
 
     private func debugPrint(_ indexPathPairs: [(Int, Int)]) -> String {

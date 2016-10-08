@@ -46,7 +46,8 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
         collectionView.delegate = self
 
         collectionView.register(CellViewCollection.self, forCellWithReuseIdentifier: "generalCell")
-        collectionView.register(CellHeaderViewCollection.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "generalHeader")
+        collectionView.register(CellHeaderViewCollection.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                withReuseIdentifier: "generalHeader")
 
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .vertical
@@ -60,10 +61,10 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
 //        runTestFromBundledFile("1.Test_DBZ_small.txt")
 //        runTestFromBundledFile("2.Test_Assertion (not working).txt")
 
-//        initBigData()
+        initBigData()
 
-        initData()
-        startTest()
+//        initData()
+//        startTest()
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -84,8 +85,10 @@ class ViewControllerCollection: UIViewController, UICollectionViewDataSource, UI
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "generalHeader", for: indexPath)
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String,
+            at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
+                withReuseIdentifier: "generalHeader", for: indexPath)
 
         if let headerView = header as? CellHeaderViewCollection {
             let sectionData = calculator.section(withIndex: indexPath.section)

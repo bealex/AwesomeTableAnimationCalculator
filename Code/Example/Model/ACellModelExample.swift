@@ -40,11 +40,11 @@ extension ACellModelExample: CustomDebugStringConvertible {
     }
 }
 
-func ==(lhs: ACellModelExample, rhs: ACellModelExample) -> Bool {
+func == (lhs: ACellModelExample, rhs: ACellModelExample) -> Bool {
     return lhs.id == rhs.id
 }
 
-func <(lhs: ACellModelExample, rhs: ACellModelExample) -> Bool {
+func < (lhs: ACellModelExample, rhs: ACellModelExample) -> Bool {
     return lhs.header < rhs.header ? true : (
             lhs.header > rhs.header ? false : (
                 lhs.text < rhs.text))
@@ -81,6 +81,6 @@ class ACellModelExampleObjC: NSObject, ACellModel {
     }
 }
 
-func ==(lhs: ACellModelExampleObjC, rhs: ACellModelExampleObjC) -> Bool {
+func == (lhs: ACellModelExampleObjC, rhs: ACellModelExampleObjC) -> Bool {
     return lhs.id == rhs.id
 }

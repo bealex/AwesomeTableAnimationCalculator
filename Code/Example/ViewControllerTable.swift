@@ -48,7 +48,8 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
         startTest()
 
 //        enableEditing()
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add Random", style: .plain, target: self, action: #selector(addRandomTapped))
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add Random", style: .plain,
+//                target: self, action: #selector(addRandomTapped))
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -61,7 +62,7 @@ class ViewControllerTable: UIViewController, UITableViewDataSource, UITableViewD
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "generalCell")
-        if (cell == nil) {
+        if cell == nil {
             cell = UITableViewCell(style: .default, reuseIdentifier: "generalCell")
         }
         cell!.textLabel!.text = calculator.item(forIndexPath: indexPath).text

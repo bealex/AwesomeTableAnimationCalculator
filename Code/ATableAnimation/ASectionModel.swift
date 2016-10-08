@@ -8,7 +8,8 @@
 import Foundation
 
 /**
- This protocol is needed because I want to provide two versions of the base class: Swift and Objective-C supported.
+    This protocol is needed because I want to provide two versions
+    of the base class: Swift and Objective-C supported.
  */
 public protocol ASectionModelProtocol {
     var startIndex: Int { get }
@@ -18,7 +19,7 @@ public protocol ASectionModelProtocol {
 }
 
 /**
- Here is the pure Swift version
+    Here is the pure Swift version
  */
 open class ASectionModel: ASectionModelProtocol {
     open internal (set) var startIndex: Int = 0
@@ -28,7 +29,7 @@ open class ASectionModel: ASectionModelProtocol {
 }
 
 /**
- This version must be used for Objective-C supported classes
+    This version must be used for Objective-C supported classes
  */
 open class ASectionModelObjC: NSObject, ASectionModelProtocol {
     open internal (set) var startIndex: Int = 0

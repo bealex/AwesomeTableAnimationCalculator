@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-//MARK: Applying calculation result to the UICollectionView
+// MARK: - Applying calculation result to the UICollectionView
 public extension ATableDiff {
     func applyTo(collectionView: UICollectionView) {
         applyTo(collectionView: collectionView, completionHandler: nil)
@@ -82,7 +82,7 @@ public extension ATableDiff {
     }
 }
 
-//MARK: Applying calculation result to the UITableView
+// MARK: - Applying calculation result to the UITableView
 public extension ATableDiff {
     func applyTo(tableView: UITableView) {
         applyTo(tableView: tableView, completionHandler: nil)
@@ -140,7 +140,7 @@ public extension ATableDiff {
                     tableView.reloadRows(at: updatedIndexPaths, with: .none)
                 }
 
-                if (self.updatedSectionHeaders.count != 0) {
+                if self.updatedSectionHeaders.count != 0 {
                     tableView.reloadSections(self.updatedSectionHeaders as IndexSet, with: .none)
                 }
             }

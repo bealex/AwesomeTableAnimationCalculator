@@ -8,7 +8,7 @@
 import Foundation
 
 /**
- Calculation result
+    Calculation result
  */
 public struct ATableDiff {
     public let updatedPaths: [IndexPath]
@@ -24,13 +24,13 @@ public struct ATableDiff {
     public let movedPaths: [(IndexPath, IndexPath)]
 
     public func isEmpty() -> Bool {
-        return updatedPaths.count == 0 &&
-            updatedSectionHeaders.count == 0 &&
-            deletedPaths.count == 0 &&
-            deletedSections.count == 0 &&
-            addedPaths.count == 0 &&
-            addedSections.count == 0 &&
-            movedSections.count == 0 &&
-            movedPaths.count == 0
+        return updatedPaths.isEmpty &&
+            updatedSectionHeaders.isEmpty &&
+            deletedPaths.isEmpty &&
+            deletedSections.isEmpty &&
+            addedPaths.isEmpty &&
+            addedSections.isEmpty &&
+            movedSections.isEmpty &&
+            movedPaths.isEmpty
     }
 }
